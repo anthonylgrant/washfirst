@@ -1,0 +1,6 @@
+{ "client": "pg",
+  "connection": {
+    "user": "development",
+    "password": "development",
+    "database": "wash_first"
+  }}
