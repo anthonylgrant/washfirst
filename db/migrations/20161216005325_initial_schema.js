@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
       t.string('password').notNullable();
       t.string('email').notNullable().unique();
       t.string('phone_number');
-      t.timestamps();
+      t.timestamp('created_at').notNullable().defaultTo(knex.raw('now'));
     }),
 
     knex.schema.createTableIfNotExists('tags', (t) => {
@@ -20,6 +20,7 @@ exports.up = function(knex, Promise) {
       t.string('type').notNullable();
       t.string('size').notNullable();
       t.string('description', 140).notNullable();
+      t.string('image').notNullable();
       t.integer('user_id').references('users.id');
     }),
 
