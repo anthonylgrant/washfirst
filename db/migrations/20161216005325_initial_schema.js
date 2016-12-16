@@ -7,11 +7,12 @@ exports.up = function(knex, Promise) {
       t.string('password').notNullable();
       t.string('email').notNullable().unique();
       t.string('phone_number');
-      t.timestamp('created_at').notNullable().defaultTo(knex.raw('now'));
+      t.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
     }),
 
     knex.schema.createTableIfNotExists('tags', (t) => {
       t.increments('id');
+      t.string('category', 32);
       t.string('content', 32).notNullable().unique();
     }),
 
@@ -47,3 +48,9 @@ exports.down = function(knex, Promise) {
     knex.schema.dropTable('users')
   ]);
 };
+
+
+// top categories
+//    - style: [user entry]
+//    - color: [user entry]
+//    -
