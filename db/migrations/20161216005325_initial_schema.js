@@ -3,16 +3,16 @@ exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTableIfNotExists('users', (t) => {
       t.increments('id');
-      t.string('username').notNullable();
+      t.string('username').notNullable().unique();
       t.string('password').notNullable();
-      t.string('email').notNullable();
+      t.string('email').notNullable().unique();
       t.string('phone_number');
-      t.timestamps();
+      t.timestamp('created_at').notNullable().defaultTo(knex.raw('now'));
     }),
 
     knex.schema.createTableIfNotExists('tags', (t) => {
       t.increments('id');
-      t.string('content', 32).notNullable();
+      t.string('content', 32).notNullable().unique();
     }),
 
     knex.schema.createTableIfNotExists('items', (t) => {
@@ -20,6 +20,7 @@ exports.up = function(knex, Promise) {
       t.string('type').notNullable();
       t.string('size').notNullable();
       t.string('description', 140).notNullable();
+      t.string('image').notNullable();
       t.integer('user_id').references('users.id');
     }),
 
