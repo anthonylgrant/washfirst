@@ -5,6 +5,16 @@ const config = require('./config')
 
 module.exports = {
 
-  development: config
+  development: {
+    client: 'pg',
+    connection: config,
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations'
+    }
+  }
 
 };
