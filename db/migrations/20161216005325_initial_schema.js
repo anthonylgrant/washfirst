@@ -23,6 +23,7 @@ exports.up = function(knex, Promise) {
       t.string('description', 140).notNullable();
       t.string('image').notNullable();
       t.integer('user_id').references('users.id');
+      t.string('tsv');
     }),
 
     knex.schema.createTableIfNotExists('tag_user', (t) => {
