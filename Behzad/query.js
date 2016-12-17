@@ -13,27 +13,15 @@ const knex = require('knex')({
   connection: dbConfig
 });
 
-// knex('items').select().asCallback((err, rows) => {
-//   console.log(rows);
-// });
 
-let userPrefrence = ['blue'];
+let userPrefrence = 'blue | green';
 let itemArr = [];
 let itemSet = new Set();
 
-userPrefrence.forEach((tag) => {
-  knex('items').select('id').whereRaw(`to_tsvector(tsv) @@ to_tsquery('${tag}')`).asCallback((err, rows) => {
-    if (err) throw err;
-    console.log(rows);
 
-
-
-
-    rows.forEach((item) => {
-      itemArr.push(item.id);
-      itemSet.add(item.id);
-    });
-  });
+knex.raw(`SELECT id, ts_rank(to_tsvector(tsv), to_tsquery('blue | green')) AS rank
+    FROM items
+    WHERE to_tsvector(tsv) @@ to_tsquery('${userPrefrence}')
+    ORDER BY rank DESC;`).asCallback((err, rows) => {
+      console.log(rows.rows);
 });
-
-// console.log(itemSet);

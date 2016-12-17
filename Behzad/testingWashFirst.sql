@@ -89,7 +89,7 @@ INSERT INTO tag_user (user_id, tag_id) VALUES ((select id from users where id = 
 
 INSERT INTO items (user_id, type, tsv) VALUES ((select id from users where id = 1), 'tops', 'green nike soccer sports short-sleeve');
 
-INSERT INTO items (user_id, type, tsv) VALUES ((select id from users where id = 2), 'tops', 'blue dress strapless zara pretty');
+INSERT INTO items (user_id, type, tsv) VALUES ((select id from users where id = 2), 'tops', 'blue green dress strapless zara pretty');
 
 INSERT INTO items (user_id, type, tsv) VALUES ((select id from users where id = 2), 'tops', 'blue casual polo shirt short-sleeve');
 
@@ -109,11 +109,7 @@ INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 
 -- SELECT * FROM items WHERE to_tsvector('english', tsv) @@ to_tsquery('english', 'dress');
 
 
-SELECT *, ts_rank_cd(textsearch, query) AS rank
-FROM items, to_tsquery('blue|dress') query
-WHERE query @@ textsearch
-ORDER BY rank DESC
-LIMIT 10;
-
-
-
+SELECT id, ts_rank(to_tsvector(tsv), to_tsquery('blue | green')) AS rank
+    FROM items
+    WHERE to_tsvector(tsv) @@ to_tsquery('blue | green')
+    ORDER BY rank DESC;
