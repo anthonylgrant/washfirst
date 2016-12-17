@@ -1,0 +1,25 @@
+b get_all_tags.js
+
+  - Gets all tags from Tags table and returns them as an array
+
+c get_inventory.js
+
+  - Gets all items (excluding those belonging to logged in user)
+    and within size rang and returns them as objects.
+
+b get_users_item_tags.js
+
+  - Gets all tags belonging to items in the logged-in user's inventory
+
+c get_users_prefs.js
+
+  - Get logged-in user's tags(preferences) and returns them as an array
+
+b tsquerify.js
+
+  - Takes input in form of array ['tag1', 'tag2', ... , 'tagN'] and turns
+    into string 'tag1 | tag2 | ... | tagN'
+
+b get_final_matrix.js
+
+  - Compiles items with final rankings to send to render. 
