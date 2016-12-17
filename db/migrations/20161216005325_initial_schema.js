@@ -48,9 +48,3 @@ exports.down = function(knex, Promise) {
     knex.schema.dropTable('users')
   ]);
 };
-
-
-// top categories
-//    - style: [user entry]
-//    - color: [user entry]
-//    -
