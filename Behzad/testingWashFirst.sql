@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS item_tag(
 
 INSERT INTO users (id) VALUES (1);
 INSERT INTO users (id) VALUES (2);
--- INSERT INTO users (id) VALUES (3);
+INSERT INTO users (id) VALUES (3);
 
 INSERT INTO tags (content) VALUES ('blue');
 INSERT INTO tags (content) VALUES ('red');
@@ -87,11 +87,11 @@ INSERT INTO tag_user (user_id, tag_id) VALUES ((select id from users where id = 
 
 
 
-
-
 INSERT INTO items (user_id, type, tsv) VALUES ((select id from users where id = 1), 'tops', 'green nike soccer sports short-sleeve');
 
 INSERT INTO items (user_id, type, tsv) VALUES ((select id from users where id = 2), 'tops', 'blue dress strapless zara pretty');
+
+INSERT INTO items (user_id, type, tsv) VALUES ((select id from users where id = 2), 'tops', 'blue casual polo shirt short-sleeve');
 
 INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 1), (select id from tags where id = 5));
 
@@ -102,13 +102,18 @@ INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 
 INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 2), (select id from tags where id = 9));
 
 
-select content from tags join item_tag on tag_id = tags.id where item_id = 2;
+-- select content from tags join item_tag on tag_id = tags.id where item_id = 2;
 
-SELECT * FROM items WHERE to_tsvector('english', tsv) @@ to_tsquery('english', 'blue & green');
+-- SELECT * FROM items WHERE to_tsvector('english', tsv) @@ to_tsquery('english', 'blue & green');
 
-SELECT * FROM items WHERE to_tsvector('english', tsv) @@ to_tsquery('english', 'dress');
+-- SELECT * FROM items WHERE to_tsvector('english', tsv) @@ to_tsquery('english', 'dress');
 
 
+SELECT *, ts_rank_cd(textsearch, query) AS rank
+FROM items, to_tsquery('blue|dress') query
+WHERE query @@ textsearch
+ORDER BY rank DESC
+LIMIT 10;
 
 
 

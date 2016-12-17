@@ -18,16 +18,22 @@ const knex = require('knex')({
 // });
 
 let userPrefrence = ['blue'];
+let itemArr = [];
+let itemSet = new Set();
 
 userPrefrence.forEach((tag) => {
-  knex('items').select().whereRaw(`to_tsvector(tsv) @@ to_tsquery('${tag}')`).asCallback((err, rows) => {
+  knex('items').select('id').whereRaw(`to_tsvector(tsv) @@ to_tsquery('${tag}')`).asCallback((err, rows) => {
     if (err) throw err;
     console.log(rows);
+
+
+
+
+    rows.forEach((item) => {
+      itemArr.push(item.id);
+      itemSet.add(item.id);
+    });
   });
-
-
-  // knex.raw(`SELECT id FROM items WHERE to_tsvector(tsv) @@ to_tsquery('${tag}')`).asCallback((err, rows) => {
-  //   if (err) throw err;
-  //   console.log(rows);
-  // });
 });
+
+// console.log(itemSet);
