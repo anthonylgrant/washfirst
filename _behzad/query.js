@@ -14,22 +14,22 @@ const knex = require('knex')({
   connection: dbConfig
 });
 
-getUserPreferences = (userInfo, cb, currentUserBool, target_id, matchedItemIndex) => {
+getUserPreferences = (userInfo, currentUserBool, target_id, matchedItemIndex) => {
   knex('tags').innerJoin('tag_user', 'tag_id', 'tags.id')
               .where('user_id', userInfo.id)
               .asCallback((err, rows) => {
     if (err) throw err;
     if (currentUserBool) {
-      cb(rows, 'content', userInfo, matchItemsToCurrUserPreferences, target_id, matchedItemIndex);
+      tsquerify(rows, 'content', userInfo, matchItemsToCurrUserPreferences, target_id, matchedItemIndex);
     }
     else {
-      cb(rows, 'content', userInfo, matchPreferencesToCurrUserItems, target_id, matchedItemIndex);
+      tsquerify(rows, 'content', userInfo, matchPreferencesToCurrUserItems, target_id, matchedItemIndex);
     }
   });
 }
 
 
-matchItemsToCurrUserPreferences = (tsquery, limit, userInfo, cb, target_id, matchedItemIndex) => {
+matchItemsToCurrUserPreferences = (tsquery, limit, userInfo, target_id, matchedItemIndex) => {
   knex.raw(`SELECT id, user_id, type, gender, size, tsv, description, imgurl, ts_rank(to_tsvector(tsv), to_tsquery('${tsquery}')) AS item_matching_my_preference
     FROM items
     WHERE (to_tsvector(tsv) @@ to_tsquery('${tsquery}'))
@@ -42,7 +42,7 @@ matchItemsToCurrUserPreferences = (tsquery, limit, userInfo, cb, target_id, matc
 }
 
 
-matchPreferencesToCurrUserItems = (tsquery, limit, userInfo, cb, target_id, matchedItemIndex) => {
+matchPreferencesToCurrUserItems = (tsquery, limit, userInfo, target_id, matchedItemIndex) => {
   knex.raw(`SELECT id, user_id, type, gender, size, tsv, ts_rank(to_tsvector(tsv), to_tsquery('${tsquery}')) AS preference_matching_my_items
     FROM items
     WHERE (to_tsvector(tsv) @@ to_tsquery('${tsquery}'))
@@ -70,11 +70,10 @@ getSelleInfo = (resultsArr, user_id) => {
     index = 0;
     itemResults = resultsArr;
     itemResults.forEach((item, index) => {
-      getUserPreferences(item.seller, tsquerify, false, user_id, index);
+      getUserPreferences(item.seller, false, user_id, index);
     });
   }
 }
-
 
 
 getFinalRanking = (resultsArr, user_id, matchedItemIndex) => {
@@ -93,10 +92,7 @@ getFinalRanking = (resultsArr, user_id, matchedItemIndex) => {
     console.log("Items recommended to the current user: \n ", itemResults, "\n \n");
     console.log("example of sellersInterestInMyItems: \n ", itemResults[0].sellersInterestInMyItems, "\n \n");
   }
-
 }
-
-
 
 
 getAvailableTags = (cb) => {
@@ -113,7 +109,6 @@ getTagsPerItem = (item_id, cb) => {
               .asCallback((err, rows) => {
     if (err) throw err;
     cb(rows);
-    tsquerify(rows, 'content', cb);
   });
 }
 
@@ -121,7 +116,7 @@ getTagsPerItem = (item_id, cb) => {
 getItemsPerUser = (user_id, cb) => {
   knex('items').select().where('user_id', user_id).asCallback((err, rows) => {
     if (err) throw err;
-    console.log(rows);
+    cb(rows);
   });
 }
 
@@ -143,7 +138,7 @@ tsquerify = (array, key, userInfo, cb, target_id, matchedItemIndex) => {
   let arrString = array.map(function(element) {
     return element[key];
   }).join (" | ");
-  cb(arrString, 100, userInfo, defaultCallBack, target_id, matchedItemIndex);
+  cb(arrString, 100, userInfo, target_id, matchedItemIndex);
 }
 
 
@@ -176,4 +171,5 @@ let userInfo = {
   min_size: 0,
   max_size: 2000
 }
-getUserPreferences(userInfo, tsquerify, true);
+
+getUserPreferences(userInfo, true);
