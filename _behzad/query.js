@@ -14,6 +14,7 @@ const knex = require('knex')({
   connection: dbConfig
 });
 
+
 getUserPreferences = (userInfo, currentUserBool, target_id, matchedItemIndex) => {
   knex('tags').innerJoin('tag_user', 'tag_id', 'tags.id')
               .where('user_id', userInfo.id)
