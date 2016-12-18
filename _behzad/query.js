@@ -30,7 +30,7 @@ getUserPreferences = (userInfo, cb, currentUserBool, target_id, matchedItemIndex
 
 
 matchItemsToCurrUserPreferences = (tsquery, limit, userInfo, cb, target_id, matchedItemIndex) => {
-  knex.raw(`SELECT id, user_id, type, gender, size, tsv, ts_rank(to_tsvector(tsv), to_tsquery('${tsquery}')) AS item_matching_my_preference
+  knex.raw(`SELECT id, user_id, type, gender, size, tsv, description, imgurl, ts_rank(to_tsvector(tsv), to_tsquery('${tsquery}')) AS item_matching_my_preference
     FROM items
     WHERE (to_tsvector(tsv) @@ to_tsquery('${tsquery}'))
     AND (user_id != ${userInfo.id} and type = '${userInfo.type}' and gender = '${userInfo.gender}' and size between ${userInfo.min_size} and ${userInfo.max_size})
@@ -86,7 +86,12 @@ getFinalRanking = (resultsArr, user_id, matchedItemIndex) => {
       calculateOverallRanking(item);
     });
 
+    itemResults.sort((item1, item2) => {
+      return item2.overAllRanking - item1.overAllRanking;
+    });
+
     console.log("Items recommended to the current user: \n ", itemResults, "\n \n");
+    console.log("example of sellersInterestInMyItems: \n ", itemResults[0].sellersInterestInMyItems, "\n \n");
   }
 
 }
