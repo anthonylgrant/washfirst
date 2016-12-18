@@ -26,9 +26,10 @@ exports.up = function(knex, Promise) {
     knex.schema.createTableIfNotExists('items', (t) => {
       t.increments('id');
       t.string('type').notNullable();
+      t.string('gender').notNullable();
       t.string('size').notNullable();
       t.string('description', 140).notNullable();
-      t.string('image').notNullable();
+      t.string('imgUrl').notNullable();
       t.integer('user_id').references('users.id');
       t.string('tsv');
     }),
