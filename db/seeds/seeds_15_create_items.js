@@ -11,49 +11,49 @@ let femaleShoeSizes = [6, 7, 8, 9, 10, 11, 12, 13, 14];
 let femaleBottomSizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]; // hash each legnth x waist combination into a number
 
 
-randomIndex = (array) => {
+randomItemIndex = (array) => {
   return array[Math.floor(Math.random() * array.length)];
 }
 
 exports.seed = function(knex, Promise) {
   for (let i = 0; i < 10; i++) {
-    let gender = randomIndex(genders);
+    let gender = randomItemIndex(genders);
     items.push(knex('items').insert(
       {
         type: "shoes",
         gender: gender,
-        size: (gender === 'male') ? randomIndex(maleShoeSizes) : randomIndex(femaleShoeSizes),
+        size: (gender === 'male') ? randomItemIndex(maleShoeSizes) : randomItemIndex(femaleShoeSizes),
         imgUrl: "img_link_${i}",
         description: "description_blah_blah_${i}",
-        user_id: i + 1;
+        user_id: i + 1
       })
     );
   }
 
   for (let i = 0; i < 10; i++) {
-    let gender = randomIndex(genders);
+    let gender = randomItemIndex(genders);
     items.push(knex('items').insert(
       {
         type: "tops",
         gender: gender,
-        size: (gender === 'male') ? randomIndex(maleTopSizes) : randomIndex(femaleTopSizes),
+        size: (gender === 'male') ? randomItemIndex(maleTopSizes) : randomItemIndex(femaleTopSizes),
         imgUrl: "img_link_${i}",
         description: "description_blah_blah_${i}",
-        user_id: i + 1;
+        user_id: i + 1
       })
     );
   }
 
   for (let i = 0; i < 10; i++) {
-    let gender = randomIndex(genders);
+    let gender = randomItemIndex(genders);
     items.push(knex('items').insert(
       {
         type: "bottoms",
         gender: gender,
-        size: (gender === 'male') ? randomIndex(maleBottomSizes) : randomIndex(femaleBottomSizes),
+        size: (gender === 'male') ? randomItemIndex(maleBottomSizes) : randomItemIndex(femaleBottomSizes),
         imgUrl: "img_link_${i}",
         description: "description_blah_blah_${i}",
-        user_id: i + 1;
+        user_id: i + 1
       })
     );
   }

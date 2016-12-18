@@ -11,7 +11,7 @@ let femaleShoeSizes = [6, 7, 8, 9, 10, 11, 12, 13, 14];
 let femaleBottomSizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]; // hash each legnth x waist combination into a number
 
 
-randomIndex = (array, type) => {
+randomUserIndex = (array, type) => {
   let output = [];
   if (type === 'gender') {
     output[0] = array[Math.floor(Math.random() * array.length)];
@@ -26,19 +26,19 @@ randomIndex = (array, type) => {
 
 exports.seed = function(knex, Promise) {
   for (let i = 0; i < 10; i++) {
-    let gender = randomIndex(genders, 'gender');
+    let gender = randomUserIndex(genders, 'gender');
     let topSizes = [];
     let shoeSizes = [];
     let bottomSizes = [];
 
     if (gender[0] === 'male') {
-      topSizes = randomIndex(maleTopSizes, 'maleTops');
-      shoeSizes = randomIndex(maleShoeSizes, 'maleShoes');
-      bottomSizes = randomIndex(maleBottomSizes, 'maleBottoms');
+      topSizes = randomUserIndex(maleTopSizes, 'maleTops');
+      shoeSizes = randomUserIndex(maleShoeSizes, 'maleShoes');
+      bottomSizes = randomUserIndex(maleBottomSizes, 'maleBottoms');
     } else if (gender[0] === 'female') {
-      topSizes = randomIndex(femaleTopSizes, 'femaleTops');
-      shoeSizes = randomIndex(femaleShoeSizes, 'femaleShoes');
-      bottomSizes = randomIndex(femaleBottomSizes, 'femaleBottoms');
+      topSizes = randomUserIndex(femaleTopSizes, 'femaleTops');
+      shoeSizes = randomUserIndex(femaleShoeSizes, 'femaleShoes');
+      bottomSizes = randomUserIndex(femaleBottomSizes, 'femaleBottoms');
     }
 
 
