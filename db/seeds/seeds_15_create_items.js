@@ -23,7 +23,7 @@ exports.seed = function(knex, Promise) {
         type: "shoes",
         gender: gender,
         size: (gender === 'male') ? randomItemIndex(maleShoeSizes) : randomItemIndex(femaleShoeSizes),
-        imgUrl: "img_link_${i}",
+        img_url: "img_link_${i}",
         description: "description_blah_blah_${i}",
         user_id: i + 1
       })
@@ -37,7 +37,7 @@ exports.seed = function(knex, Promise) {
         type: "tops",
         gender: gender,
         size: (gender === 'male') ? randomItemIndex(maleTopSizes) : randomItemIndex(femaleTopSizes),
-        imgUrl: "img_link_${i}",
+        img_url: "img_link_${i}",
         description: "description_blah_blah_${i}",
         user_id: i + 1
       })
@@ -51,7 +51,7 @@ exports.seed = function(knex, Promise) {
         type: "bottoms",
         gender: gender,
         size: (gender === 'male') ? randomItemIndex(maleBottomSizes) : randomItemIndex(femaleBottomSizes),
-        imgUrl: "img_link_${i}",
+        img_url: "img_link_${i}",
         description: "description_blah_blah_${i}",
         user_id: i + 1
       })

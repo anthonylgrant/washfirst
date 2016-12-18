@@ -29,7 +29,7 @@ exports.up = function(knex, Promise) {
       t.string('gender').notNullable();
       t.string('size').notNullable();
       t.string('description', 140).notNullable();
-      t.string('imgUrl').notNullable();
+      t.string('img_url').notNullable();
       t.integer('user_id').references('users.id');
       t.string('tsv');
     }),
