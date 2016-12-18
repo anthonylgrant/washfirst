@@ -10,16 +10,16 @@ let styleTags = [11, 12, 13, 14, 15, 16, 17, 18, 19];
 let materialTags = [20, 21, 22, 23, 24, 25, 26];
 let brandTags = [27, 28, 29, 30, 31, 32, 33];
 
-let users = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-let tagUserArr = [];
+let items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+let itemTagArr = [];
 
 exports.seed = function(knex, Promise) {
 
-  randomUserForTagUser = (array) => {
+  randomItemForItemTag = (array) => {
     return array[Math.floor(Math.random() * array.length)];
   }
 
-  randomTagForTagUser = (array, user_id, tagUserArr) => {
+  randomTagForItemTag = (array, item_id, itemTagArr) => {
     let numberOfTagsFromThisArr = Math.floor(Math.random() * array.length);
     let tags = new Set();
 
@@ -28,30 +28,26 @@ exports.seed = function(knex, Promise) {
     }
 
     tags.forEach((tag_id) => {
-      tagUserArr.push(knex('tag_user').insert(
+      itemTagArr.push(knex('item_tag').insert(
         {
           tag_id: tag_id,
-          user_id: user_id
+          item_id: item_id
         })
       );
     });
   }
 
-  users.forEach((user_id) => {
-    randomTagForTagUser(colorTags, user_id, tagUserArr);
-    randomTagForTagUser(otherTags, user_id, tagUserArr);
-    randomTagForTagUser(styleTags, user_id, tagUserArr);
-    randomTagForTagUser(materialTags, user_id, tagUserArr);
-    randomTagForTagUser(brandTags, user_id, tagUserArr);
+  items.forEach((item_id) => {
+    randomTagForItemTag(colorTags, item_id, itemTagArr);
+    randomTagForItemTag(otherTags, item_id, itemTagArr);
+    randomTagForItemTag(styleTags, item_id, itemTagArr);
+    randomTagForItemTag(materialTags, item_id, itemTagArr);
+    randomTagForItemTag(brandTags, item_id, itemTagArr);
   });
 
-  tagUserArr.push(knex('tag_user').orderBy('id'));
+  itemTagArr.push(knex('item_tag').orderBy('id'));
 
   return Promise.all(
-    tagUserArr
+    itemTagArr
   );
 };
-
-
-
-
