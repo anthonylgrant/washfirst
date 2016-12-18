@@ -7,6 +7,13 @@ exports.up = function(knex, Promise) {
       t.string('password').notNullable();
       t.string('email').notNullable().unique();
       t.string('phone_number');
+      t.string('gender');
+      t.integer('min_top_size');
+      t.integer('max_top_size');
+      t.integer('min_shoe_size');
+      t.integer('max_shoe_size');
+      t.integer('min_bottom_size');
+      t.integer('max_bottom_size');
       t.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
     }),
 

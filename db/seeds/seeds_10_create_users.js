@@ -54,13 +54,13 @@ exports.seed = function(knex, Promise) {
         min_shoe_size: shoeSizes[0],
         max_shoe_size: shoeSizes[1],
         min_bottom_size: bottomSizes[0],
-        min_bottom_size: bottomSizes[1]
+        max_bottom_size: bottomSizes[1]
       })
     );
   }
 
   users.push(knex('users').orderBy('id'));
 
-  return //Promise.all(users);
+  return Promise.all(users);
 
 };
