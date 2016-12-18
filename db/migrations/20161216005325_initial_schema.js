@@ -8,8 +8,11 @@ exports.up = function(knex, Promise) {
       t.string('email').notNullable().unique();
       t.string('phone_number');
       t.string('gender');
+      t.string('type');
       t.integer('min_top_size');
       t.integer('max_top_size');
+      t.integer('min_size');
+      t.integer('max_size');
       t.integer('min_shoe_size');
       t.integer('max_shoe_size');
       t.integer('min_bottom_size');
@@ -27,7 +30,7 @@ exports.up = function(knex, Promise) {
       t.increments('id');
       t.string('type').notNullable();
       t.string('gender').notNullable();
-      t.string('size').notNullable();
+      t.integer('size').notNullable();
       t.string('description', 140).notNullable();
       t.string('img_url').notNullable();
       t.integer('user_id').references('users.id');

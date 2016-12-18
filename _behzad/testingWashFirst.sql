@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS items(
   size integer,
   tsv varchar(1000),
   description varchar(140),
-  imgUrl varchar(200)
+  img_url varchar(200)
 );
 
 CREATE TABLE IF NOT EXISTS item_tag(
@@ -81,17 +81,17 @@ INSERT INTO tag_user (user_id, tag_id) VALUES ((select id from users where id = 
 INSERT INTO tag_user (user_id, tag_id) VALUES ((select id from users where id = 3), (select id from tags where content='basketball'));
 
 
-INSERT INTO items (user_id, type, gender, size, tsv, description, imgUrl) VALUES ((select id from users where id = 1), 'tops', 'male', 1, 'orange new-balance basketball', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
-INSERT INTO items (user_id, type, gender, size, tsv, description, imgUrl) VALUES ((select id from users where id = 1), 'tops', 'male', 1, 'black new-balance basketball', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
-INSERT INTO items (user_id, type, gender, size, tsv, description, imgUrl) VALUES ((select id from users where id = 1), 'tops', 'male', 11, 'nike red soccer short-sleeve', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
+INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 1), 'tops', 'male', 1, 'orange new-balance basketball', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
+INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 1), 'tops', 'male', 1, 'black new-balance basketball', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
+INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 1), 'tops', 'male', 11, 'nike red soccer short-sleeve', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
 
-INSERT INTO items (user_id, type, gender, size, tsv, description, imgUrl) VALUES ((select id from users where id = 2), 'tops', 'male', 111, 'green nike soccer long-sleeve', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
-INSERT INTO items (user_id, type, gender, size, tsv, description, imgUrl) VALUES ((select id from users where id = 2), 'tops', 'female', 12, 'blue', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
-INSERT INTO items (user_id, type, gender, size, tsv, description, imgUrl) VALUES ((select id from users where id = 2), 'tops', 'male', 22, 'black short-sleeve', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
+INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 2), 'tops', 'male', 111, 'green nike soccer long-sleeve', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
+INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 2), 'tops', 'female', 12, 'blue', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
+INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 2), 'tops', 'male', 22, 'black short-sleeve', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
 
-INSERT INTO items (user_id, type, gender, size, tsv, description, imgUrl) VALUES ((select id from users where id = 3), 'tops', 'male', 111, 'nike soccer short-sleeve green', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
-INSERT INTO items (user_id, type, gender, size, tsv, description, imgUrl) VALUES ((select id from users where id = 3), 'tops', 'female', 12, 'nike soccer short-sleeve green', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
-INSERT INTO items (user_id, type, gender, size, tsv, description, imgUrl) VALUES ((select id from users where id = 3), 'tops', 'male', 22, 'adidas orange basketball', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
+INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 3), 'tops', 'male', 111, 'nike soccer short-sleeve green', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
+INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 3), 'tops', 'female', 12, 'nike soccer short-sleeve green', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
+INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 3), 'tops', 'male', 22, 'adidas orange basketball', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
 
 
 INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 1), (select id from tags where id = 6));

@@ -1,18 +1,94 @@
-dbConfig = {
-  "user": "development",
-  "password": "development",
-  "database": "wash_first_dev_behzad",
-  "host": "localhost",
-  "port": 5432,
-  "ssl": true
-}
+// dbConfig = {
+//   "user": "development",
+//   "password": "development",
+//   "database": "wash_first_dev_behzad",
+//   "host": "localhost",
+//   "port": 5432,
+//   "ssl": true
+// }
+
+let users = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+let items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+let tagTsvArr = [];
+
+const dbConfig = require('../db/config');
 
 let itemResults = [];
 
 const knex = require('knex')({
   client: 'pg',
-  connection: dbConfig
+  connection: dbConfig,
+  pool: {
+      min: 2,
+      max: 10
+    }
 });
+
+startApp = () => {
+  knex('users').where('id', 1).asCallback((err, rows) => {
+    if (err) throw err;
+    let userInfo = {
+      id: rows[0].id,
+      gender: rows[0].gender,
+      type: 'tops',
+      min_size: rows[0].min_top_size,
+      max_size: rows[0].max_top_size
+    }
+    console.log(userInfo);
+    getUserPreferences(userInfo, true);
+  });
+}
+
+// items.forEach((item_id) => {
+//       knex('items').select('item_id', 'content')
+//             .innerJoin('item_tag', 'items.id', 'item_tag.item_id')
+//             .innerJoin('tags', 'tags.id', 'item_tag.tag_id')
+//             .where('items.id', item_id)
+//             .then((res) => {
+//               let tsvStr = '';
+//               res.forEach((element) => {
+//                 tsvStr += element.content + ' ';
+//               });
+//               tsvStr = tsvStr.slice(0, -1);
+//                knex('items').where('items.id', item_id).update({
+//                 tsv: tsvStr
+//               }).asCallback((err, rows) => {
+//                 if (err) throw err;
+//                 // startApp();
+//               });
+//             });
+//           });
+
+
+let itemCounter = 1;
+
+populateTsv = (itemCounter) => {
+  knex('items').select('item_id', 'content')
+            .innerJoin('item_tag', 'items.id', 'item_tag.item_id')
+            .innerJoin('tags', 'tags.id', 'item_tag.tag_id')
+            .where('items.id', itemCounter)
+            .then((res) => {
+              let tsvStr = '';
+              res.forEach((element) => {
+                tsvStr += element.content + ' ';
+              });
+              tsvStr = tsvStr.slice(0, -1);
+               knex('items').where('items.id', itemCounter).update({
+                tsv: tsvStr
+              }).asCallback((err, rows) => {
+                if (err) throw err;
+                if (itemCounter === items.length) {
+                  startApp();
+                } else {
+                  itemCounter++;
+                  populateTsv(itemCounter);
+                }
+
+              });
+            });
+}
+
+populateTsv(itemCounter);
 
 
 getUserPreferences = (userInfo, currentUserBool, target_id, matchedItemIndex) => {
@@ -165,12 +241,14 @@ defaultCallBack = (rows) => {
 }
 
 
-let userInfo = {
-  id: 1,
-  gender: 'male',
-  type: 'tops',
-  min_size: 0,
-  max_size: 2000
-}
+// let userInfo = {
+//   id: 1,
+//   gender: "female",
+//   type: "tops",
+//   min_size: 1,
+//   max_size: 3
+// }
 
-getUserPreferences(userInfo, true);
+// getUserPreferences(userInfo, true);
+
+
