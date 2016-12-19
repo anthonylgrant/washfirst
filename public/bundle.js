@@ -46,7 +46,7 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(33);
-	var Component = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./Component.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var Component = __webpack_require__(172);
 	var props = window.PROPS;
 
 	ReactDOM.render(
@@ -21157,6 +21157,53 @@
 	var ReactMount = __webpack_require__(164);
 
 	module.exports = ReactMount.renderSubtreeIntoContainer;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	module.exports = React.createClass({
+	  displayName: 'exports',
+
+	  _handleClick: function () {
+	    alert();
+	  },
+	  render: function () {
+	    return React.createElement(
+	      'html',
+	      null,
+	      React.createElement(
+	        'head',
+	        null,
+	        React.createElement(
+	          'title',
+	          null,
+	          this.props.title
+	        ),
+	        React.createElement('link', { rel: 'stylesheet', href: '/style.css' })
+	      ),
+	      React.createElement(
+	        'body',
+	        null,
+	        React.createElement(
+	          'h1',
+	          null,
+	          this.props.heading
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: this._handleClick },
+	          'Click Me'
+	        ),
+	        React.createElement('script', { dangerouslySetInnerHTML: {
+	            __html: 'window.PROPS=' + JSON.stringify(this.props)
+	          } }),
+	        React.createElement('script', { src: '/bundle.js' })
+	      )
+	    );
+	  }
+	});
 
 /***/ }
 /******/ ]);
