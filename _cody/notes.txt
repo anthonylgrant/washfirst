@@ -22,4 +22,4 @@ b tsquerify.js
 
 b get_final_matrix.js
 
-  - Compiles items with final rankings to send to render. 
+  - Compiles items with final rankings to send to render.

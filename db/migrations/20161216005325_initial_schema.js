@@ -7,6 +7,16 @@ exports.up = function(knex, Promise) {
       t.string('password').notNullable();
       t.string('email').notNullable().unique();
       t.string('phone_number');
+      t.string('gender');
+      t.string('type');
+      t.integer('min_top_size');
+      t.integer('max_top_size');
+      t.integer('min_size');
+      t.integer('max_size');
+      t.integer('min_shoe_size');
+      t.integer('max_shoe_size');
+      t.integer('min_bottom_size');
+      t.integer('max_bottom_size');
       t.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
     }),
 
@@ -19,9 +29,10 @@ exports.up = function(knex, Promise) {
     knex.schema.createTableIfNotExists('items', (t) => {
       t.increments('id');
       t.string('type').notNullable();
-      t.string('size').notNullable();
+      t.string('gender').notNullable();
+      t.integer('size').notNullable();
       t.string('description', 140).notNullable();
-      t.string('image').notNullable();
+      t.string('img_url').notNullable();
       t.integer('user_id').references('users.id');
       t.string('tsv');
     }),
