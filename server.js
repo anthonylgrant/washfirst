@@ -20,5 +20,5 @@ app.get('/', function (req, res) {
 })
 
 app.listen(PORT, () => {
-  console.log('listeing to http://localhost:' + PORT);
+  console.log('listening to http://localhost:' + PORT);
 });
