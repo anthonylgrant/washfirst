@@ -10,11 +10,9 @@
 let users = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 let items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 let tagTsvArr = [];
-
-const dbConfig = require('../db/config');
-
 let itemResults = [];
 
+const dbConfig = require('../db/config');
 const knex = require('knex')({
   client: 'pg',
   connection: dbConfig,
@@ -23,6 +21,8 @@ const knex = require('knex')({
       max: 10
     }
 });
+
+
 
 startApp = () => {
   knex('users').where('id', 1).asCallback((err, rows) => {
@@ -39,29 +39,9 @@ startApp = () => {
   });
 }
 
-// items.forEach((item_id) => {
-//       knex('items').select('item_id', 'content')
-//             .innerJoin('item_tag', 'items.id', 'item_tag.item_id')
-//             .innerJoin('tags', 'tags.id', 'item_tag.tag_id')
-//             .where('items.id', item_id)
-//             .then((res) => {
-//               let tsvStr = '';
-//               res.forEach((element) => {
-//                 tsvStr += element.content + ' ';
-//               });
-//               tsvStr = tsvStr.slice(0, -1);
-//                knex('items').where('items.id', item_id).update({
-//                 tsv: tsvStr
-//               }).asCallback((err, rows) => {
-//                 if (err) throw err;
-//                 // startApp();
-//               });
-//             });
-//           });
 
 
 let itemCounter = 1;
-
 populateTsv = (itemCounter) => {
   knex('items').select('item_id', 'content')
             .innerJoin('item_tag', 'items.id', 'item_tag.item_id')
@@ -78,6 +58,7 @@ populateTsv = (itemCounter) => {
               }).asCallback((err, rows) => {
                 if (err) throw err;
                 if (itemCounter === items.length) {
+                  console.log("Done populating the tsvs... real query beginning now");
                   startApp();
                 } else {
                   itemCounter++;
@@ -88,7 +69,6 @@ populateTsv = (itemCounter) => {
             });
 }
 
-populateTsv(itemCounter);
 
 
 getUserPreferences = (userInfo, currentUserBool, target_id, matchedItemIndex) => {
@@ -215,6 +195,7 @@ tsquerify = (array, key, userInfo, cb, target_id, matchedItemIndex) => {
   let arrString = array.map(function(element) {
     return element[key];
   }).join (" | ");
+  console.log("User's preference is: ", arrString);
   cb(arrString, 100, userInfo, target_id, matchedItemIndex);
 }
 
@@ -223,9 +204,7 @@ findObjectInArrByKey = (objArr, key, value) => {
   findObjects = (obj) => {
     return obj[key] === value;
   }
-  let x = objArr.find(findObjects);
-
-  console.log(x);
+  return objArr.find(findObjects);
 }
 
 
@@ -240,15 +219,5 @@ defaultCallBack = (rows) => {
   console.log(rows);
 }
 
-
-// let userInfo = {
-//   id: 1,
-//   gender: "female",
-//   type: "tops",
-//   min_size: 1,
-//   max_size: 3
-// }
-
-// getUserPreferences(userInfo, true);
-
-
+// populateTsv(itemCounter);
+startApp();
