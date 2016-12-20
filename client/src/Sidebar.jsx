@@ -5,8 +5,9 @@ class Sidebar extends Component {
     return (
       <div id='side-bar'>
         <h2>This is the side-bar</h2>
-      
+        <h1>Test</h1>
       </div>
+
     )
   }
 };
