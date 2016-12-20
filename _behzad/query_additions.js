@@ -1,4 +1,4 @@
-const dbConfig = require('../db/config');
+const dbConfig = require('../db/config_heroku');
 const knex = require('knex')({
   client: 'pg',
   connection: dbConfig,
