@@ -28,9 +28,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>{this.state.test}</h1>
-        <Navbar />
-        <Sidebar />
+        <div>
+          <Navbar />
+          <Sidebar />
+        </div>
+        <h1 className="header-test">{this.state.test}</h1>
       </div>
     );
   }
