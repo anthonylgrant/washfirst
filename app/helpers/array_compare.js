@@ -9,16 +9,19 @@
 
 function compareArrays(preferences, itemTags) {
 
-  const numOfPreferences = preferences.length;
-  const numOfItemTags = preferences.length;
+  p = new Set(preferences);
+  iT = new Set(itemTags);
+
+  const numOfPreferences = p.size;
+  const numOfItemTags = iT.size;
   let overlap = 0;
 
   if(numOfPreferences === 0) {
     return 0;
   }
 
-  preferences.forEach((tag) => {
-    if (itemTags.includes(tag)) {
+  p.forEach((tag) => {
+    if (iT.has(tag)) {
       overlap += 1;
     }
   });
