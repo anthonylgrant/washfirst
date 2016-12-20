@@ -7,7 +7,9 @@ var app = express();
 var PORT = 8080;
 var React = require('react');
 var ReactDOMServer = require('react-dom/server');
+var getTags = require('./helpers/get_tags.js');
 // var Component = require('./Component.jsx')
+
 
 app.use(express.static('public'));
 
@@ -20,8 +22,15 @@ app.get('/', function (req, res) {
 })
 
 app.get('/test', function (req, res) {
-  res.json({hello: "hello"});
-})
+
+
+  getTags()
+  .then((tags) => {
+    res.json({hello: "hello", tags: tags });
+  })
+});
+
+
 
 
 app.listen(PORT, () => {

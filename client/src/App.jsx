@@ -7,7 +7,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      test: ""
+      test: "",
+      tags: []
     }
   }
 
@@ -18,19 +19,25 @@ class App extends Component {
       dataType: 'JSON',
       success: function(response){
         console.log('componentDidMount success:', response)
+        console.log('tags at 0: ', response.tags[0].content)
         this.setState({
-            test: response.hello
+            test: response.hello,
+            tags: response.tags
         })
       }.bind(this)
     })
   }
 
   render() {
+    console.log('the state: ', this.state);
     return (
       <div>
         <h1>{this.state.test}</h1>
         <Navbar />
-        <Sidebar />
+        { this.state.tags.length > 0 &&
+          <Sidebar tags={this.state.tags}/>
+        }
+
       </div>
     );
   }
