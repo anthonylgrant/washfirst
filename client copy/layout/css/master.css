@@ -1,0 +1,74 @@
++/*************************
+ +      CSS FOR FRAME
+ +*************************/
+ +
+ +* {
+ +  box-sizing: border-box;
+ +  margin: 0;
+ +  padding: 0;
+ +}
+ +
+ +
+ +
+ +#top-bar {
+ +  background-color: rgba(128, 0, 0, 0.5);
+ +  font-family: sans-serif;
+ +  font-size: .8em;
+ +  line-height: 50px;
+ +  padding-left: 20px;
+ +  position: fixed;
+ +  top: 0;
+ +  width: 100%;
+ +  z-index: 5;
+ +}
+ +
+ +#side-bar {
+ +  background-color: rgba(0, 0, 128, 0.5);
+ +  display: flex;
+ +  flex-direction: column;
+ +  height: 100%;
+ +  position: fixed;
+ +  width: 25%;
+ +  right: 0;
+ +  z-index: 3;
+ +}
+ +
+ +#side-bar #side-bar-tags-container {
+ +  display: flex;
+ +  flex-direction: row;
+ +  flex-wrap: wrap;
+ +}
+ +
+ +#main-container {
+ +  display: flex;
+ +  flex-direction: row;
+ +  flex-wrap: wrap;
+ +  margin-top: 50px;
+ +  width: 75%;
+ +}
+ +
+ +
+ +#main-container article {
+ +  border: 1px solid #000;
+ +  border-radius: 10px;
+ +  padding: 20px;
+ +  margin: 50px auto 0 auto;
+ +}
+ +
+ +#main-container article img {
+ +  border: 1px solid rgb(255, 0, 0);
+ +  border-radius: 8px;
+ +  padding: 20px;
+ +  width: 200px;
+ +}
+ +
+ +
+ +#bottom-bar {
+ +  background-color: rgba(0, 128, 0, 0.5);
+ +  bottom: 0;
+ +  line-height: 15px;
+ +  position: fixed;
+ +  text-align: center;
+ +  width: 100%;
+ +  z-index: 4;
+ +}
