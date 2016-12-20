@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import Interface from './Interface.jsx'
+import Navbar from './components/Navbar.jsx'
+import Sidebar from './components/Sidebar.jsx'
 
 
 class App extends Component {
   render() {
     return (
       <div>
-        {/* <h1>Welcome to Washfirst</h1> */}
-        <Interface />
+        <Navbar />
+        <Sidebar />
       </div>
     );
   }
