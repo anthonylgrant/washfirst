@@ -105,10 +105,52 @@ getItemOwners = (itemInfo) => new Promise((resolve, reject) => {
 });
 
 
+// compareArrays = (userInfo, inventoryArr, findThisSellersInterest) => {
+
+//   inventoryArr.forEach((item) => {
+//     if (findThisSellersInterest) { item.sellersInterest = item.sellersInterest || []; }
+
+//     let p = new Set(userInfo.preferences);
+//     let iT = new Set(item.tags);
+
+//     const numOfPreferences = p.size;
+//     const numOfItemTags = iT.size;
+//     let overlap = 0;
+
+//     if(numOfPreferences === 0) {
+//       if (findThisSellersInterest) {
+//         let sellerInterest = {};
+//         sellerInterest[userInfo.id] = 0;
+//         item.sellersInterest.push(sellerInterest);
+//       } else {
+//         item.currUserWantsThis = 0;
+//       }
+//       return 0;
+//     }
+
+//     p.forEach((tag) => {
+//       iT.has(tag) ? overlap++ : null;
+//     });
+
+//     const matchValue = overlap / numOfPreferences;
+
+//     if (findThisSellersInterest) {
+//       let sellerInterest = {};
+//       sellerInterest[userInfo.id] = matchValue;
+//       item.sellersInterest.push(sellerInterest);
+//     } else {
+//       item.currUserWantsThis = matchValue;
+//     }
+
+//   });
+
+// }
+
+
 compareArrays = (userInfo, inventoryArr, findThisSellersInterest) => {
 
   inventoryArr.forEach((item) => {
-    if (findThisSellersInterest) { item.sellersInterest = item.sellersInterest || []; }
+    if (findThisSellersInterest) { userInfo.sellersInterestInMyProduct = userInfo.sellersInterestInMyProduct || []; }
 
     let p = new Set(userInfo.preferences);
     let iT = new Set(item.tags);
@@ -120,8 +162,8 @@ compareArrays = (userInfo, inventoryArr, findThisSellersInterest) => {
     if(numOfPreferences === 0) {
       if (findThisSellersInterest) {
         let sellerInterest = {};
-        sellerInterest[userInfo.id] = 0;
-        item.sellersInterest.push(sellerInterest);
+        sellerInterest[item.id] = 0;
+        userInfo.sellersInterestInMyProduct.push(sellerInterest);
       } else {
         item.currUserWantsThis = 0;
       }
@@ -136,8 +178,8 @@ compareArrays = (userInfo, inventoryArr, findThisSellersInterest) => {
 
     if (findThisSellersInterest) {
       let sellerInterest = {};
-      sellerInterest[userInfo.id] = matchValue;
-      item.sellersInterest.push(sellerInterest);
+      sellerInterest[item.id] = matchValue;
+      userInfo.sellersInterestInMyProduct.push(sellerInterest);
     } else {
       item.currUserWantsThis = matchValue;
     }
