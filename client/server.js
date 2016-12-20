@@ -4,6 +4,9 @@ var config = require('./webpack.config');
 
 new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
+    proxy: {
+      '/test': 'http://localhost:8080'
+    },
     watchOptions: {
       aggregateTimeout: 300,
       poll: 1000
