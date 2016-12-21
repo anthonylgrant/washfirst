@@ -47,8 +47,9 @@
   "dependencies": {
     "bulma": "^0.2.3",
     "bulma-loader": "^1.0.1",
+    "css-loader": "^0.23.1",
     "react": "15.2.1",
     "react-dom": "15.2.1",
-    "sass-loader": "^4.0.0"
+    "sass-loader": "^4.1.0"
   }
 }

@@ -9,7 +9,8 @@ class App extends Component {
     super(props);
     this.state = {
       userPreferenceTags: [],
-      tagsFromItems: []
+      tagsFromItems: [],
+      shoesInventory: []
     }
     this.sendPostRequest = this.sendPostRequest.bind(this);
   }
@@ -21,9 +22,14 @@ class App extends Component {
       url: '/test',
       dataType: 'JSON',
       success: function(response) {
+        response.inventory.shoes.map((shoe) => {
+          console.log(shoe);
+        })
+        console.log("response: ", response.inventory.shoes);
         this.concatItemArrays(response.inventory);
         this.setState({
-          userPreferenceTags: response.currUserInfo.preferences
+          userPreferenceTags: response.currUserInfo.preferences,
+          shoesInventory: response.inventory.shoes
         })
       }.bind(this)
     })
@@ -68,13 +74,19 @@ class App extends Component {
   }
 
   render() {
-    console.log('the state: ', this.state);
+
+    console.log('shoesInventory: ', this.state.shoesInventory)
     return (
       <div>
         <Navbar />
-        <Item />
+        {this.state.shoesInventory.map((shoe) => {
+          return <Item key={shoe.id} gender={shoe.gender} size={shoe.size} desc={shoe.description} />
+        })}
         { this.state.userPreferenceTags.length > 0 &&
-          <Sidebar userPreferenceTags={this.state.userPreferenceTags} tagsFromItems={this.state.tagsFromItems}/>
+          <Sidebar
+            userPreferenceTags={this.state.userPreferenceTags}
+            tagsFromItems={this.state.tagsFromItems}
+          />
         }
         <form onSubmit={this.sendPostRequest}>
           <input
@@ -84,7 +96,7 @@ class App extends Component {
             onChange={this.changeMessage.bind(this)}
             placeholder="Type a message and hit ENTER"
           />
-          <div className="item container">
+          <div className="main-container">
             <input type="submit" />
           </div>
         </form>

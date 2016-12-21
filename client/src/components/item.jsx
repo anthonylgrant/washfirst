@@ -22,10 +22,8 @@ class Item extends Component {
               <p className="subtitle is-6">@johnsmith</p>
             </div>
           </div>
-
           <div className="content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Phasellus nec iaculis mauris. <a href="#">@bulmaio</a>.
+            {this.props.desc} <p>Gender: {this.props.gender}</p><p>Size: {this.props.size}</p> <a href="#">@bulmaio</a>.
             <a href="#">#css</a> <a href="#">#responsive</a>
             <br />
             <small>11:09 PM - 1 Jan 2016</small>
