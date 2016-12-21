@@ -26,11 +26,12 @@ class App extends Component {
   swapTags(event) {
     event.preventDefault;
     let targetText = event.target.innerHTML;
-    let newArr1 = this.state.tagsFromItems
-    newArr1.push(targetText);
-
+    let newArr1 = this.state.tagsFromItems;
     let newArr2 = this.state.userPreferenceTags
+
     let index = newArr2.indexOf(targetText);
+
+    newArr1.push(targetText);
     newArr2.splice(index, 1);
     this.setState({tagsFromItems: newArr1, userPreferenceTags: newArr2});
   }
