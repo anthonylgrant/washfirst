@@ -19,6 +19,7 @@ class App extends Component {
     this.swapTagsFromTagsFromItems = this.swapTagsFromTagsFromItems.bind(this);
     this.sortItemsByRanking = this.sortItemsByRanking.bind(this);
     this.concatTagArrays = this.concatTagArrays.bind(this);
+    this.autoCompleteSearchBar = this.autoCompleteSearchBar.bind(this);
   }
 
   swapTagsFromUserPref(event) {
@@ -31,7 +32,11 @@ class App extends Component {
 
     newArr1.push(targetText);
     newArr2.splice(index, 1);
-    this.setState({tagsFromItems: newArr1, userPreferenceTags: newArr2});
+    this.setState({
+      tagsFromItems: newArr1,
+      fixedTagsFromItems: newArr1,
+      userPreferenceTags: newArr2
+    });
   }
 
   swapTagsFromTagsFromItems(event) {
@@ -43,7 +48,21 @@ class App extends Component {
     let newArr1 = this.state.tagsFromItems
     let index = newArr1.indexOf(targetText);
     newArr1.splice(index, 1);
-    this.setState({tagsFromItems: newArr1, userPreferenceTags: newArr2});
+    this.setState({
+      tagsFromItems: newArr1,
+      fixedTagsFromItems: newArr1,
+      userPreferenceTags: newArr2
+    });
+  }
+
+  autoCompleteSearchBar(event) {
+    event.preventDefault();
+    let regex = new RegExp('^' + event.target.value);
+
+    let filtered = this.state.fixedTagsFromItems.filter((tag) => {
+      return regex.test(tag);
+    });
+    this.setState({ tagsFromItems: filtered });
   }
 
   componentDidMount() {
@@ -55,6 +74,7 @@ class App extends Component {
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
           tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
+          fixedTagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
           topsInventory: this.sortItemsByRanking(response.inventory.tops),
           bottomsInventory: this.sortItemsByRanking(response.inventory.bottoms),
           shoesInventory: this.sortItemsByRanking(response.inventory.shoes)
@@ -128,6 +148,7 @@ class App extends Component {
             tagsFromItems={this.state.tagsFromItems}
             swapTagsFromUserPref = {this.swapTagsFromUserPref}
             swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
+            autoCompleteSearchBar={this.autoCompleteSearchBar}
           />
         }
         <form onSubmit={this.sendPostRequest}>
