@@ -15,7 +15,7 @@ class Sidebar extends Component {
     const tags = this.props.tags.map((tag, i) => {
       return (
       <li key={i}>
-        <span className='side-bar-tag' >{tag.content}</span>
+        <span className='side-bar-tag' >{tag}</span>
       </li>
     )});
     return (
