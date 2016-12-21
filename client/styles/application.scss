@@ -1,6 +1,6 @@
 // This is the top-level scss file. Import all other files in here.
 @import 'home';
-// @import "bulma";
+@import '../node_modules/bulma/bulma.sass';
 
 h1 {
   color: blue;
