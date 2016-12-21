@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS tag_user;
+DROP TABLE IF EXISTStag_user;
 DROP TABLE IF EXISTS item_tag;
 DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS items;
@@ -43,93 +43,98 @@ CREATE TABLE IF NOT EXISTS item_tag(
 );
 
 
-INSERT INTO users (id, gender, type, min_size, max_size) VALUES (1, 'male', 'tops', 0, 11100);
-INSERT INTO users (id, gender, type, min_size, max_size) VALUES (2, 'male', 'tops', 0, 22200);
-INSERT INTO users (id, gender, type, min_size, max_size) VALUES (3, 'male', 'tops', 0, 33300);
+INSERT INTO users (id, gender, type, min_size, max_size) VALUES
+(1, 'male', 'tops', 0, 11100),
+(2, 'male', 'tops', 0, 22200),
+(3, 'male', 'tops', 0, 33300);
 
-INSERT INTO tags (content) VALUES ('blue'); --1
-INSERT INTO tags (content) VALUES ('red'); --2
-INSERT INTO tags (content) VALUES ('green'); --3
-INSERT INTO tags (content) VALUES ('white'); --4
-INSERT INTO tags (content) VALUES ('black'); --5
-INSERT INTO tags (content) VALUES ('orange'); --6
+INSERT INTO tags (content) VALUES
+('blue'), --1
+('red'), --2
+('green'), --3
+('white'), --4
+('black'), --5
+('orange'), --6
 
-INSERT INTO tags (content) VALUES ('soccer'); --7
-INSERT INTO tags (content) VALUES ('basketball'); --8
+('soccer'), --7
+('basketball'), --8
 
-INSERT INTO tags (content) VALUES ('long-sleeve'); --9
-INSERT INTO tags (content) VALUES ('short-sleeve'); --10
+('long-sleeve'), --9
+('short-sleeve'), --10
 
-INSERT INTO tags (content) VALUES ('nike'); --11
-INSERT INTO tags (content) VALUES ('adidas'); --12
-INSERT INTO tags (content) VALUES ('new-balance'); --13
-INSERT INTO tags (content) VALUES ('reebok'); --14
-INSERT INTO tags (content) VALUES ('gucci'); --15
-
-
-
-INSERT INTO tag_user (user_id, tag_id) VALUES ((select id from users where id = 1), (select id from tags where content='green'));
-INSERT INTO tag_user (user_id, tag_id) VALUES ((select id from users where id = 1), (select id from tags where content='soccer'));
-INSERT INTO tag_user (user_id, tag_id) VALUES ((select id from users where id = 1), (select id from tags where content='nike'));
-INSERT INTO tag_user (user_id, tag_id) VALUES ((select id from users where id = 1), (select id from tags where content='short-sleeve'));
-
-INSERT INTO tag_user (user_id, tag_id) VALUES ((select id from users where id = 2), (select id from tags where content='red'));
-INSERT INTO tag_user (user_id, tag_id) VALUES ((select id from users where id = 2), (select id from tags where content='nike'));
-
-INSERT INTO tag_user (user_id, tag_id) VALUES ((select id from users where id = 3), (select id from tags where content='new-balance'));
-INSERT INTO tag_user (user_id, tag_id) VALUES ((select id from users where id = 3), (select id from tags where content='orange'));
-INSERT INTO tag_user (user_id, tag_id) VALUES ((select id from users where id = 3), (select id from tags where content='basketball'));
+('nike'), --11
+('adidas'), --12
+('new-balance'), --13
+('reebok'), --14
+('gucci'); --15
 
 
-INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 1), 'tops', 'male', 1, 'orange new-balance basketball', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
-INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 1), 'tops', 'male', 1, 'black new-balance basketball', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
-INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 1), 'tops', 'male', 11, 'nike red soccer short-sleeve', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
 
-INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 2), 'tops', 'male', 111, 'green nike soccer long-sleeve', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
-INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 2), 'tops', 'female', 12, 'blue', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
-INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 2), 'tops', 'male', 22, 'black short-sleeve', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
+INSERT INTO tag_user (user_id, tag_id) VALUES
+((select id from users where id = 1), (select id from tags where content='green')),
+((select id from users where id = 1), (select id from tags where content='soccer')),
+((select id from users where id = 1), (select id from tags where content='nike')),
+((select id from users where id = 1), (select id from tags where content='short-sleeve')),
 
-INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 3), 'tops', 'male', 111, 'nike soccer short-sleeve green', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
-INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 3), 'tops', 'female', 12, 'nike soccer short-sleeve green', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
-INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES ((select id from users where id = 3), 'tops', 'male', 22, 'adidas orange basketball', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
+((select id from users where id = 2), (select id from tags where content='red')),
+((select id from users where id = 2), (select id from tags where content='nike')),
+
+((select id from users where id = 3), (select id from tags where content='new-balance')),
+((select id from users where id = 3), (select id from tags where content='orange')),
+((select id from users where id = 3), (select id from tags where content='basketball'));
 
 
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 1), (select id from tags where id = 6));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 1), (select id from tags where id = 13));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 1), (select id from tags where id = 8));
+INSERT INTO items (user_id, type, gender, size, tsv, description, img_url) VALUES
+((select id from users where id = 1), 'tops', 'male', 1, 'orange new-balance basketball', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc'),
+((select id from users where id = 1), 'tops', 'male', 1, 'black new-balance basketball', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc'),
+((select id from users where id = 1), 'tops', 'male', 11, 'nike red soccer short-sleeve', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc'),
 
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 1), (select id from tags where id = 5));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 1), (select id from tags where id = 13));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 1), (select id from tags where id = 8));
+((select id from users where id = 2), 'tops', 'male', 111, 'green nike soccer long-sleeve', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc'),
+((select id from users where id = 2), 'tops', 'female', 12, 'blue', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc'),
+((select id from users where id = 2), 'tops', 'male', 22, 'black short-sleeve', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc'),
 
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 2), (select id from tags where id = 11));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 2), (select id from tags where id = 2));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 2), (select id from tags where id = 7));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 2), (select id from tags where id = 10));
+((select id from users where id = 3), 'tops', 'male', 111, 'nike soccer short-sleeve green', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc'),
+((select id from users where id = 3), 'tops', 'female', 12, 'nike soccer short-sleeve green', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc'),
+((select id from users where id = 3), 'tops', 'male', 22, 'adidas orange basketball', 'blah blah blah blah blah', 'http://something.com/something/png or jpg, etc');
 
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 3), (select id from tags where id = 3));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 3), (select id from tags where id = 14));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 3), (select id from tags where id = 7));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 3), (select id from tags where id = 9));
 
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 4), (select id from tags where id = 1));
+INSERT INTO item_tag (item_id, tag_id) VALUES
+((select id from items where id = 1), (select id from tags where id = 6)),
+((select id from items where id = 1), (select id from tags where id = 13)),
+((select id from items where id = 1), (select id from tags where id = 8)),
 
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 5), (select id from tags where id = 5));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 5), (select id from tags where id = 10));
+((select id from items where id = 1), (select id from tags where id = 5)),
+((select id from items where id = 1), (select id from tags where id = 13)),
+((select id from items where id = 1), (select id from tags where id = 8)),
 
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 6), (select id from tags where id = 11));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 6), (select id from tags where id = 7));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 6), (select id from tags where id = 10));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 6), (select id from tags where id = 3));
+((select id from items where id = 2), (select id from tags where id = 11)),
+((select id from items where id = 2), (select id from tags where id = 2)),
+((select id from items where id = 2), (select id from tags where id = 7)),
+((select id from items where id = 2), (select id from tags where id = 10)),
 
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 7), (select id from tags where id = 11));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 7), (select id from tags where id = 7));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 7), (select id from tags where id = 10));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 7), (select id from tags where id = 3));
+((select id from items where id = 3), (select id from tags where id = 3)),
+((select id from items where id = 3), (select id from tags where id = 14)),
+((select id from items where id = 3), (select id from tags where id = 7)),
+((select id from items where id = 3), (select id from tags where id = 9)),
 
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 8), (select id from tags where id = 12));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 8), (select id from tags where id = 6));
-INSERT INTO item_tag (item_id, tag_id) VALUES ((select id from items where id = 8), (select id from tags where id = 8));
+((select id from items where id = 4), (select id from tags where id = 1)),
+
+((select id from items where id = 5), (select id from tags where id = 5)),
+((select id from items where id = 5), (select id from tags where id = 10)),
+
+((select id from items where id = 6), (select id from tags where id = 11)),
+((select id from items where id = 6), (select id from tags where id = 7)),
+((select id from items where id = 6), (select id from tags where id = 10)),
+((select id from items where id = 6), (select id from tags where id = 3)),
+
+((select id from items where id = 7), (select id from tags where id = 11)),
+((select id from items where id = 7), (select id from tags where id = 7)),
+((select id from items where id = 7), (select id from tags where id = 10)),
+((select id from items where id = 7), (select id from tags where id = 3)),
+
+((select id from items where id = 8), (select id from tags where id = 12)),
+((select id from items where id = 8), (select id from tags where id = 6)),
+((select id from items where id = 8), (select id from tags where id = 8));
 
 
 
