@@ -13,8 +13,21 @@ class App extends Component {
       shoesInventory: []
     }
     this.sendPostRequest = this.sendPostRequest.bind(this);
+    this.swapTags = this.swapTags.bind(this);
   }
 
+
+  swapTags(event) {
+    event.preventDefault;
+    let targetText = event.target.innerHTML;
+    let newArr1 = this.state.tagsFromItems
+    newArr1.push(targetText);
+
+    let newArr2 = this.state.userPreferenceTags
+    let index = newArr2.indexOf(targetText);
+    newArr2.splice(index, 1);
+    this.setState({tagsFromItems: newArr1, userPreferenceTags: newArr2});
+  }
 
   componentDidMount() {
     $.ajax({
@@ -31,6 +44,7 @@ class App extends Component {
           userPreferenceTags: response.currUserInfo.preferences,
           shoesInventory: response.inventory.shoes
         })
+        console.log("THESE ARE userPreferenceTags: ", this.state.userPreferenceTags)
       }.bind(this)
     })
   }
@@ -89,6 +103,7 @@ class App extends Component {
           <Sidebar
             userPreferenceTags={this.state.userPreferenceTags}
             tagsFromItems={this.state.tagsFromItems}
+            swapTags = {this.swapTags}
           />
         }
         <form onSubmit={this.sendPostRequest}>
