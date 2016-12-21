@@ -1,0 +1,35 @@
+$HEADER_HEIGHT: 50px;
+$SIDEBAR_COLOR: rgba(0, 0, 128, 0.5);
+$TAG_HOVER_COLOR: rgba(100, 199, 128, 0.5);
+$FIXED_COMPONENT_Z_INDEX: 3;
+
+
+.side-bar {
+  background-color: $SIDEBAR_COLOR;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  position: fixed;
+  right: 0;
+  top: $HEADER_HEIGHT;
+  width: 25%;
+  z-index: $FIXED_COMPONENT_Z_INDEX;
+  h2 {
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+  }
+}
+
+.side-bar-tag-list {
+  overflow-y: auto;
+}
+
+.side-bar-tag-list li {
+  display: inline-block;
+  padding: 5px;
+  :hover {
+    background-color: $TAG_HOVER_COLOR;
+  }
+}
