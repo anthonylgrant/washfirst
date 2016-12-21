@@ -22,7 +22,8 @@ app.get('/', function (req, res) {
   res.render("../client/index");
 })
 
-
+app.get('/registration', (req, res) => {
+})
 
 
 app.post('/test', (req, res) => {
