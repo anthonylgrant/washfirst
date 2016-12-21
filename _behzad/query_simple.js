@@ -1,11 +1,11 @@
-  const dbConfig = require('../db/config_heroku');
-  const knex = require('knex')({
-    client: 'pg',
-    connection: dbConfig,
-    pool: {
-        min: 2,
-        max: 10
-      }
+const dbConfig = require('../server/db/config_heroku');
+const knex = require('knex')({
+  client: 'pg',
+  connection: dbConfig,
+  pool: {
+      min: 2,
+      max: 10
+    }
   });
 
 
@@ -224,15 +224,10 @@ getResultsFromDb = (res) => {
         inventory: inventory
       }
 
-      // res.json(outputData);
-      // cb(getResultsFromDb);
-
       res.json(outputData);
 
     });
   });
 }
-
-// getResultsFromDb(getResultsFromDb);
 
 module.exports = getResultsFromDb;

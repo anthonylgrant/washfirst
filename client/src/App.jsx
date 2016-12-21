@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import Navbar from './components/Navbar.jsx'
-import Sidebar from './components/Sidebar.jsx'
+import Navbar from './components/Navbar.jsx';
+import Sidebar from './components/Sidebar.jsx';
+import Item from './components/Item.jsx';
 
 
 class App extends Component {
@@ -15,7 +16,6 @@ class App extends Component {
 
 
   componentDidMount() {
-    console.log("componentDidMount: ")
     $.ajax({
       method: 'GET',
       url: '/test',
@@ -44,7 +44,6 @@ class App extends Component {
 
     tempArr = new Set(tempArr);
     tempArr = Array.from(tempArr);
-    console.log("asdasdasdasdad:", tempArr);
     this.setState( {tagsFromItems: tempArr});
   }
 
@@ -68,12 +67,12 @@ class App extends Component {
     e.preventDefault();
   }
 
-
   render() {
     console.log('the state: ', this.state);
     return (
       <div>
         <Navbar />
+        <Item />
         { this.state.userPreferenceTags.length > 0 &&
           <Sidebar userPreferenceTags={this.state.userPreferenceTags} tagsFromItems={this.state.tagsFromItems}/>
         }
@@ -85,7 +84,9 @@ class App extends Component {
             onChange={this.changeMessage.bind(this)}
             placeholder="Type a message and hit ENTER"
           />
-          <input type="submit" />
+          <div className="item container">
+            <input type="submit" />
+          </div>
         </form>
       </div>
     );
