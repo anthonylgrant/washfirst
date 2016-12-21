@@ -68,7 +68,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('the state: ', this.state);
     return (
       <div>
         <Navbar />
@@ -84,7 +83,7 @@ class App extends Component {
             onChange={this.changeMessage.bind(this)}
             placeholder="Type a message and hit ENTER"
           />
-          <div className="item container">
+          <div className="main-container">
             <input type="submit" />
           </div>
         </form>
