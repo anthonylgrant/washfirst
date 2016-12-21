@@ -9,8 +9,10 @@ var React = require('react');
 var ReactDOMServer = require('react-dom/server');
 var getTags = require('./helpers/get_tags.js');
 // var Component = require('./Component.jsx')
+var bodyParser = require('body-parser');
 
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
@@ -21,11 +23,16 @@ app.get('/', function (req, res) {
   res.render("../client/index");
 })
 
+app.post('/test', (req, res) => {
+    console.log(req.body.message);
+    res.redirect('/');
+})
+
 app.get('/test', function (req, res) {
 
 
   getTags()
-  
+
   .then((tags) => {
     res.json({hello: "hello", tags: tags });
   })
