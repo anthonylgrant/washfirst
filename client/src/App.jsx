@@ -7,14 +7,15 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      test: "",
       userPreferenceTags: [],
       tagsFromItems: []
     }
+    this.sendPostRequest = this.sendPostRequest.bind(this);
   }
 
 
   componentDidMount() {
+    console.log("componentDidMount: ")
     $.ajax({
       method: 'GET',
       url: '/test',
@@ -22,7 +23,6 @@ class App extends Component {
       success: function(response) {
         this.concatItemArrays(response.inventory);
         this.setState({
-          test: response.currUserInfo.gender,
           userPreferenceTags: response.currUserInfo.preferences
         })
       }.bind(this)
@@ -48,16 +48,45 @@ class App extends Component {
     this.setState( {tagsFromItems: tempArr});
   }
 
+  changeMessage(e) {
+    console.log(e.target);
+    console.log('value:', e.target.value);
+    this.setState({message: e.target.value});
+  }
+
+  sendPostRequest(e) {
+    console.log('sending post:', this.state.message);
+    $.post({
+      method: 'POST',
+      url: '/test',
+      data: {message: this.state.message},
+      success: function(response) {
+        // console.log(e.target.value);
+        // console.log('sendPostRequest:', response);
+      }
+    })
+    e.preventDefault();
+  }
+
 
   render() {
     console.log('the state: ', this.state);
     return (
       <div>
         <Navbar />
-        <h1>{this.state.test} This is rendering the current user's preference tags right now </h1>
         { this.state.userPreferenceTags.length > 0 &&
           <Sidebar userPreferenceTags={this.state.userPreferenceTags} tagsFromItems={this.state.tagsFromItems}/>
         }
+        <form onSubmit={this.sendPostRequest}>
+          <input
+            id="new-message"
+            type="text"
+            name="theinput"
+            onChange={this.changeMessage.bind(this)}
+            placeholder="Type a message and hit ENTER"
+          />
+          <input type="submit" />
+        </form>
       </div>
     );
   }

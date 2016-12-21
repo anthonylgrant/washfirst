@@ -2,9 +2,13 @@ let getResultsFromDb = require('../_behzad/query_simple');
 var express = require('express');
 var app = express();
 var PORT = 8080;
-// var Component = require('./Component.jsx')
 
 
+var getTags = require('./helpers/get_tags.js');
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
@@ -15,16 +19,20 @@ app.get('/', function (req, res) {
   res.render("../client/index");
 });
 
+app.get('/registration', (req, res) => {
+
+})
+
+
+app.post('/test', (req, res) => {
+    console.log(req.body.message);
+    res.redirect('/');
+})
+
 app.get('/test', function (req, res) {
-
   getResultsFromDb(res);
-
-  // getTags()
-
-  // .then((tags) => {
-  //   res.json({hello: "hello", tags: tags });
-  // })
 });
+
 
 
 app.listen(PORT, () => {
