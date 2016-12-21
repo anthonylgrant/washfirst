@@ -1,6 +1,4 @@
-// Needs all tags and user-pref tags sent in as props
-
-
+// Needs all item tags and user-pref tags sent in as props
 import React, {Component} from 'react';
 
 class Sidebar extends Component {
@@ -9,25 +7,24 @@ class Sidebar extends Component {
     const userPreferenceTags = this.props.userPreferenceTags.map((tag, i) => {
       return (
       <li key={i}>
-        <span className='side-bar-tag' >{tag}</span>
+        <span className='tag' >{tag}</span>
       </li>
     )});
 
     const tagsFromItems = this.props.tagsFromItems.map((tag, i) => {
       return (
       <li key={i}>
-        <span className='tag side-bar-tag' >{tag}</span>
+        <span className='tag' >{tag}</span>
       </li>
     )});
 
     return (
       <div id='side-bar'>
-        <h4 id='all-tags-label'>User Preferance Tags</h4>
+        <h2 id='all-tags-label'>User Preferance Tags</h2>
         <hr/>
         <ul id='side-bar-tag-list'>{userPreferenceTags}</ul>
         <hr/>
-        <hr/>
-        <h4 id='all-tags-label'>Tags From Items</h4>
+        <h2 id='all-tags-label'>Tags From Items</h2>
         <hr/>
         <ul id='side-bar-tag-list'>{tagsFromItems}</ul>
       </div>

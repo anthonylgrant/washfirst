@@ -4,19 +4,16 @@
 
 */
 
-
-
 #side-bar {
-  background-color: rgba(255, 0, 0, 0.5);
   bottom: 0;
   margin: 0;
-  padding: 10px 20px;
+  padding: 10px;
   position: fixed;
   right: 0;
   top: 0;
-  width: 27%;
+  width: 25%;
   padding-top: 100px;
-  top: 84.28px;
+  top: 50px;
 }
 
 #side-bar-tag-list {
@@ -30,6 +27,7 @@
 #side-bar-tag-list li {
   list-style: none;
   display: inline-block;
+  padding: 5px 5px;
 }
 
 
@@ -42,4 +40,6 @@
 .side-bar-tag {
   margin: 0;
   padding: 5px 5px;
+  background-color: #eee;
+
 }
