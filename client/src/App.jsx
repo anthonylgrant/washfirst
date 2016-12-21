@@ -10,20 +10,18 @@ class App extends Component {
     this.state = {
       userPreferenceTags: [],
       tagsFromItems: [],
-      fixedTagsFromItems: [],
       shoesInventory: [],
       topsInventory: [],
       bottomsInventory: []
     }
     this.sendPostRequest = this.sendPostRequest.bind(this);
-    this.swapTags = this.swapTags.bind(this);
+    this.swapTagsFromUserPref = this.swapTagsFromUserPref.bind(this);
+    this.swapTagsFromTagsFromItems = this.swapTagsFromTagsFromItems.bind(this);
     this.sortItemsByRanking = this.sortItemsByRanking.bind(this);
     this.concatTagArrays = this.concatTagArrays.bind(this);
-    this.autoCompleteSearchBar = this.autoCompleteSearchBar.bind(this);
   }
 
-
-  swapTags(event) {
+  swapTagsFromUserPref(event) {
     event.preventDefault;
     let targetText = event.target.innerHTML;
     let newArr1 = this.state.tagsFromItems;
@@ -36,6 +34,18 @@ class App extends Component {
     this.setState({tagsFromItems: newArr1, userPreferenceTags: newArr2});
   }
 
+  swapTagsFromTagsFromItems(event) {
+    event.preventDefault;
+    let targetText = event.target.innerHTML;
+    let newArr2 = this.state.userPreferenceTags
+    newArr2.push(targetText);
+
+    let newArr1 = this.state.tagsFromItems
+    let index = newArr1.indexOf(targetText);
+    newArr1.splice(index, 1);
+    this.setState({tagsFromItems: newArr1, userPreferenceTags: newArr2});
+  }
+
   componentDidMount() {
     $.ajax({
       method: 'GET',
@@ -45,7 +55,6 @@ class App extends Component {
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
           tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
-          fixedTagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
           topsInventory: this.sortItemsByRanking(response.inventory.tops),
           bottomsInventory: this.sortItemsByRanking(response.inventory.bottoms),
           shoesInventory: this.sortItemsByRanking(response.inventory.shoes)
@@ -60,17 +69,6 @@ class App extends Component {
       return b.currUserWantsThis - a.currUserWantsThis;
     });
     return items;
-  }
-
-
-  autoCompleteSearchBar(event) {
-    event.preventDefault();
-    let regex = new RegExp('^' + event.target.value);
-
-    let filtered = this.state.fixedTagsFromItems.filter((tag) => {
-      return regex.test(tag);
-    });
-    this.setState({ tagsFromItems: filtered });
   }
 
 
@@ -128,8 +126,8 @@ class App extends Component {
           <Sidebar
             userPreferenceTags={this.state.userPreferenceTags}
             tagsFromItems={this.state.tagsFromItems}
-            autoCompleteSearchBar={this.autoCompleteSearchBar}
-            swapTags = {this.swapTags}
+            swapTagsFromUserPref = {this.swapTagsFromUserPref}
+            swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
           />
         }
         <form onSubmit={this.sendPostRequest}>
