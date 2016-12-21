@@ -23,12 +23,18 @@ app.get('/', function (req, res) {
 
 app.get('/test', function (req, res) {
 
+  let tagArray = []
+
 
   getTags()
-  
-  .then((tags) => {
-    res.json({hello: "hello", tags: tags });
+  .then((rows) => {
+    rows.forEach((tagObject) => {
+      tagArray.push(tagObject.content);
+    });
+    console.log('this is the tag array', tagArray);
+    res.json({hello: "hello", tags: tagArray });
   })
+
 });
 
 

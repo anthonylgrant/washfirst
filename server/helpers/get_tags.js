@@ -24,9 +24,19 @@ const knex = require('knex')({
 });
 
 
+
+
+
+
 function getTags() {
   return knex.select('content')
               .from('tags')
 }
+
+
+
+
+
+
 
 module.exports = getTags;

@@ -19,7 +19,6 @@ class App extends Component {
       dataType: 'JSON',
       success: function(response){
         console.log('componentDidMount success:', response)
-        console.log('tags at 0: ', response.tags[0].content)
         this.setState({
             test: response.hello,
             tags: response.tags
