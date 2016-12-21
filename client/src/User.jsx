@@ -4,10 +4,10 @@
 // var props = window.PROPS;
 
 import React from 'react';
-import App from './App.jsx';
+import User from './App.jsx';
 
 // ReactDOM.render(
 //   React.createElement(Component, props), document
 // );
 
-ReactDOM.render(<App />, document.getElementById('react-root'));
+ReactDOM.render(<User />, document.getElementById('react-root'));

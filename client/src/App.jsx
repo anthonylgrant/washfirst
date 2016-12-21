@@ -16,11 +16,24 @@ class App extends Component {
       bottomsInventory: []
     }
     this.sendPostRequest = this.sendPostRequest.bind(this);
+    this.swapTags = this.swapTags.bind(this);
     this.sortItemsByRanking = this.sortItemsByRanking.bind(this);
     this.concatTagArrays = this.concatTagArrays.bind(this);
     this.autoCompleteSearchBar = this.autoCompleteSearchBar.bind(this);
   }
 
+
+  swapTags(event) {
+    event.preventDefault;
+    let targetText = event.target.innerHTML;
+    let newArr1 = this.state.tagsFromItems
+    newArr1.push(targetText);
+
+    let newArr2 = this.state.userPreferenceTags
+    let index = newArr2.indexOf(targetText);
+    newArr2.splice(index, 1);
+    this.setState({tagsFromItems: newArr1, userPreferenceTags: newArr2});
+  }
 
   componentDidMount() {
     $.ajax({
@@ -115,6 +128,7 @@ class App extends Component {
             userPreferenceTags={this.state.userPreferenceTags}
             tagsFromItems={this.state.tagsFromItems}
             autoCompleteSearchBar={this.autoCompleteSearchBar}
+            swapTags = {this.swapTags}
           />
         }
         <form onSubmit={this.sendPostRequest}>

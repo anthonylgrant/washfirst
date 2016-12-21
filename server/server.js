@@ -61,7 +61,8 @@ app.use(express.static('public'));
 // |        PORT         |
 // +---------------------+
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
+
 
 
 
@@ -97,22 +98,7 @@ const PORT = 8080;
 // |        INDEX        |
 // +---------------------+
 
-// app.get('/', function (req, res) {
-//   let tagArray = []
-//   getTags()
-//   .then((rows) => {
-//     rows.forEach((tagObject) => {
-//       tagArray.push(tagObject.content);
-//     });
-//     console.log('this is the tag array', tagArray);
-//     res.json({hello: "hello", tags: tagArray });
-//   })
-// })
 app.get('/', function (req, res) {
-  var props = { title: 'WashFirst', heading: 'Hello World!!!!' };
-  var html = ReactDOMServer.renderToString(
-    React.createElement(Component, props)
-  );
   res.render("../client/index");
 });
 
@@ -211,9 +197,8 @@ app.put('/logout', (req, res) => {
 // |        ITEM         |
 // +---------------------+
 
-// app.update('/users/:id/items/id', (req, res) => {
+// app.post('/users/:id/items/id', (req, res) => {
 
-// });
 
 
 // ***********************
@@ -227,7 +212,7 @@ app.put('/logout', (req, res) => {
 // +---------------------+
 
 //CHECK EXPRESS SYNTAX
-app.del('/users/:id/items/id', (req, res) => {
+app.delete('/users/:id/items/id', (req, res) => {
 
 });
 
