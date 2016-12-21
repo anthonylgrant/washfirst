@@ -8,11 +8,8 @@ class App extends Component {
     super(props);
     this.state = {
       test: "",
-<<<<<<< HEAD
-      tags: []
-=======
+      tags: [],
       message: ""
->>>>>>> server/post-request-handling
     }
     this.sendPostRequest = this.sendPostRequest.bind(this);
   }
