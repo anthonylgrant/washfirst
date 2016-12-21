@@ -10,9 +10,13 @@ class App extends Component {
     this.state = {
       userPreferenceTags: [],
       tagsFromItems: [],
-      shoesInventory: []
+      shoesInventory: [],
+      topsInventory: [],
+      bottomsInventory: []
     }
     this.sendPostRequest = this.sendPostRequest.bind(this);
+    this.sortItemsByRanking = this.sortItemsByRanking.bind(this);
+    this.concatTagArrays = this.concatTagArrays.bind(this);
   }
 
 
@@ -21,22 +25,28 @@ class App extends Component {
       method: 'GET',
       url: '/test',
       dataType: 'JSON',
-      success: function(response) {
-        response.inventory.shoes.map((shoe) => {
-          console.log(shoe);
-        })
-        console.log("response: ", response.inventory.shoes);
-        this.concatItemArrays(response.inventory);
+      success: (response) => {
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
-          shoesInventory: response.inventory.shoes
-        })
-      }.bind(this)
-    })
+          tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
+          topsInventory: this.sortItemsByRanking(response.inventory.tops),
+          bottomsInventory: this.sortItemsByRanking(response.inventory.bottoms),
+          shoesInventory: this.sortItemsByRanking(response.inventory.shoes)
+        });
+      }
+    });
   }
 
 
-  concatItemArrays(inventory) {
+  sortItemsByRanking(items) {
+    items.sort((a, b) => {
+      return b.currUserWantsThis - a.currUserWantsThis;
+    });
+    return items;
+  }
+
+
+  concatTagArrays(inventory, preferences) {
     let tempArr = [];
     inventory.tops.forEach((item) => {
       tempArr = tempArr.concat(item.tags);
@@ -50,7 +60,10 @@ class App extends Component {
 
     tempArr = new Set(tempArr);
     tempArr = Array.from(tempArr);
-    this.setState( {tagsFromItems: tempArr});
+    tempArr = tempArr.filter((tag) => {
+      return !preferences.includes(tag);
+    });
+    return tempArr;
   }
 
   changeMessage(e) {
@@ -74,8 +87,6 @@ class App extends Component {
   }
 
   render() {
-
-    console.log('shoesInventory: ', this.state.shoesInventory)
     return (
       <div>
         <Navbar />
