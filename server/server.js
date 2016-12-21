@@ -25,6 +25,7 @@ app.get('/test', function (req, res) {
 
 
   getTags()
+  
   .then((tags) => {
     res.json({hello: "hello", tags: tags });
   })
