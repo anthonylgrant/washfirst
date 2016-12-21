@@ -1,0 +1,45 @@
+/*
+
+  CSS SHEET EXCLUSIVELY FOR THE SIDE-BAR COMPONENT
+
+*/
+
+
+
+#side-bar {
+  background-color: rgba(255, 0, 0, 0.5);
+  bottom: 0;
+  margin: 0;
+  padding: 10px 20px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 27%;
+  padding-top: 100px;
+  top: 84.28px;
+}
+
+#side-bar-tag-list {
+  left: 20px;
+  right: 20px;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+}
+
+#side-bar-tag-list li {
+  list-style: none;
+  display: inline-block;
+}
+
+
+
+#all-tags-label {
+  margin: 0;
+
+}
+
+.side-bar-tag {
+  margin: 0;
+  padding: 5px 5px;
+}

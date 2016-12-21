@@ -1,15 +1,9 @@
-require('babel-register')({
-  presets: ['react']
-});
-
-
 let getResultsFromDb = require('../_behzad/query_simple');
 var express = require('express');
 var app = express();
 var PORT = 8080;
-var React = require('react');
-var ReactDOMServer = require('react-dom/server');
 // var Component = require('./Component.jsx')
+
 
 app.use(express.static('public'));
 
@@ -24,8 +18,12 @@ app.get('/', function (req, res) {
 app.get('/test', function (req, res) {
 
   getResultsFromDb(res);
-  // res.json({phrase: "hello"});
 
+  // getTags()
+
+  // .then((tags) => {
+  //   res.json({hello: "hello", tags: tags });
+  // })
 });
 
 
