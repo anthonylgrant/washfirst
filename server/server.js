@@ -23,6 +23,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/registration', (req, res) => {
+  
 })
 
 
