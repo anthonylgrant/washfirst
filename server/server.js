@@ -6,9 +6,10 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-
 // const bcrypt = require('bcrypt');
-// const session = require('sessions');
+// const session = require('express-session');
+
+// HEROKU CONFIG GOES INTO .ENV FILE
 // const connection = require('./db/knexfile.js').development;
 // const knex = require('knex')(connection);
 
@@ -35,7 +36,15 @@ const blacklist = [
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
+// app.use(session({
+//   // secret goes into .env file
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: true
+// }));
 
+
+//  // AUTHENTICATION MIDDLEWARE
 // app.use(blacklist, (req, res, next) => {
 // ####################
 // on login we create the session. It doesn't have to make use of the email.
@@ -67,6 +76,7 @@ const PORT = PROCESS.ENV || 8080;
     // -Sessions
     // -bCrypt
     // -instructions for form names
+    // -env files
 
 
 // ***********************
@@ -203,9 +213,6 @@ app.update('/users/:id/items/id', (req, res) => {
 app.del('/users/:id/items/id', (req, res) => {
 
 });
-
-
-
 
 // ***********************
 // ***********************
