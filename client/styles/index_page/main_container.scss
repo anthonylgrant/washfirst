@@ -1,0 +1,11 @@
+$HEADER_HEIGHT: 50px;
+
+.main-container {
+  padding-top: $HEADER_HEIGHT;
+  max-width: 75%;
+
+  .card {
+    display: inline-block;
+    margin: 10px;
+  }
+}

@@ -79,9 +79,12 @@ class App extends Component {
     return (
       <div>
         <Navbar />
-        {this.state.shoesInventory.map((shoe) => {
-          return <Item key={shoe.id} gender={shoe.gender} size={shoe.size} desc={shoe.description} />
-        })}
+        <div className="main-container">
+          {this.state.shoesInventory.map((shoe) => {
+            return <Item key={shoe.id} gender={shoe.gender} size={shoe.size} desc={shoe.description} />
+          })}
+        </div>
+
         { this.state.userPreferenceTags.length > 0 &&
           <Sidebar
             userPreferenceTags={this.state.userPreferenceTags}
@@ -96,9 +99,7 @@ class App extends Component {
             onChange={this.changeMessage.bind(this)}
             placeholder="Type a message and hit ENTER"
           />
-          <div className="main-container">
-            <input type="submit" />
-          </div>
+          <input type="submit" />
         </form>
       </div>
     );
