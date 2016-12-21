@@ -1,40 +1,63 @@
-require('babel-register')({
-  presets: ['react']
-});
+'use strict';
 
-var express = require('express');
-var app = express();
-var PORT = 8080;
-var React = require('react');
-var ReactDOMServer = require('react-dom/server');
-var getTags = require('./helpers/get_tags.js');
-var bodyParser = require('body-parser');
+// +---------------------+
+// |    DEPENDENCIES     |
+// +---------------------+
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
 
+// +---------------------+
+// |       HELPERS       |
+// +---------------------+
+const getTags = require('./helpers/get_tags.js');
+
+const PORT = PROCESS.ENV || 8080;
+
+// +---------------------+
+// |     MIDDLEWARE      |
+// +---------------------+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+// ***********************
+// ***********************
+//          ToDO
+// ***********************
+// ***********************
+  // Authentication
+    // -BlackList
+    // -Middleware
+    // -Sessions
+    // -bCrypt
+    // -instructions for form names
+
+// +---------------------+
+// |      BLACKLIST      |
+// +---------------------+
+
+const blacklist = [
+        '/index',
+        '/user/:id'
+      ]
+
+// ***********************
+// ***********************
+// +---------------------+
+// |       ROUTES        |
+// +---------------------+
+// ***********************
+// +---------------------+
+// |         GET         |
+// +---------------------+
+
+// +---------------------+
+// |        INDEX        |
+// +---------------------+
+
 app.get('/', function (req, res) {
-  // var props = { title: 'WashFirst', heading: 'Hello World!!!!' };
-  // var html = ReactDOMServer.renderToString(
-  //   React.createElement(Component, props)
-  // );
-  res.render("../client/index");
-})
-
-
-
-
-app.post('/test', (req, res) => {
-    console.log(req.body.message);
-    res.redirect('/');
-})
-
-app.get('/test', function (req, res) {
-
   let tagArray = []
-
-
   getTags()
   .then((rows) => {
     rows.forEach((tagObject) => {
@@ -43,8 +66,47 @@ app.get('/test', function (req, res) {
     console.log('this is the tag array', tagArray);
     res.json({hello: "hello", tags: tagArray });
   })
+})
+
+// +---------------------+
+// |     USER'S PAGE     |
+// +---------------------+
+
+app.get('/users/:id', (req, res) => {
+  const userId = req.params.id;
+
+
+  // Passing back to view: user's items, user's sizes (editable)
+  res.json({})
+});
+
+// ***********************
+// +---------------------+
+// |        POST         |
+// +---------------------+
+
+// +---------------------+
+// |        LOGIN        |
+// +---------------------+
+
+app.post('/login', (req, res) => {
+
 
 });
+
+
+
+
+
+
+
+
+// +---------------------+
+// |        INDEX        |
+// +---------------------+
+
+
+
 
 
 
