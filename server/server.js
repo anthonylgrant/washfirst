@@ -12,10 +12,6 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-  // var props = { title: 'WashFirst', heading: 'Hello World!!!!' };
-  // var html = ReactDOMServer.renderToString(
-  //   React.createElement(Component, props)
-  // );
   res.render("../client/index");
 });
 
