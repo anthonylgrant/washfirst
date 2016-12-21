@@ -57,7 +57,6 @@ class App extends Component {
         { this.state.tags.length > 0 &&
           <Sidebar tags={this.state.tags}/>
         }
-        <Sidebar />
         <form onSubmit={this.sendPostRequest}>
           <input
             id="new-message"
