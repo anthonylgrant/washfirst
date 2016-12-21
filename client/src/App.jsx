@@ -19,7 +19,7 @@ class App extends Component {
       success: function(response){
         console.log('componentDidMount success:', response)
         this.setState({
-            test: response.hello
+            test: response.currUserInfo.gender
         })
       }.bind(this)
     })
