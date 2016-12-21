@@ -6,24 +6,18 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
+
+// const bcrypt = require('bcrypt');
+// const session = require('sessions');
+// const connection = require('./db/knexfile.js').development;
+// const knex = require('knex')(connection);
+
 // +---------------------+
 // |       HELPERS       |
 // +---------------------+
 const getTags = require('./helpers/get_tags.js');
 const getResultsFromDb = require('../_behzad/query_simple');
 
-// +---------------------+
-// |     MIDDLEWARE      |
-// +---------------------+
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(express.static('public'));
-
-// +---------------------+
-// |        PORT         |
-// +---------------------+
-
-const PORT = PROCESS.ENV || 8080;
 
 // +---------------------+
 // |      BLACKLIST      |
@@ -35,6 +29,30 @@ const blacklist = [
 ]
 
 
+// +---------------------+
+// |     MIDDLEWARE      |
+// +---------------------+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.static('public'));
+
+// app.use(blacklist, (req, res, next) => {
+// ####################
+// on login we create the session. It doesn't have to make use of the email.
+// ####################
+// if(req.session.email) {
+//     next();
+//   } else {
+//     res.render('pages/error');
+//   }
+// });
+
+
+// +---------------------+
+// |        PORT         |
+// +---------------------+
+
+const PORT = PROCESS.ENV || 8080;
 
 
 
