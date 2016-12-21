@@ -32,7 +32,6 @@ class App extends Component {
     console.log('the state: ', this.state);
     return (
       <div>
-        <h1>{this.state.test}</h1>
         <Navbar />
         { this.state.tags.length > 0 &&
           <Sidebar tags={this.state.tags}/>
