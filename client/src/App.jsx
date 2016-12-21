@@ -7,26 +7,45 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      test: "",
-      tags: [],
-      message: ""
+      userPreferenceTags: [],
+      tagsFromItems: []
     }
     this.sendPostRequest = this.sendPostRequest.bind(this);
   }
 
+
   componentDidMount() {
+    console.log("componentDidMount: ")
     $.ajax({
       method: 'GET',
       url: '/test',
       dataType: 'JSON',
-      success: function(response){
-        console.log('componentDidMount success:', response)
+      success: function(response) {
+        this.concatItemArrays(response.inventory);
         this.setState({
-            test: response.hello,
-            tags: response.tags
+          userPreferenceTags: response.currUserInfo.preferences
         })
       }.bind(this)
     })
+  }
+
+
+  concatItemArrays(inventory) {
+    let tempArr = [];
+    inventory.tops.forEach((item) => {
+      tempArr = tempArr.concat(item.tags);
+    });
+    inventory.bottoms.forEach((item) => {
+      tempArr = tempArr.concat(item.tags);
+    });
+    inventory.shoes.forEach((item) => {
+      tempArr = tempArr.concat(item.tags);
+    });
+
+    tempArr = new Set(tempArr);
+    tempArr = Array.from(tempArr);
+    console.log("asdasdasdasdad:", tempArr);
+    this.setState( {tagsFromItems: tempArr});
   }
 
   changeMessage(e) {
@@ -49,13 +68,14 @@ class App extends Component {
     e.preventDefault();
   }
 
+
   render() {
     console.log('the state: ', this.state);
     return (
       <div>
         <Navbar />
-        { this.state.tags.length > 0 &&
-          <Sidebar tags={this.state.tags}/>
+        { this.state.userPreferenceTags.length > 0 &&
+          <Sidebar userPreferenceTags={this.state.userPreferenceTags} tagsFromItems={this.state.tagsFromItems}/>
         }
         <form onSubmit={this.sendPostRequest}>
           <input
@@ -71,4 +91,5 @@ class App extends Component {
     );
   }
 }
+
 export default App;

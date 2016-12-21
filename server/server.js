@@ -1,12 +1,9 @@
-require('babel-register')({
-  presets: ['react']
-});
-
+let getResultsFromDb = require('../_behzad/query_simple');
 var express = require('express');
 var app = express();
 var PORT = 8080;
-var React = require('react');
-var ReactDOMServer = require('react-dom/server');
+
+
 var getTags = require('./helpers/get_tags.js');
 var bodyParser = require('body-parser');
 
@@ -20,9 +17,11 @@ app.get('/', function (req, res) {
   //   React.createElement(Component, props)
   // );
   res.render("../client/index");
+});
+
+app.get('/registration', (req, res) => {
+
 })
-
-
 
 
 app.post('/test', (req, res) => {
@@ -31,21 +30,8 @@ app.post('/test', (req, res) => {
 })
 
 app.get('/test', function (req, res) {
-
-  let tagArray = []
-
-
-  getTags()
-  .then((rows) => {
-    rows.forEach((tagObject) => {
-      tagArray.push(tagObject.content);
-    });
-    console.log('this is the tag array', tagArray);
-    res.json({hello: "hello", tags: tagArray });
-  })
-
+  getResultsFromDb(res);
 });
-
 
 
 
