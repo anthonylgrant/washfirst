@@ -61,7 +61,7 @@ app.use(express.static('public'));
 // |        PORT         |
 // +---------------------+
 
-const PORT = PROCESS.ENV || 8080;
+const PORT = 8080;
 
 
 
@@ -194,9 +194,9 @@ app.post('/users/:id/items/new', (req, res) => {
 // |        ITEM         |
 // +---------------------+
 
-app.update('/users/:id/items/id', (req, res) => {
+// app.update('/users/:id/items/id', (req, res) => {
 
-});
+// });
 
 
 // ***********************
@@ -235,6 +235,6 @@ app.listen(PORT, () => {
 //     res.redirect('/');
 // })
 //
-// app.get('/test', function (req, res) {
-//   getResultsFromDb(res);
-// });
+app.get('/test', function (req, res) {
+  getResultsFromDb(res);
+});
