@@ -1,7 +1,7 @@
 
-$FIXED_COMPONENT_Z_INDEX: 3;
+$fixed_componet_z_index: 3;
 $HEADER_COLOR: rgba(221, 97, 74, 1);
-$HEADER_HEIGHT: 50px;
+$header_height: 50px;
 
 .top-bar {
    background-color: $HEADER_COLOR;
@@ -9,14 +9,14 @@ $HEADER_HEIGHT: 50px;
    flex-direction: row;
    font-family: sans-serif;
    font-size: .8em;
-   line-height: $HEADER_HEIGHT;
+   line-height: $header_height;
    padding-left: 20px;
    position: fixed;
    width: 100%;
-   z-index: $FIXED_COMPONENT_Z_INDEX;
+   z-index: $fixed_componet_z_index;
    h1 {
     color: white;
-    font-weight: bold;
     font-size: 18px;
+    font-weight: bold;
    }
  }

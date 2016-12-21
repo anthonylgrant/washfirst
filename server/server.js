@@ -65,6 +65,7 @@ const PORT = process.env.PORT || 8080;
 
 
 
+
 // ***********************
 // ***********************
 //          ToDO
@@ -198,8 +199,7 @@ app.put('/logout', (req, res) => {
 // +---------------------+
 
 // app.post('/users/:id/items/id', (req, res) => {
-//
-// });
+
 
 
 // ***********************
@@ -238,6 +238,6 @@ app.listen(PORT, () => {
 //     res.redirect('/');
 // })
 //
-// app.get('/test', function (req, res) {
-//   getResultsFromDb(res);
-// });
+app.get('/test', function (req, res) {
+  getResultsFromDb(res);
+});
