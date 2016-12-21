@@ -10,6 +10,7 @@ class App extends Component {
     this.state = {
       userPreferenceTags: [],
       tagsFromItems: [],
+      fixedTagsFromItems: [],
       shoesInventory: [],
       topsInventory: [],
       bottomsInventory: []
@@ -17,6 +18,7 @@ class App extends Component {
     this.sendPostRequest = this.sendPostRequest.bind(this);
     this.sortItemsByRanking = this.sortItemsByRanking.bind(this);
     this.concatTagArrays = this.concatTagArrays.bind(this);
+    this.autoCompleteSearchBar = this.autoCompleteSearchBar.bind(this);
   }
 
 
@@ -29,6 +31,7 @@ class App extends Component {
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
           tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
+          fixedTagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
           topsInventory: this.sortItemsByRanking(response.inventory.tops),
           bottomsInventory: this.sortItemsByRanking(response.inventory.bottoms),
           shoesInventory: this.sortItemsByRanking(response.inventory.shoes)
@@ -43,6 +46,17 @@ class App extends Component {
       return b.currUserWantsThis - a.currUserWantsThis;
     });
     return items;
+  }
+
+
+  autoCompleteSearchBar(event) {
+    event.preventDefault();
+    let regex = new RegExp('^' + event.target.value);
+
+    let filtered = this.state.fixedTagsFromItems.filter((tag) => {
+      return regex.test(tag);
+    });
+    this.setState({ tagsFromItems: filtered });
   }
 
 
@@ -100,6 +114,7 @@ class App extends Component {
           <Sidebar
             userPreferenceTags={this.state.userPreferenceTags}
             tagsFromItems={this.state.tagsFromItems}
+            autoCompleteSearchBar={this.autoCompleteSearchBar}
           />
         }
         <form onSubmit={this.sendPostRequest}>

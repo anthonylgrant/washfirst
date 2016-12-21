@@ -25,6 +25,7 @@ class Sidebar extends Component {
         <ul className='side-bar-tag-list'>{userPreferenceTags}</ul>
         <hr/>
         <h2 className='all-tags-label'>Tags From Items</h2>
+        <input type="text" onChange={this.props.autoCompleteSearchBar}/>
         <hr/>
 
         <ul className='side-bar-tag-list'>{tagsFromItems}</ul>
