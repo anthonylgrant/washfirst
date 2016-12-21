@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 // app.use(session({
-//   // secret goes into .env file
+//   // SECRET GOES INTO .ENV FILE
 //   secret: 'keyboard cat',
 //   resave: false,
 //   saveUninitialized: true
@@ -46,9 +46,9 @@ app.use(express.static('public'));
 
 //  // AUTHENTICATION MIDDLEWARE
 // app.use(blacklist, (req, res, next) => {
-// ####################
-// on login we create the session. It doesn't have to make use of the email.
-// ####################
+// // ####################
+// // on login we create the session. It doesn't have to make use of the email.
+// // ####################
 // if(req.session.email) {
 //     next();
 //   } else {
@@ -159,6 +159,7 @@ app.get('/registration', (req, res) => {
 
 app.post('/login', (req, res) => {
 
+// if successful login, create session key here.
 
 });
 
@@ -168,7 +169,6 @@ app.post('/login', (req, res) => {
 // +---------------------+
 
 app.post('/registration', (req, res) => {
-
 
 });
 
@@ -180,6 +180,23 @@ app.post('/registration', (req, res) => {
 app.post('/users/:id/items/new', (req, res) => {
   const userId = req.body.params;
   console.log('users id from url is: ', userId);
+
+});
+
+
+// ***********************
+// ***********************
+// +---------------------+
+// |        PUT          |
+// +---------------------+
+
+// +---------------------+
+// |        LOGOUT       |
+// +---------------------+
+
+app.put('/logout', (req, res) => {
+
+  // delete session key, redirect to '/'
 
 });
 
