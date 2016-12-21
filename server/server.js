@@ -2,6 +2,8 @@ require('babel-register')({
   presets: ['react']
 });
 
+
+let getResultsFromDb = require('../_behzad/query_simple');
 var express = require('express');
 var app = express();
 var PORT = 8080;
@@ -17,11 +19,14 @@ app.get('/', function (req, res) {
   //   React.createElement(Component, props)
   // );
   res.render("../client/index");
-})
+});
 
 app.get('/test', function (req, res) {
-  res.json({hello: "hello"});
-})
+
+  getResultsFromDb(res);
+  // res.json({phrase: "hello"});
+
+});
 
 
 app.listen(PORT, () => {
