@@ -1,5 +1,4 @@
 'use strict';
-
 // +---------------------+
 // |    DEPENDENCIES     |
 // +---------------------+
@@ -13,16 +12,30 @@ const bodyParser = require('body-parser');
 const getTags = require('./helpers/get_tags.js');
 const getResultsFromDb = require('../_behzad/query_simple');
 
-
-const PORT = PROCESS.ENV || 8080;
-
-
 // +---------------------+
 // |     MIDDLEWARE      |
 // +---------------------+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+// +---------------------+
+// |        PORT         |
+// +---------------------+
+
+const PORT = PROCESS.ENV || 8080;
+
+// +---------------------+
+// |      BLACKLIST      |
+// +---------------------+
+
+const blacklist = [
+  '/index',
+  '/user/:id'
+]
+
+
+
 
 
 // ***********************
@@ -37,20 +50,16 @@ app.use(express.static('public'));
     // -bCrypt
     // -instructions for form names
 
-// +---------------------+
-// |      BLACKLIST      |
-// +---------------------+
-
-const blacklist = [
-        '/index',
-        '/user/:id'
-      ]
 
 // ***********************
 // ***********************
 // +---------------------+
 // |       ROUTES        |
 // +---------------------+
+// ***********************
+// ***********************
+
+// ***********************
 // ***********************
 // +---------------------+
 // |         GET         |
@@ -110,15 +119,7 @@ app.get('/registration', (req, res) => {
 })
 
 
-// app.post('/test', (req, res) => {
-//     console.log(req.body.message);
-//     res.redirect('/');
-// })
-//
-// app.get('/test', function (req, res) {
-//   getResultsFromDb(res);
-// });
-
+// ***********************
 // ***********************
 // +---------------------+
 // |        POST         |
@@ -134,21 +135,81 @@ app.post('/login', (req, res) => {
 });
 
 
+// +---------------------+
+// |      REGISTER       |
+// +---------------------+
+
+app.post('/registration', (req, res) => {
 
 
-
-
+});
 
 
 // +---------------------+
-// |        INDEX        |
+// |      NEW ITEM       |
 // +---------------------+
 
+app.post('/users/:id/items/new', (req, res) => {
+  const userId = req.body.params;
+  console.log('users id from url is: ', userId);
+
+});
+
+
+// ***********************
+// ***********************
+// +---------------------+
+// |       UPDATE        |
+// +---------------------+
+
+// +---------------------+
+// |        ITEM         |
+// +---------------------+
+
+app.update('/users/:id/items/id', (req, res) => {
+
+});
+
+
+// ***********************
+// ***********************
+// +---------------------+
+// |       DELETE        |
+// +---------------------+
+
+// +---------------------+
+// |        ITEM         |
+// +---------------------+
+
+//CHECK EXPRESS SYNTAX
+app.del('/users/:id/items/id', (req, res) => {
+
+});
 
 
 
 
+// ***********************
+// ***********************
+// +---------------------+
+// |       LISTEN        |
+// +---------------------+
+// ***********************
+// ***********************
 
 app.listen(PORT, () => {
   console.log('listening to http://localhost:' + PORT);
 });
+
+
+
+
+
+// app.post('/test', (req, res) => {
+//     console.log(req.body.message);
+//     res.redirect('/');
+// })
+//
+// app.get('/test', function (req, res) {
+//   getResultsFromDb(res);
+// });
