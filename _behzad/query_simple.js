@@ -1,10 +1,10 @@
-const dbConfig = require('../server/db/config_heroku');
+const dbConfig = require('../server/db/config_local');
 const knex = require('knex')({
   client: 'pg',
   connection: dbConfig,
   pool: {
-      min: 2,
-      max: 10
+      min: 4,
+      max: 16
     }
   });
 
@@ -48,7 +48,10 @@ getResultsFromDb = (res) => {
           resolve();
         });
       });
-    }).catch((err) => { reject("inside getCurrUsersItems"); });
+    }).catch((err) => {
+      console.log(err);
+      reject("inside getCurrUsersItems");
+    });
   });
 
 
@@ -60,7 +63,8 @@ getResultsFromDb = (res) => {
                 .whereBetween('size', [min_size, max_size])
                 .asCallback((err, rows) => {
       if (err) {
-        reject();
+        console.log(err);
+        reject("inside getInventory");
       } else {
         switch(type) {
           case "tops":
@@ -73,7 +77,7 @@ getResultsFromDb = (res) => {
             inventory.shoes = rows;
             break;
           default:
-            reject("inside getInventory");
+            reject("inside getInventory - no case in switch case");
         };
         resolve();
       }
@@ -86,6 +90,7 @@ getResultsFromDb = (res) => {
                 .where('item_id', itemInfo.id)
                 .asCallback((err, rows) => {
       if (err) {
+        console.log(err);
         reject("inside getItemTags");
       } else {
         let itemTagArr = rows.map((tag) => {
@@ -105,7 +110,10 @@ getResultsFromDb = (res) => {
       getUserPreferences(itemInfo.owner).then(() => {
         resolve();
       });
-    }).catch((err) => { reject("inside getItemOwners"); });
+    }).catch((err) => {
+      console.log(err);
+      reject("inside getItemOwners");
+    });
   });
 
 

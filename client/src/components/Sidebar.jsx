@@ -7,26 +7,27 @@ class Sidebar extends Component {
     const userPreferenceTags = this.props.userPreferenceTags.map((tag, i) => {
       return (
       <li key={i}>
-        <span className='side-bar-tag' >{tag}</span>
+        <span className='tag' >{tag}</span>
       </li>
     )});
 
     const tagsFromItems = this.props.tagsFromItems.map((tag, i) => {
       return (
       <li key={i}>
-        <span className='side-bar-tag' >{tag}</span>
+        <span className='tag' >{tag}</span>
       </li>
     )});
 
     return (
-      <div id='side-bar'>
-        <h2 id='all-tags-label'>User Preferance Tags</h2>
+      <div className='side-bar'>
+        <h2 className='all-tags-label'>User Preferance Tags</h2>
         <hr/>
-        <ul id='side-bar-tag-list'>{userPreferenceTags}</ul>
+        <ul className='side-bar-tag-list'>{userPreferenceTags}</ul>
         <hr/>
-        <h2 id='all-tags-label'>Tags From Items</h2>
+        <h2 className='all-tags-label'>Tags From Items</h2>
         <hr/>
-        <ul id='side-bar-tag-list'>{tagsFromItems}</ul>
+
+        <ul className='side-bar-tag-list'>{tagsFromItems}</ul>
       </div>
 
     )

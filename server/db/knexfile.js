@@ -1,7 +1,7 @@
 // Update with your config settings.
 "use strict"
 
-const config = require('./config');
+const config = require('./config_local');
 
 module.exports = {
 
