@@ -5,6 +5,21 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+
+
+// const dbConfig = require('../server/db/config_local');
+// const knex = require('knex')({
+//   client: 'pg',
+//   connection: dbConfig,
+//   pool: {
+//     min: 2,
+//     max: 16
+//   }
+// });
+
+
+// const bcrypt = require('bcrypt');
+// const session = require('express-session');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 // const engine = require('ejs-locals');
@@ -18,7 +33,11 @@ const knex = require('knex')(connection);
 // +---------------------+
 const getTags = require('./helpers/get_tags.js');
 const getResultsFromDb = require('../_behzad/query_simple');
+
+const processUserQuery = require('../_behzad/process_user_query');
+
 const insertUser = require('./helpers/add_user_to_db.js');
+
 
 
 // +---------------------+
@@ -98,9 +117,11 @@ const PORT = process.env.PORT || 8080;
 // +---------------------+
 
 
-app.get('/api/items', function (req, res) {
-    getResultsFromDb(res);
-});
+// app.get('/api/items', function (req, res) {
+//     getResultsFromDb(res);
+// });
+
+
 
 
 // +---------------------+
@@ -287,4 +308,16 @@ app.delete('/users/:id/items/id', (req, res) => {
 
 app.listen(PORT, () => {
   console.log('listening to http://localhost:' + PORT);
+});
+
+
+
+
+
+app.get('/api', (req, res) => {
+  getResultsFromDb(res, knex);
+});
+
+app.post('/api', (req, res) => {
+  processUserQuery(req, res, knex);
 });

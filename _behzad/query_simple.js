@@ -1,15 +1,4 @@
-const dbConfig = require('../server/db/config_local');
-const knex = require('knex')({
-  client: 'pg',
-  connection: dbConfig,
-  pool: {
-      min: 4,
-      max: 16
-    }
-  });
-
-
-getResultsFromDb = (res) => {
+getResultsFromDb = (res, knex) => {
 
   const Promise = require('bluebird');
   const util = require('util');
@@ -21,7 +10,6 @@ getResultsFromDb = (res) => {
   }
 
   let inventory = {};
-
 
   getUserPreferences = (userInfo) => new Promise((resolve, reject) => {
     knex('tags').select('content').innerJoin('tag_user', 'tag_id', 'tags.id')
@@ -39,6 +27,7 @@ getResultsFromDb = (res) => {
 
 
   getCurrUsersItems = (userInfo) => new Promise((resolve, reject) => {
+
     knex('items').select().where('user_id', userInfo.id).andWhere('type', 'tops').then((rows) => {
       userInfo.myItems.tops = rows;
       knex('items').select().where('user_id', userInfo.id).andWhere('type', 'bottoms').then((rows) => {

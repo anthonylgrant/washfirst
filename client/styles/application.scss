@@ -2,8 +2,8 @@
 @import 'header';
 @import '../node_modules/bulma/bulma';
 @import '../node_modules/animate.css/animate.min.css';
-@import './card';
-@import './layout';
+@import './item';
+@import './main-container';
 @import './sidebar';
 
 h1 {
@@ -15,7 +15,8 @@ h1 {
  *************************/
 
  .parent-container > div {
-   display: flex;
-   height: 100%;
-   position: fixed;
+   // display: flex;
+   // height: 100%;
+   // position: fixed;
+   margin: 0;
  }
