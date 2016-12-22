@@ -99,8 +99,7 @@ const PORT = process.env.PORT || 8080;
 // +---------------------+
 
 app.get('/', function (req, res) {
-    // res.json({hello: "hello", tags: tagArray });
-    res.render('../client/src/App');
+  res.render("../client/index");
 });
 
 

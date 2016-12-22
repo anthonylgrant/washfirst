@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Navbar from './components/Navbar.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Item from './components/Item.jsx';
-
+import FlipCard from 'react-flipcard';
 
 class App extends Component {
   constructor(props) {
@@ -15,10 +15,56 @@ class App extends Component {
       bottomsInventory: []
     }
     this.sendPostRequest = this.sendPostRequest.bind(this);
+    this.swapTagsFromUserPref = this.swapTagsFromUserPref.bind(this);
+    this.swapTagsFromTagsFromItems = this.swapTagsFromTagsFromItems.bind(this);
     this.sortItemsByRanking = this.sortItemsByRanking.bind(this);
     this.concatTagArrays = this.concatTagArrays.bind(this);
+    this.autoCompleteSearchBar = this.autoCompleteSearchBar.bind(this);
+    this.handlePreferenceSubmit = this.handlePreferenceSubmit.bind(this);
   }
 
+  swapTagsFromUserPref(event) {
+    event.preventDefault;
+    let targetText = event.target.innerHTML;
+    let newArr1 = this.state.tagsFromItems;
+    let newArr2 = this.state.userPreferenceTags
+
+    let index = newArr2.indexOf(targetText);
+
+    newArr1.push(targetText);
+    newArr2.splice(index, 1);
+    this.setState({
+      tagsFromItems: newArr1,
+      fixedTagsFromItems: newArr1,
+      userPreferenceTags: newArr2
+    });
+  }
+
+  swapTagsFromTagsFromItems(event) {
+    event.preventDefault;
+    let targetText = event.target.innerHTML;
+    let newArr2 = this.state.userPreferenceTags
+    newArr2.push(targetText);
+
+    let newArr1 = this.state.tagsFromItems
+    let index = newArr1.indexOf(targetText);
+    newArr1.splice(index, 1);
+    this.setState({
+      tagsFromItems: newArr1,
+      fixedTagsFromItems: newArr1,
+      userPreferenceTags: newArr2
+    });
+  }
+
+  autoCompleteSearchBar(event) {
+    event.preventDefault();
+    let regex = new RegExp('^' + event.target.value);
+
+    let filtered = this.state.fixedTagsFromItems.filter((tag) => {
+      return regex.test(tag);
+    });
+    this.setState({ tagsFromItems: filtered });
+  }
 
   componentDidMount() {
     $.ajax({
@@ -29,6 +75,7 @@ class App extends Component {
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
           tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
+          fixedTagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
           topsInventory: this.sortItemsByRanking(response.inventory.tops),
           bottomsInventory: this.sortItemsByRanking(response.inventory.bottoms),
           shoesInventory: this.sortItemsByRanking(response.inventory.shoes)
@@ -37,6 +84,9 @@ class App extends Component {
     });
   }
 
+  handlePreferenceSubmit() {
+    console.log("gotcha!");
+  }
 
   sortItemsByRanking(items) {
     items.sort((a, b) => {
@@ -87,22 +137,24 @@ class App extends Component {
   }
 
   render() {
+    console.log("this.state.shoesInventory", this.state.shoesInventory)
     return (
       <div>
         <Navbar />
         <div className="main-container">
           {this.state.shoesInventory.map((shoe) => {
-            return <Item key={shoe.id} gender={shoe.gender} size={shoe.size} desc={shoe.description} />
+            return <Item key={shoe.id} item={shoe} />
           })}
         </div>
-
-        { this.state.userPreferenceTags.length > 0 &&
           <Sidebar
             userPreferenceTags={this.state.userPreferenceTags}
             tagsFromItems={this.state.tagsFromItems}
+            swapTagsFromUserPref = {this.swapTagsFromUserPref}
+            swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
+            autoCompleteSearchBar={this.autoCompleteSearchBar}
+            handlePreferenceSubmit={this.handlePreferenceSubmit}
           />
-        }
-        <form onSubmit={this.sendPostRequest}>
+        {/* <form onSubmit={this.sendPostRequest}>
           <input
             id="new-message"
             type="text"
@@ -111,7 +163,7 @@ class App extends Component {
             placeholder="Type a message and hit ENTER"
           />
           <input type="submit" />
-        </form>
+        </form> */}
       </div>
     );
   }

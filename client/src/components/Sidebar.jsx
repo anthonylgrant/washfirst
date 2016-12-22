@@ -7,14 +7,14 @@ class Sidebar extends Component {
     const userPreferenceTags = this.props.userPreferenceTags.map((tag, i) => {
       return (
       <li key={i}>
-        <span className='tag' >{tag}</span>
+        <a onClick={ this.props.swapTagsFromUserPref }><span className='tag animated fadeIn'>{tag}</span></a>
       </li>
     )});
 
     const tagsFromItems = this.props.tagsFromItems.map((tag, i) => {
       return (
       <li key={i}>
-        <span className='tag' >{tag}</span>
+        <a onClick={ this.props.swapTagsFromTagsFromItems }><span className='tag animated fadeIn'>{tag}</span></a>
       </li>
     )});
 
@@ -23,8 +23,10 @@ class Sidebar extends Component {
         <h2 className='all-tags-label'>User Preferance Tags</h2>
         <hr/>
         <ul className='side-bar-tag-list'>{userPreferenceTags}</ul>
+        <button onClick={this.props.handlePreferenceSubmit}>submit</button>
         <hr/>
         <h2 className='all-tags-label'>Tags From Items</h2>
+        <input type="text" onChange={this.props.autoCompleteSearchBar}/>
         <hr/>
 
         <ul className='side-bar-tag-list'>{tagsFromItems}</ul>
