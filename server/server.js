@@ -7,6 +7,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+// const engine = require('ejs-locals');
 
 // HEROKU CONFIG GOES INTO .ENV FILE
 const connection = require('./db/knexfile.js').development;
@@ -56,6 +57,7 @@ if(req.session.username) {
 // |     VIEW ENGINE     |
 // +---------------------+
 
+// app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 
 
@@ -117,7 +119,12 @@ app.get('/users/:id', (req, res) => {
 // +---------------------+
 
 app.get('/login', (req, res) => {
-  res.render('pages/login');
+  const usernameError = false;
+  const passwordError = false;
+  res.render('pages/login', {
+    usernameError: usernameError,
+    passwordError: passwordError
+  });
 })
 
 
@@ -145,19 +152,46 @@ app.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   // username: nodemon, password: asdf = true
-  knex('users').select('password')
-  .where('username', username)
-  .then((hash) => {
-    bcrypt.compare(password, hash[0].password).then(function(valid) {
-      console.log('valid: ', valid);
-      if(valid) {
-        req.session.username = username;
-        res.redirect('http://localhost:3000');
-      } else {
-        res.render('pages/login');
-      }
-    });
+  knex('users')
+    .count('id')
+    .where('username', username)
+  .then((string) => {
+    console.log('string: ', string);
+    const int = parseInt(string[0].count);
+    console.log('int: ', int);
+    if (int === 0) {
+      console.log('in here');
+      const usernameError = true;
+      const passwordError = false;
+      res.render('pages/login', {
+        usernameError: usernameError,
+        passwordError: passwordError
+      });
+    }
+  })
+  .then(() => {
+    knex('users').select('password')
+    .where('username', username)
+    .then((hashDb) => {
+      bcrypt.compare(password, hashDb[0].password)
+      .then((valid) => {
+        console.log('valid: ', valid);
+        if(valid) {
+          req.session.username = username;
+          res.redirect('http://localhost:3000');
+        } else {
+          const usernameError = false;
+          const passwordError = true;
+          console.log('passwordError', passwordError)
+          res.render('pages/login', {
+            usernameError: usernameError,
+            passwordError: passwordError
+          });
+        }
+      });
+    })
   });
+
 });
 
 
