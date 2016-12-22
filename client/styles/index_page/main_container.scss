@@ -14,5 +14,8 @@ $default_content_padding: 10px;
     display: inline-block;
     margin: $default_content_padding;
     max-width: 100%;
+    .item-tag {
+      margin: 1px;
+    }
   }
 }

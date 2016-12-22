@@ -138,11 +138,11 @@ class App extends Component {
         <Navbar />
         <div className="main-container">
           {this.state.shoesInventory.map((shoe) => {
-            return <Item key={shoe.id} gender={shoe.gender} size={shoe.size} desc={shoe.description} />
+            return <Item key={shoe.id} gender={shoe.gender} size={shoe.size} desc={shoe.description} tags={shoe.tags} date={shoe.owner.created_at}/>
           })}
         </div>
 
-        { this.state.userPreferenceTags.length > 0 &&
+
           <Sidebar
             userPreferenceTags={this.state.userPreferenceTags}
             tagsFromItems={this.state.tagsFromItems}
@@ -150,7 +150,7 @@ class App extends Component {
             swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
             autoCompleteSearchBar={this.autoCompleteSearchBar}
           />
-        }
+
         <form onSubmit={this.sendPostRequest}>
           <input
             id="new-message"
