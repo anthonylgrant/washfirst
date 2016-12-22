@@ -7,14 +7,14 @@ class Sidebar extends Component {
     const userPreferenceTags = this.props.userPreferenceTags.map((tag, i) => {
       return (
       <li key={i}>
-        <a onClick={ this.props.swapTagsFromUserPref }><span className='tag'>{tag}</span></a>
+        <a onClick={ this.props.swapTagsFromUserPref }><span className='tag animated fadeIn'>{tag}</span></a>
       </li>
     )});
 
     const tagsFromItems = this.props.tagsFromItems.map((tag, i) => {
       return (
       <li key={i}>
-        <a onClick={ this.props.swapTagsFromTagsFromItems }><span className='tag'>{tag}</span></a>
+        <a onClick={ this.props.swapTagsFromTagsFromItems }><span className='tag animated fadeIn'>{tag}</span></a>
       </li>
     )});
 
