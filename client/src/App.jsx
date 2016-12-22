@@ -4,6 +4,17 @@ import Sidebar from './components/Sidebar.jsx';
 import Item from './components/Item.jsx';
 
 
+Array.prototype.removeIf = function(callback) {
+    var i = this.length;
+    while (i--) {
+        if (callback(this[i], i)) {
+            this.splice(i, 1);
+        }
+    }
+};
+
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -85,14 +96,39 @@ class App extends Component {
   }
 
   handlePreferenceSubmit() {
-    console.log("gotcha!");
+    let data = {
+      data: JSON.stringify(this.state.userPreferenceTags)
+    };
+
+    console.log("data, ", data);
+    $.ajax({
+      method: 'POST',
+      url: '/test',
+      data: data,
+      dataType: "JSON",
+      success: (response) => {
+        console.log("SUCCESS POSTING TO /test", response);
+        this.setState({
+          userPreferenceTags: response.currUserInfo.preferences,
+          tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
+          fixedTagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
+          topsInventory: this.sortItemsByRanking(response.inventory.tops),
+          bottomsInventory: this.sortItemsByRanking(response.inventory.bottoms),
+          shoesInventory: this.sortItemsByRanking(response.inventory.shoes)
+        });
+      }
+
+    });
   }
 
   sortItemsByRanking(items) {
-    items.sort((a, b) => {
+    let tempArr = items.filter((item) => {
+      return item.currUserWantsThis > 0;
+    });
+    tempArr.sort((a, b) => {
       return b.currUserWantsThis - a.currUserWantsThis;
     });
-    return items;
+    return tempArr;
   }
 
 
@@ -137,7 +173,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("this.state.shoesInventory", this.state.shoesInventory)
     return (
       <div>
         <Navbar />

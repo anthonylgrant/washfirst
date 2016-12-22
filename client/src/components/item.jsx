@@ -6,10 +6,6 @@ class Item extends Component {
     return (
 
         <div className="card animated fadeInDown">
-
-
-
-
           <div className="default-item-view">
             <div className="card-image">
               <figure className="image is-4by3">
@@ -32,6 +28,7 @@ class Item extends Component {
               </div>
             </div>
           </div>
+
 
             <div className="hover-item-view">
               <span className="item-owner-contact-info">email: {this.props.item.owner.email} | phone: {this.props.item.owner.phone_number} </span>

@@ -6,6 +6,17 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
+const dbConfig = require('../server/db/config_local');
+const knex = require('knex')({
+  client: 'pg',
+  connection: dbConfig,
+  pool: {
+    min: 2,
+    max: 16
+  }
+});
+
+
 // const bcrypt = require('bcrypt');
 // const session = require('express-session');
 
@@ -18,6 +29,7 @@ const bodyParser = require('body-parser');
 // +---------------------+
 const getTags = require('./helpers/get_tags.js');
 const getResultsFromDb = require('../_behzad/query_simple');
+const processUserQuery = require('../_behzad/process_user_query');
 
 
 // +---------------------+
@@ -237,6 +249,10 @@ app.listen(PORT, () => {
 //     res.redirect('/');
 // })
 //
-app.get('/test', function (req, res) {
-  getResultsFromDb(res);
+app.get('/test', (req, res) => {
+  getResultsFromDb(res, knex);
+});
+
+app.post('/test', (req, res) => {
+  processUserQuery(req, res, knex);
 });
