@@ -4,7 +4,7 @@ class Item extends Component {
 
   render() {
     return (
-      <div className="card">
+      <div className="card animated fadeInDown">
         <div className="card-image">
           <figure className="image is-4by3">
             <img src="../../public/images/default_img.jpg" alt="" />
