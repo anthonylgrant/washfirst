@@ -23,6 +23,7 @@ class Sidebar extends Component {
         <h2 className='all-tags-label'>User Preferance Tags</h2>
         <hr/>
         <ul className='side-bar-tag-list'>{userPreferenceTags}</ul>
+        <button onClick={this.props.handlePreferenceSubmit}>submit</button>
         <hr/>
         <h2 className='all-tags-label'>Tags From Items</h2>
         <input type="text" onChange={this.props.autoCompleteSearchBar}/>

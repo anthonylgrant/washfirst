@@ -20,6 +20,7 @@ class App extends Component {
     this.sortItemsByRanking = this.sortItemsByRanking.bind(this);
     this.concatTagArrays = this.concatTagArrays.bind(this);
     this.autoCompleteSearchBar = this.autoCompleteSearchBar.bind(this);
+    this.handlePreferenceSubmit = this.handlePreferenceSubmit.bind(this);
   }
 
   swapTagsFromUserPref(event) {
@@ -83,6 +84,9 @@ class App extends Component {
     });
   }
 
+  handlePreferenceSubmit() {
+    console.log("gotcha!");
+  }
 
   sortItemsByRanking(items) {
     items.sort((a, b) => {
@@ -148,6 +152,7 @@ class App extends Component {
             swapTagsFromUserPref = {this.swapTagsFromUserPref}
             swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
             autoCompleteSearchBar={this.autoCompleteSearchBar}
+            handlePreferenceSubmit={this.handlePreferenceSubmit}
           />
         <form onSubmit={this.sendPostRequest}>
           <input

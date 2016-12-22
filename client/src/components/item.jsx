@@ -19,7 +19,7 @@ class Item extends Component {
           <div className="content">
             <p>Size: {this.props.size}</p>
             { this.props.tags.map((tag, i) => {
-              return <span className="tag item-tag">{tag}</span>
+              return <span key={i} className="tag item-tag">{tag}</span>
             })}
 
             <br />
