@@ -14,8 +14,31 @@ $default_content_padding: 10px;
     display: inline-block;
     margin: $default_content_padding;
     max-width: 100%;
+
+    .hover-item-view {
+      display: none;
+    }
+
+
+    // .card-hover:active {
+    //   .hover-item-view { display: block; }
+    //   .default-item-view { display: none; }
+    // }
+
+
+
+
+
+
+
+
     .item-tag {
       margin: 1px;
     }
   }
+}
+
+.card-hover:active {
+  .hover-item-view { display: block; }
+  .default-item-view { display: none; }
 }
