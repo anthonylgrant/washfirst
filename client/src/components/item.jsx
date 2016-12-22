@@ -42,7 +42,7 @@ class Item extends Component {
 
   render() {
     return (
-      <div className="card">
+      <div className="card animated fadeInDown">
         <FlipCard
           className = "card"
           disabled={true}
@@ -62,8 +62,7 @@ class Item extends Component {
                 <div className="card-content">
                   <div className="content">
                     <div className="media-content">
-                      <span className="title is-5">John Smith</span>
-                      <a><p className="subtitle is-6">@johnsmith</p></a>
+                      <span className="title is-5">{this.props.item.owner.username}</span>
                     </div>
                     <small>11:09 PM - 1 Jan 2016</small>
                   </div>
@@ -83,7 +82,18 @@ class Item extends Component {
             <div className="content-container">
               {/* <div>Back</div> */}
               <div className="card-back">
-                <span className="item-owner-contact-info">email: {this.props.item.owner.email} | phone: {this.props.item.owner.phone_number} </span>
+                <div className="item-owner-contact-info">
+                  <span><b>Contact Info</b></span>
+                  <span>
+                    Username: {this.props.item.owner.username}
+                  </span>
+                  <span>
+                    email: {this.props.item.owner.email}
+                  </span>
+                  <span>
+                    phone: {this.props.item.owner.phone_number}
+                  </span>
+                </div>
                 <div className="item-owner-matches">
                 { this.props.item.owner.sellersInterestInMyProduct.map((item, index) => {
                   return (
