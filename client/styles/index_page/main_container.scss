@@ -20,10 +20,22 @@ $default_content_padding: 10px;
     }
 
 
-    // .card-hover:active {
-    //   .hover-item-view { display: block; }
-    //   .default-item-view { display: none; }
-    // }
+    &:hover {
+      .hover-item-view {
+        display: block;
+
+        .matched-item-from-users-closet {
+          line-height: 80px;
+
+          figure {
+            display: inline-block;
+            margin: auto 10px;
+            vertical-align: middle;
+          }
+        }
+      }
+      .default-item-view { display: none; }
+    }
 
 
 
@@ -36,9 +48,4 @@ $default_content_padding: 10px;
       margin: 1px;
     }
   }
-}
-
-.card-hover:active {
-  .hover-item-view { display: block; }
-  .default-item-view { display: none; }
 }
