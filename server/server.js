@@ -6,30 +6,37 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-const dbConfig = require('../server/db/config_local');
-const knex = require('knex')({
-  client: 'pg',
-  connection: dbConfig,
-  pool: {
-    min: 2,
-    max: 16
-  }
-});
+
+// const dbConfig = require('../server/db/config_local');
+// const knex = require('knex')({
+//   client: 'pg',
+//   connection: dbConfig,
+//   pool: {
+//     min: 2,
+//     max: 16
+//   }
+// });
 
 
 // const bcrypt = require('bcrypt');
 // const session = require('express-session');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
 
 // HEROKU CONFIG GOES INTO .ENV FILE
-// const connection = require('./db/knexfile.js').development;
-// const knex = require('knex')(connection);
+const connection = require('./db/knexfile.js').development;
+const knex = require('knex')(connection);
 
 // +---------------------+
 // |       HELPERS       |
 // +---------------------+
 const getTags = require('./helpers/get_tags.js');
 const getResultsFromDb = require('../_behzad/query_simple');
+
 const processUserQuery = require('../_behzad/process_user_query');
+
+const insertUser = require('./helpers/add_user_to_db.js');
+
 
 
 // +---------------------+
@@ -38,7 +45,8 @@ const processUserQuery = require('../_behzad/process_user_query');
 
 const blacklist = [
   '/index',
-  '/user/:id'
+  '/user/:id',
+  '/api/items'
 ]
 
 
@@ -48,25 +56,26 @@ const blacklist = [
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
-// app.use(session({
-//   // SECRET GOES INTO .ENV FILE
-//   secret: 'keyboard cat',
-//   resave: false,
-//   saveUninitialized: true
-// }));
+app.use(session({
+  // SECRET GOES INTO .ENV FILE
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(blacklist, (req, res, next) => {
+if(req.session.username) {
+    next();
+  } else {
+    res.render('pages/login');
+  }
+});
 
 
-//  // AUTHENTICATION MIDDLEWARE
-// app.use(blacklist, (req, res, next) => {
-// // ####################
-// // on login we create the session. It doesn't have to make use of the email.
-// // ####################
-// if(req.session.email) {
-//     next();
-//   } else {
-//     res.render('pages/error');
-//   }
-// });
+// +---------------------+
+// |     VIEW ENGINE     |
+// +---------------------+
+
+app.set('view engine', 'ejs');
 
 
 // +---------------------+
@@ -76,13 +85,8 @@ app.use(express.static('public'));
 const PORT = process.env.PORT || 8080;
 
 
-
-
-// ***********************
-// ***********************
 //          ToDO
-// ***********************
-// ***********************
+
   // Authentication
     // -BlackList
     // -Middleware
@@ -107,12 +111,15 @@ const PORT = process.env.PORT || 8080;
 // +---------------------+
 
 // +---------------------+
-// |        INDEX        |
+// |     INDEX/ITEMS     |
 // +---------------------+
 
-app.get('/', function (req, res) {
-  res.render("../client/index");
-});
+
+// app.get('/api/items', function (req, res) {
+//     getResultsFromDb(res);
+// });
+
+
 
 
 // +---------------------+
@@ -131,7 +138,7 @@ app.get('/users/:id', (req, res) => {
 // +---------------------+
 
 app.get('/login', (req, res) => {
-
+  res.render('pages/login');
 })
 
 
@@ -140,8 +147,8 @@ app.get('/login', (req, res) => {
 // +---------------------+
 
 
-app.get('/registration', (req, res) => {
-
+app.get('/register', (req, res) => {
+  res.render('pages/signup')
 })
 
 
@@ -156,9 +163,22 @@ app.get('/registration', (req, res) => {
 // +---------------------+
 
 app.post('/login', (req, res) => {
-
-// if successful login, create session key here.
-
+  const username = req.body.username;
+  const password = req.body.password;
+  // username: nodemon, password: asdf = true
+  knex('users').select('password')
+  .where('username', username)
+  .then((hash) => {
+    bcrypt.compare(password, hash[0].password).then(function(valid) {
+      console.log('valid: ', valid);
+      if(valid) {
+        req.session.username = username;
+        res.redirect('http://localhost:3000');
+      } else {
+        res.render('pages/login');
+      }
+    });
+  });
 });
 
 
@@ -166,8 +186,24 @@ app.post('/login', (req, res) => {
 // |      REGISTER       |
 // +---------------------+
 
-app.post('/registration', (req, res) => {
-
+app.post('/register', (req, res) => {
+  bcrypt.hash(req.body.password, 10).then(function(hash) {
+    const userObject = {
+      username: req.body.username,
+      password: hash,
+      email: req.body.email,
+      phone_number: req.body.phone,
+      gender: req.body.gender
+      // min_top_size: parseInt(req.body.min_top_size),
+      // max_top_size: parseInt(req.body.max_top_size),
+      // min_bottom_size: parseInt(req.body.min_bottom_size),
+      // max_bottom_size: parseInt(req.body.max_bottom_size),
+      // min_shoe_size: parseInt(req.body.min_shoe_size),
+      // max_shoe_size: parseInt(req.body.max_shoe_size)
+    }
+    insertUser(userObject);
+    res.redirect('http://localhost:3000');
+  })
 });
 
 
@@ -244,15 +280,10 @@ app.listen(PORT, () => {
 
 
 
-// app.post('/test', (req, res) => {
-//     console.log(req.body.message);
-//     res.redirect('/');
-// })
-//
-app.get('/test', (req, res) => {
+app.get('/api', (req, res) => {
   getResultsFromDb(res, knex);
 });
 
-app.post('/test', (req, res) => {
+app.post('/api', (req, res) => {
   processUserQuery(req, res, knex);
 });

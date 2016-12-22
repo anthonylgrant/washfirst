@@ -20,16 +20,19 @@ class Sidebar extends Component {
 
     return (
       <div className='side-bar'>
-        <h2 className='all-tags-label'>User Preferance Tags</h2>
+        <div className='tags-list'>
+          <h2 className='all-tags-label'>User Preference Tags</h2>
+          <hr/>
+          <ul className='side-bar-tag-list'>{userPreferenceTags}</ul>
+        </div>
+        <button className="button is-primary is-small" onClick={this.props.handlePreferenceSubmit}>submit</button>
         <hr/>
-        <ul className='side-bar-tag-list'>{userPreferenceTags}</ul>
-        <button onClick={this.props.handlePreferenceSubmit}>submit</button>
-        <hr/>
-        <h2 className='all-tags-label'>Tags From Items</h2>
-        <input type="text" onChange={this.props.autoCompleteSearchBar}/>
-        <hr/>
-
-        <ul className='side-bar-tag-list'>{tagsFromItems}</ul>
+        <div className='tags-list'>
+          <h2 className='all-tags-label'>Tags From Items</h2>
+          <input id="search-bar" type="text" placeholder="enter tags here" onChange={this.props.autoCompleteSearchBar}/>
+          <hr/>
+          <ul className='side-bar-tag-list'>{tagsFromItems}</ul>
+        </div>
       </div>
 
     )

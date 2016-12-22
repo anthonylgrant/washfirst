@@ -3,18 +3,6 @@ import Navbar from './components/Navbar.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Item from './components/Item.jsx';
 
-
-Array.prototype.removeIf = function(callback) {
-    var i = this.length;
-    while (i--) {
-        if (callback(this[i], i)) {
-            this.splice(i, 1);
-        }
-    }
-};
-
-
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -23,8 +11,9 @@ class App extends Component {
       tagsFromItems: [],
       shoesInventory: [],
       topsInventory: [],
-      bottomsInventory: []
-    }
+      bottomsInventory: [],
+      searchBarText: ''
+    };
     this.sendPostRequest = this.sendPostRequest.bind(this);
     this.swapTagsFromUserPref = this.swapTagsFromUserPref.bind(this);
     this.swapTagsFromTagsFromItems = this.swapTagsFromTagsFromItems.bind(this);
@@ -69,18 +58,23 @@ class App extends Component {
 
   autoCompleteSearchBar(event) {
     event.preventDefault();
-    let regex = new RegExp('^' + event.target.value);
+    console.log("I AM IN AUTOCOMPLETE", this.state.fixedTagsFromItems);
+    let text = event.target.value;
+    let regex = new RegExp('^' + text);
 
     let filtered = this.state.fixedTagsFromItems.filter((tag) => {
       return regex.test(tag);
     });
-    this.setState({ tagsFromItems: filtered });
+    this.setState({
+      tagsFromItems: filtered,
+      searchBarText: text
+    });
   }
 
   componentDidMount() {
     $.ajax({
       method: 'GET',
-      url: '/test',
+      url: '/api',
       dataType: 'JSON',
       success: (response) => {
         this.setState({
@@ -93,6 +87,20 @@ class App extends Component {
         });
       }
     });
+
+    document.querySelector('#search-bar').addEventListener('keypress', (event) => {
+      let key = event.which || event.keyCode;
+      if (key === 13) {
+        let tempArr = this.state.userPreferenceTags;
+        tempArr.push(this.state.searchBarText);
+
+        this.setState({
+          userPreferenceTags: tempArr,
+          searchBarText: ''
+        });
+        event.target.value = '';
+      }
+    });
   }
 
   handlePreferenceSubmit() {
@@ -103,11 +111,11 @@ class App extends Component {
     console.log("data, ", data);
     $.ajax({
       method: 'POST',
-      url: '/test',
+      url: '/api',
       data: data,
       dataType: "JSON",
       success: (response) => {
-        console.log("SUCCESS POSTING TO /test", response);
+        console.log("SUCCESS POSTING TO /api", response);
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
           tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
@@ -117,7 +125,6 @@ class App extends Component {
           shoesInventory: this.sortItemsByRanking(response.inventory.shoes)
         });
       }
-
     });
   }
 
@@ -162,13 +169,10 @@ class App extends Component {
     console.log('sending post:', this.state.message);
     $.post({
       method: 'POST',
-      url: '/test',
+      url: '/api',
       data: {message: this.state.message},
-      success: function(response) {
-        // console.log(e.target.value);
-        // console.log('sendPostRequest:', response);
-      }
-    })
+      success: function(response) {}
+    });
     e.preventDefault();
   }
 
@@ -178,27 +182,21 @@ class App extends Component {
         <Navbar />
         <div className="main-container">
           {this.state.shoesInventory.map((shoe) => {
-            return <Item key={shoe.id} item={shoe} />
+            return (
+              <span key={shoe.id} className="item-container">
+                <Item key={shoe.id} item={shoe} />
+              </span>
+            )
           })}
         </div>
-          <Sidebar
-            userPreferenceTags={this.state.userPreferenceTags}
-            tagsFromItems={this.state.tagsFromItems}
-            swapTagsFromUserPref = {this.swapTagsFromUserPref}
-            swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
-            autoCompleteSearchBar={this.autoCompleteSearchBar}
-            handlePreferenceSubmit={this.handlePreferenceSubmit}
-          />
-        <form onSubmit={this.sendPostRequest}>
-          <input
-            id="new-message"
-            type="text"
-            name="theinput"
-            onChange={this.changeMessage.bind(this)}
-            placeholder="Type a message and hit ENTER"
-          />
-          <input type="submit" />
-        </form>
+        <Sidebar
+          userPreferenceTags={this.state.userPreferenceTags}
+          tagsFromItems={this.state.tagsFromItems}
+          swapTagsFromUserPref = {this.swapTagsFromUserPref}
+          swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
+          autoCompleteSearchBar={this.autoCompleteSearchBar}
+          handlePreferenceSubmit={this.handlePreferenceSubmit}
+        />
       </div>
     );
   }
