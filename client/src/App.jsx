@@ -133,6 +133,7 @@ class App extends Component {
   }
 
   render() {
+    console.log("this.state.shoesInventory", this.state.shoesInventory)
     return (
       <div>
         <Navbar />
@@ -141,8 +142,6 @@ class App extends Component {
             return <Item key={shoe.id} gender={shoe.gender} size={shoe.size} desc={shoe.description} />
           })}
         </div>
-
-        { this.state.userPreferenceTags.length > 0 &&
           <Sidebar
             userPreferenceTags={this.state.userPreferenceTags}
             tagsFromItems={this.state.tagsFromItems}
@@ -150,7 +149,6 @@ class App extends Component {
             swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
             autoCompleteSearchBar={this.autoCompleteSearchBar}
           />
-        }
         <form onSubmit={this.sendPostRequest}>
           <input
             id="new-message"
