@@ -221,11 +221,11 @@ getResultsFromDb = (res) => {
         compareArrays(shoe.owner, currUserInfo.myItems.shoes, shoe.owner);
       });
 
-      console.log("current user: \n", util.inspect(currUserInfo, false, null), "\n \n");
-      console.log("------------------------------------------------------------");
-      console.log("\n \n total inventory size: ", inventory.tops.length + inventory.bottoms.length + inventory.shoes.length, "\n \n");
-      console.log("------------------------------------------------------------");
-      console.log("\n \n Inventory: \n", util.inspect(inventory, false, null), "\n \n");
+      // console.log("current user: \n", util.inspect(currUserInfo, false, null), "\n \n");
+      // console.log("------------------------------------------------------------");
+      // console.log("\n \n total inventory size: ", inventory.tops.length + inventory.bottoms.length + inventory.shoes.length, "\n \n");
+      // console.log("------------------------------------------------------------");
+      // console.log("\n \n Inventory: \n", util.inspect(inventory, false, null), "\n \n");
 
       let outputData = {
         currUserInfo: currUserInfo,

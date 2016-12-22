@@ -66,10 +66,12 @@ class App extends Component {
     this.setState({ tagsFromItems: filtered });
   }
 
+
+
   componentDidMount() {
     $.ajax({
       method: 'GET',
-      url: '/test',
+      url: '/api/items',
       dataType: 'JSON',
       success: (response) => {
         this.setState({
@@ -82,6 +84,8 @@ class App extends Component {
         });
       }
     });
+
+
   }
 
   handlePreferenceSubmit() {
