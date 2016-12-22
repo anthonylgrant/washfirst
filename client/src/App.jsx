@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Navbar from './components/Navbar.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Item from './components/Item.jsx';
-
+import FlipCard from 'react-flipcard';
 
 class App extends Component {
   constructor(props) {
@@ -149,7 +149,7 @@ class App extends Component {
             swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
             autoCompleteSearchBar={this.autoCompleteSearchBar}
           />
-        <form onSubmit={this.sendPostRequest}>
+        {/* <form onSubmit={this.sendPostRequest}>
           <input
             id="new-message"
             type="text"
@@ -158,7 +158,7 @@ class App extends Component {
             placeholder="Type a message and hit ENTER"
           />
           <input type="submit" />
-        </form>
+        </form> */}
       </div>
     );
   }
