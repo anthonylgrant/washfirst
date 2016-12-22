@@ -1,8 +1,47 @@
-.item-container {
-  // display: flex;
+.card {
+  background-color: transparent;
+  box-shadow: 0 0 0;
 
-  .button-container {
-    // flex: none;
+
+  .ReactFlipCard {
+    width: 100%;
+
+    > div > div {
+      background-color: white;
+      box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+      &:focus, button:focus {
+        outline: none !important;
+      }
+
+    }
+
+    .item-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .content-container {
+        display: flex;
+      }
+    }
+
+    > div, > div > div {
+      height: 100%;
+    }
+  }
+}
+
+.card-front {
+  flex: 1;
+}
+.card-back {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .item-owner-matches {
+    display: flex;
+    flex-direction: column;
   }
 }
 

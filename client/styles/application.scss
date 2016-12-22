@@ -1,6 +1,4 @@
 // This is the top-level scss file. Import all other files in here.
-@import './index_page/side_bar';
-@import './index_page/main_container';
 @import 'header';
 @import '../node_modules/bulma/bulma';
 @import '../node_modules/animate.css/animate.min.css';
@@ -19,14 +17,4 @@ h1 {
    display: flex;
    height: 100%;
    position: fixed;
- }
-
- #bottom-bar {
-   background-color: rgba(0, 128, 0, 0.5);
-   bottom: 0;
-   line-height: 15px;
-   position: fixed;
-   text-align: center;
-   width: 100%;
-   z-index: 4;
  }
