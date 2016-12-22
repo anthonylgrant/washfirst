@@ -20,7 +20,7 @@ class Sidebar extends Component {
 
     return (
       <div className='side-bar'>
-        <h2 className='all-tags-label'>User Preferance Tags</h2>
+        <h2 className='all-tags-label'>User Preference Tags</h2>
         <hr/>
         <ul className='side-bar-tag-list'>{userPreferenceTags}</ul>
         <button onClick={this.props.handlePreferenceSubmit}>submit</button>
