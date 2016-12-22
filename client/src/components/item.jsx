@@ -21,7 +21,6 @@ class Item extends Component {
             { this.props.tags.map((tag, i) => {
               return <span className="tag item-tag">{tag}</span>
             })}
-
             <br />
             <small>!!{this.props.date.slice(0, 10)}!!</small>
           </div>
@@ -29,6 +28,9 @@ class Item extends Component {
       </div>
     );
   }
+
+
+
 
 };
 export default Item;
