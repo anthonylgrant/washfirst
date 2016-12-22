@@ -14,6 +14,36 @@ $default_content_padding: 10px;
     display: inline-block;
     margin: $default_content_padding;
     max-width: 100%;
+
+    .hover-item-view {
+      display: none;
+    }
+
+
+    &:hover {
+      .hover-item-view {
+        display: block;
+
+        .matched-item-from-users-closet {
+          line-height: 80px;
+
+          figure {
+            display: inline-block;
+            margin: auto 10px;
+            vertical-align: middle;
+          }
+        }
+      }
+      .default-item-view { display: none; }
+    }
+
+
+
+
+
+
+
+
     .item-tag {
       margin: 1px;
     }
