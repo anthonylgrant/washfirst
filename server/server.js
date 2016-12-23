@@ -286,8 +286,13 @@ app.post('/register', (req, res) => {
 // +---------------------+
 
 app.post('/users/:id/new', (req, res) => {
-  const userId = req.body.params;
-  console.log('users id from url is: ', userId);
+  let currentUserId = 0;
+  knex('users').select('id').where('username', req.session.username).asCallback((err, rows) => {
+    if (err) throw err;
+    console.log("rows[0].id: ", rows[0].id)
+    currentUserId = rows[0].id;
+  })
+
   let itemTags = req.body.tags.split(' ');
   let dataTemplate = {
     gender: req.body.gender,
@@ -296,7 +301,7 @@ app.post('/users/:id/new', (req, res) => {
     itemdescription: req.body.description,
     itemtags: itemTags,
     itemimageurl: req.body.imageurl,
-    userId: 'user id from session'
+    username: currentUserId
   }
   console.log(dataTemplate);
   res.redirect('/users/:id');
