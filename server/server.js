@@ -47,7 +47,7 @@ const insertUser = require('./helpers/add_user_to_db.js');
 const blacklist = [
   '/index',
   '/user/:id',
-  '/api/items'
+  '/api'
 ]
 
 
@@ -67,7 +67,12 @@ app.use(blacklist, (req, res, next) => {
 if(req.session.username) {
     next();
   } else {
-    res.render('pages/login');
+    const usernameError = false;
+    const passwordError = false;
+    res.render('pages/login', {
+      usernameError: usernameError,
+      passwordError: passwordError
+    });
   }
 });
 
@@ -76,7 +81,6 @@ if(req.session.username) {
 // |     VIEW ENGINE     |
 // +---------------------+
 
-// app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 
 
@@ -116,10 +120,21 @@ const PORT = process.env.PORT || 8080;
 // |     INDEX/ITEMS     |
 // +---------------------+
 
+app.get('/login/check', (req, res) => {
+  console.log('got called');
+  console.log('req.session', req.session.username);
+  if(!req.session.username) {
+    console.log('no username');
+    res.json({ status: false });
+  } else {
+    res.json({ status: true });
+    console.log('username present');
+  }
+});
 
-// app.get('/api/items', function (req, res) {
-//     getResultsFromDb(res);
-// });
+app.get('/api', (req, res) => {
+  getResultsFromDb(res, knex);
+});
 
 
 
@@ -173,6 +188,16 @@ app.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   // username: nodemon, password: asdf = true
+  if(!username || !password) {
+    const usernameError = true;
+    const passwordError = false;
+    res.render('pages/login', {
+      usernameError: usernameError,
+      passwordError: passwordError
+    });
+    return;
+  }
+
   knex('users')
     .count('id')
     .where('username', username)
@@ -194,6 +219,11 @@ app.post('/login', (req, res) => {
     knex('users').select('password')
     .where('username', username)
     .then((hashDb) => {
+      console.log('hashDb', hashDb);
+      if (hashDb.length === 0) {
+        return;
+      }
+      console.log('password', password);
       bcrypt.compare(password, hashDb[0].password)
       .then((valid) => {
         console.log('valid: ', valid);
@@ -262,10 +292,9 @@ app.post('/users/:id/items/new', (req, res) => {
 // |        LOGOUT       |
 // +---------------------+
 
-app.put('/logout', (req, res) => {
-
-  // delete session key, redirect to '/'
-
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/login');
 });
 
 
@@ -314,10 +343,8 @@ app.listen(PORT, () => {
 
 
 
-app.get('/api', (req, res) => {
-  getResultsFromDb(res, knex);
-});
 
-app.post('/api', (req, res) => {
-  processUserQuery(req, res, knex);
-});
+//
+// app.post('/api', (req, res) => {
+//   processUserQuery(req, res, knex);
+// });

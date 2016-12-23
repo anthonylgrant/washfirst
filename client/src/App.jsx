@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Navbar from './components/Navbar.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Item from './components/Item.jsx';
+import Landing from './components/Landing.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class App extends Component {
       shoesInventory: [],
       topsInventory: [],
       bottomsInventory: [],
-      searchBarText: ''
+      searchBarText: '',
+      loggedIn: false
     };
     this.sendPostRequest = this.sendPostRequest.bind(this);
     this.swapTagsFromUserPref = this.swapTagsFromUserPref.bind(this);
@@ -70,6 +72,22 @@ class App extends Component {
       searchBarText: text
     });
   }
+
+  componentWillMount() {
+    $.ajax({
+      method: 'GET',
+      url: '/login/check',
+      dataType: 'JSON',
+      success: (response) => {
+        console.log('response: ', response);
+        this.setState({
+          loggedIn: response.status
+        })
+      }
+    })
+  }
+
+
 
   componentDidMount() {
     $.ajax({
@@ -179,7 +197,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar loggedIn={this.state.loggedIn}/>
         <div className="main-container">
           {this.state.shoesInventory.map((shoe) => {
             return (
@@ -189,14 +207,19 @@ class App extends Component {
             )
           })}
         </div>
-        <Sidebar
-          userPreferenceTags={this.state.userPreferenceTags}
-          tagsFromItems={this.state.tagsFromItems}
-          swapTagsFromUserPref = {this.swapTagsFromUserPref}
-          swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
-          autoCompleteSearchBar={this.autoCompleteSearchBar}
-          handlePreferenceSubmit={this.handlePreferenceSubmit}
-        />
+        {this.state.loggedIn &&
+          <Sidebar
+            userPreferenceTags={this.state.userPreferenceTags}
+            tagsFromItems={this.state.tagsFromItems}
+            swapTagsFromUserPref = {this.swapTagsFromUserPref}
+            swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
+            autoCompleteSearchBar={this.autoCompleteSearchBar}
+            handlePreferenceSubmit={this.handlePreferenceSubmit}
+          />
+        }
+        {!this.state.loggedIn &&
+          <Landing />
+        }
       </div>
     );
   }
