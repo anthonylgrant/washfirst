@@ -47,7 +47,7 @@ const insertUser = require('./helpers/add_user_to_db.js');
 const blacklist = [
   '/index',
   '/user/:id',
-  '/api/items'
+  '/api'
 ]
 
 
@@ -81,7 +81,6 @@ if(req.session.username) {
 // |     VIEW ENGINE     |
 // +---------------------+
 
-// app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 
 
@@ -121,10 +120,9 @@ const PORT = process.env.PORT || 8080;
 // |     INDEX/ITEMS     |
 // +---------------------+
 
-
-// app.get('/api/items', function (req, res) {
-//     getResultsFromDb(res);
-// });
+app.get('/api', (req, res) => {
+  getResultsFromDb(res, knex);
+});
 
 
 
@@ -185,6 +183,7 @@ app.post('/login', (req, res) => {
       usernameError: usernameError,
       passwordError: passwordError
     });
+    return;
   }
 
   knex('users')
@@ -333,10 +332,8 @@ app.listen(PORT, () => {
 
 
 
-app.get('/api', (req, res) => {
-  getResultsFromDb(res, knex);
-});
 
-app.post('/api', (req, res) => {
-  processUserQuery(req, res, knex);
-});
+//
+// app.post('/api', (req, res) => {
+//   processUserQuery(req, res, knex);
+// });
