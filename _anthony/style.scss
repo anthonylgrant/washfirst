@@ -1,0 +1,55 @@
+$top-nav-height: 50px;
+$right-nav-width: 300px;
+
+.fixed-top-nav {
+  background-color: pink;
+}
+
+.fixed-right-nav {
+  background-color: purple;
+}
+
+.card-list-item {
+  background-color: blue;
+
+}
+
+.fixed-top-nav {
+  height: $top-nav-height;
+  background-color: pink;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.fixed-right-nav {
+  bottom: 0;
+  position: fixed;
+  right: 0;
+  top: 50px;
+  width: $right-nav-width;
+}
+
+.main-content-area {
+  padding: $top-nav-height $right-nav-width 0 0;
+  display: flex;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid grey;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
+  padding: 1em;
+}
+
+.card-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.card-list-item {
+  width: 200px;
+}

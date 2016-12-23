@@ -1,0 +1,44 @@
+.fixed-top-nav {
+  background-color: pink; }
+
+.fixed-right-nav {
+  background-color: purple; }
+
+.card-list-item {
+  background-color: blue; }
+
+.fixed-top-nav {
+  height: 50px;
+  background-color: pink;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0; }
+
+.fixed-right-nav {
+  bottom: 0;
+  position: fixed;
+  right: 0;
+  top: 50px;
+  width: 300px; }
+
+.main-content-area {
+  padding: 50px 300px 0 0;
+  display: flex; }
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid grey;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  padding: 1em; }
+
+.card-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px; }
+
+.card-list-item {
+  width: 200px; }
+
+/*# sourceMappingURL=style.css.map */

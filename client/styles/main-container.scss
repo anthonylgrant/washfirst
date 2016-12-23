@@ -3,20 +3,11 @@ $main_container_width: 75%;
 $default_content_padding: 5px;
 
 .main-container {
-  padding-top: $header_height;
-  max-width: $main_container_width;
-
-  .item-container {
-    // display: static;
-    .ReactFlipCard,
-    .ReactFlipCard__Front,
-    .ReactFlipCard__Back {
-      position: relative;
-      margin: $default_content_padding;
-      max-width: 300px;
-      .item-tag {
-        margin: 2px;
-      }
-    }
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 300px 0 0;
+  .main-container-item {
+    width: 320px;
+    height: 550px;
   }
 }

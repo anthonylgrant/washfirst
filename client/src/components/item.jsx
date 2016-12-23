@@ -162,14 +162,13 @@ class Item extends Component {
 
   render() {
     return (
-
       <FlipCard
         disabled={true}
         flipped={this.state.isFlipped}
         onFlip={this.handleOnFlip}
         onKeyDown={this.handleKeyDown}
       >
-
+      <div>
         <div className="card card-front">
           <div className="card-image">
             <DeleteButton />
@@ -197,7 +196,9 @@ class Item extends Component {
             <button className="card-footer-item" type="button" onClick={this.showBack}>Show back</button>
           </div>
         </div>
+      </div>
 
+      <div>
         <div className="card card-back">
           <span className="item-owner-contact-info">email: {this.props.item.owner.email} | phone: {this.props.item.owner.phone_number} </span>
 
@@ -215,7 +216,7 @@ class Item extends Component {
             <button className="card-footer-item" type="button" ref="backButton" onClick={this.showFront}>Show front</button>
           </div>
         </div>
-
+      </div>
       </FlipCard>
     );
   }

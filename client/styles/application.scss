@@ -5,18 +5,3 @@
 @import './item';
 @import './main-container';
 @import './sidebar';
-
-h1 {
-  color: blue;
-}
-
-/*************************
-       CSS FOR FRAME
- *************************/
-
- .parent-container > div {
-   // display: flex;
-   // height: 100%;
-   // position: fixed;
-   margin: 0;
- }
