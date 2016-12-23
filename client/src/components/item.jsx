@@ -158,10 +158,15 @@ class Item extends Component {
     }
   }
 
+
 // className="animated fadeInDown"
 
   render() {
+    console.log('item in item component', this.props.item)
+    console.log('user_id', this.props.item.user_id);
+    console.log('id', this.props.item.id);
     return (
+
 
       <FlipCard
         disabled={true}
@@ -172,7 +177,11 @@ class Item extends Component {
 
         <div className="card card-front">
           <div className="card-image">
-            <DeleteButton />
+
+
+            <DeleteButton item={this.props.item} deleteItem={this.props.deleteItem} />
+            
+
             <figure className="image is-4by3">
               <img src="../../public/images/default_img.jpg" alt="" />
             </figure>
