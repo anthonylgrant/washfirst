@@ -33,10 +33,13 @@ const knex = require('knex')(connection);
 // +---------------------+
 const getTags = require('./helpers/get_tags.js');
 const getResultsFromDb = require('../_behzad/query_simple');
-
 const processUserQuery = require('../_behzad/process_user_query');
-
 const insertUser = require('./helpers/add_user_to_db.js');
+
+  // VALIDATION
+  // const validUsername;
+  // const validPassword;
+  // const validEmail;
 
 
 
@@ -228,7 +231,10 @@ app.post('/login', (req, res) => {
       .then((valid) => {
         console.log('valid: ', valid);
         if(valid) {
+
+          //### Initializes Session ###//
           req.session.username = username;
+
           res.redirect('http://localhost:3000');
         } else {
           const usernameError = false;
@@ -265,6 +271,8 @@ app.post('/register', (req, res) => {
       // min_shoe_size: parseInt(req.body.min_shoe_size),
       // max_shoe_size: parseInt(req.body.max_shoe_size)
     }
+
+
     insertUser(userObject);
     res.redirect('http://localhost:3000');
   })

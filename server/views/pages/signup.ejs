@@ -3,14 +3,27 @@
   <head>
     <meta charset="utf-8">
     <title>Log In</title>
-    <style media="screen">
-      label {
-        display: block;
-      }
-      input {
-        display: block;
-      }
-    </style>
+    <link rel="stylesheet" href="/style/signup.css">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+    $(function() {
+      var slider = $('#slider');
+
+      slider.slider({
+        min: 20,
+        max: 44,
+        range: true,
+        values: [28,36]
+
+      });
+      console.log(slider)
+    });
+    </script>
   </head>
   <body>
     <form class="register-form" action="/register" method="post">
@@ -24,6 +37,10 @@
       <input class='input' type="text" name="phone" value="">
       Male <input class='input' type="radio" name="gender" value="male">
       Female <input class='input' type="radio" name="gender" value="female">
+
+      <p class='waist-size-min'></p><p class='waist-size-max'></p>
+
+      <div id='slider'></div>
       <%# <span class='label'>smallest shoe size: </span>
       <input class='input' type="text" name="min_shoe_size" value="">
       <span class='label'>largest shoe size: </span>
