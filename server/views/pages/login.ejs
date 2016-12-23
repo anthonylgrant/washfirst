@@ -7,8 +7,14 @@
   </head>
   <body>
     <form class="login-form" action="/login" method="post">
+      <%if(usernameError) {%>
+        <span>No account? <a href="/register">Sign up!</a></span>
+      <%}%>
       <span>username: </span>
       <input type="text" name="username" value="">
+      <%if(passwordError) {%>
+        <span>Invalid password.</span>
+      <%}%>
       <span>password: </span>
       <input type="password" name="password" value="">
       <button type="Submit" name="button">Submit</button>

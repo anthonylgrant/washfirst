@@ -5,8 +5,24 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+
+
+// const dbConfig = require('../server/db/config_local');
+// const knex = require('knex')({
+//   client: 'pg',
+//   connection: dbConfig,
+//   pool: {
+//     min: 2,
+//     max: 16
+//   }
+// });
+
+
+// const bcrypt = require('bcrypt');
+// const session = require('express-session');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+// const engine = require('ejs-locals');
 
 // HEROKU CONFIG GOES INTO .ENV FILE
 const connection = require('./db/knexfile.js').development;
@@ -17,7 +33,15 @@ const knex = require('knex')(connection);
 // +---------------------+
 const getTags = require('./helpers/get_tags.js');
 const getResultsFromDb = require('../_behzad/query_simple');
+const processUserQuery = require('../_behzad/process_user_query');
+const createNewItem = require('../_behzad/create_new_item');
 const insertUser = require('./helpers/add_user_to_db.js');
+
+  // VALIDATION
+  // const validUsername;
+  // const validPassword;
+  // const validEmail;
+
 
 
 // +---------------------+
@@ -27,7 +51,7 @@ const insertUser = require('./helpers/add_user_to_db.js');
 const blacklist = [
   '/index',
   '/user/:id',
-  '/api/items'
+  '/api'
 ]
 
 
@@ -47,7 +71,12 @@ app.use(blacklist, (req, res, next) => {
 if(req.session.username) {
     next();
   } else {
-    res.render('pages/login');
+    const usernameError = false;
+    const passwordError = false;
+    res.render('pages/login', {
+      usernameError: usernameError,
+      passwordError: passwordError
+    });
   }
 });
 
@@ -67,14 +96,10 @@ const PORT = process.env.PORT || 8080;
 
 
 //          ToDO
-
-  // Authentication
+    // -validate registration
     // -BlackList
-    // -Middleware
-    // -Sessions
-    // -bCrypt
-    // -instructions for form names
     // -env files
+    // -
 
 
 // ***********************
@@ -95,10 +120,23 @@ const PORT = process.env.PORT || 8080;
 // |     INDEX/ITEMS     |
 // +---------------------+
 
-
-app.get('/api/items', function (req, res) {
-    getResultsFromDb(res);
+app.get('/login/check', (req, res) => {
+  console.log('got called');
+  console.log('req.session', req.session.username);
+  if(!req.session.username) {
+    console.log('no username');
+    res.json({ status: false });
+  } else {
+    res.json({ status: true });
+    console.log('username present');
+  }
 });
+
+app.get('/api', (req, res) => {
+  getResultsFromDb(res, knex);
+});
+
+
 
 
 // +---------------------+
@@ -108,7 +146,7 @@ app.get('/api/items', function (req, res) {
 app.get('/users/:id', (req, res) => {
   const userId = req.params.id;
   // Passing back to view: user's items, user's sizes (editable)
-  res.json({})
+  res.render('pages/user')
 })
 
 
@@ -117,7 +155,12 @@ app.get('/users/:id', (req, res) => {
 // +---------------------+
 
 app.get('/login', (req, res) => {
-  res.render('pages/login');
+  const usernameError = false;
+  const passwordError = false;
+  res.render('pages/login', {
+    usernameError: usernameError,
+    passwordError: passwordError
+  });
 })
 
 
@@ -145,19 +188,66 @@ app.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   // username: nodemon, password: asdf = true
-  knex('users').select('password')
-  .where('username', username)
-  .then((hash) => {
-    bcrypt.compare(password, hash[0].password).then(function(valid) {
-      console.log('valid: ', valid);
-      if(valid) {
-        req.session.username = username;
-        res.redirect('http://localhost:3000');
-      } else {
-        res.render('pages/login');
-      }
+  if(!username || !password) {
+    const usernameError = true;
+    const passwordError = false;
+    res.render('pages/login', {
+      usernameError: usernameError,
+      passwordError: passwordError
     });
+    return;
+  }
+
+  knex('users')
+    .count('id')
+    .where('username', username)
+  .then((string) => {
+    console.log('string: ', string);
+    const int = parseInt(string[0].count);
+    console.log('int: ', int);
+    if (int === 0) {
+      console.log('in here');
+      const usernameError = true;
+      const passwordError = false;
+      res.render('pages/login', {
+        usernameError: usernameError,
+        passwordError: passwordError
+      });
+    }
+  })
+  .then(() => {
+    knex('users').select('password', 'id')
+    .where('username', username)
+    .then((user) => {
+      console.log('user', user);
+      if (user.length === 0) {
+        return;
+      }
+      console.log('password', password);
+      bcrypt.compare(password, user[0].password)
+      .then((valid) => {
+        console.log('valid: ', valid);
+        if(valid) {
+          console.log('inside bcrypt user: ', user)
+          //### Initializes Session ###//
+          req.session.username = username;
+          req.session.userId = user[0].id;
+
+
+          res.redirect('http://localhost:3000');
+        } else {
+          const usernameError = false;
+          const passwordError = true;
+          console.log('passwordError', passwordError)
+          res.render('pages/login', {
+            usernameError: usernameError,
+            passwordError: passwordError
+          });
+        }
+      });
+    })
   });
+
 });
 
 
@@ -172,14 +262,16 @@ app.post('/register', (req, res) => {
       password: hash,
       email: req.body.email,
       phone_number: req.body.phone,
-      gender: req.body.gender
-      // min_top_size: parseInt(req.body.min_top_size),
-      // max_top_size: parseInt(req.body.max_top_size),
-      // min_bottom_size: parseInt(req.body.min_bottom_size),
-      // max_bottom_size: parseInt(req.body.max_bottom_size),
-      // min_shoe_size: parseInt(req.body.min_shoe_size),
-      // max_shoe_size: parseInt(req.body.max_shoe_size)
+      gender: req.body.gender,
+      min_top_size: parseInt(req.body.min_top_size),
+      max_top_size: parseInt(req.body.max_top_size),
+      min_bottom_size: parseInt(req.body.min_bottom_size),
+      max_bottom_size: parseInt(req.body.max_bottom_size),
+      min_shoe_size: parseInt(req.body.min_shoe_size),
+      max_shoe_size: parseInt(req.body.max_shoe_size)
     }
+
+
     insertUser(userObject);
     res.redirect('http://localhost:3000');
   })
@@ -190,10 +282,23 @@ app.post('/register', (req, res) => {
 // |      NEW ITEM       |
 // +---------------------+
 
-app.post('/users/:id/items/new', (req, res) => {
-  const userId = req.body.params;
-  console.log('users id from url is: ', userId);
+app.post('/users/:id/new', (req, res) => {
+  let currentUserId = req.session.userId;
 
+  let itemTags = req.body.tags.split(' ');
+  let dataTemplate = {
+    gender: req.body.gender,
+    type: req.body.type,
+    size: Number(req.body.size),
+    description: req.body.description,
+    tags: itemTags,
+    img_url: req.body.imageurl,
+    user_id: currentUserId
+  }
+  console.log(dataTemplate);
+
+  createNewItem(dataTemplate, knex);
+  res.redirect('/users/:id');
 });
 
 
@@ -207,10 +312,9 @@ app.post('/users/:id/items/new', (req, res) => {
 // |        LOGOUT       |
 // +---------------------+
 
-app.put('/logout', (req, res) => {
-
-  // delete session key, redirect to '/'
-
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('http://localhost:3000');
 });
 
 
@@ -224,7 +328,7 @@ app.put('/logout', (req, res) => {
 // |        ITEM         |
 // +---------------------+
 
-// app.post('/users/:id/items/id', (req, res) => {
+// app.post('/users/:id/items/id', (req, res) => { });
 
 
 
@@ -238,7 +342,6 @@ app.put('/logout', (req, res) => {
 // |        ITEM         |
 // +---------------------+
 
-//CHECK EXPRESS SYNTAX
 app.delete('/users/:id/items/id', (req, res) => {
 
 });
@@ -254,3 +357,14 @@ app.delete('/users/:id/items/id', (req, res) => {
 app.listen(PORT, () => {
   console.log('listening to http://localhost:' + PORT);
 });
+
+
+
+
+
+
+
+app.post('/api', (req, res) => {
+  processUserQuery(req, res, knex);
+});
+

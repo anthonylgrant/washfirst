@@ -49,8 +49,8 @@
     "bulma": "^0.2.3",
     "bulma-loader": "^1.0.1",
     "css-loader": "^0.23.1",
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1",
+    "react": "^0.14.8",
+    "react-dom": "0.14.8",
     "react-flipcard": "^0.2.1",
     "sass-loader": "^4.1.0"
   }

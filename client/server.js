@@ -5,7 +5,8 @@ var config = require('./webpack.config');
 new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
     proxy: {
-      '/api/items': 'http://localhost:8080'
+      '/api': 'http://localhost:8080',
+      '/login/check': 'http://localhost:8080'
     },
     watchOptions: {
       aggregateTimeout: 300,
