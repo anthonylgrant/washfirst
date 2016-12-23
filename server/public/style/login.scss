@@ -1,3 +1,6 @@
+$HEADER_COLOR: rgba(221, 97, 74, 1);
+
+
 body {
-  background-color: blue;
+  background-color: lighten($HEADER_COLOR, 30%);
 }

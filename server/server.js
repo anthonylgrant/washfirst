@@ -67,7 +67,12 @@ app.use(blacklist, (req, res, next) => {
 if(req.session.username) {
     next();
   } else {
-    res.render('pages/login');
+    const usernameError = false;
+    const passwordError = false;
+    res.render('pages/login', {
+      usernameError: usernameError,
+      passwordError: passwordError
+    });
   }
 });
 
@@ -173,6 +178,15 @@ app.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   // username: nodemon, password: asdf = true
+  if(!username || !password) {
+    const usernameError = true;
+    const passwordError = false;
+    res.render('pages/login', {
+      usernameError: usernameError,
+      passwordError: passwordError
+    });
+  }
+
   knex('users')
     .count('id')
     .where('username', username)
@@ -194,6 +208,11 @@ app.post('/login', (req, res) => {
     knex('users').select('password')
     .where('username', username)
     .then((hashDb) => {
+      console.log('hashDb', hashDb);
+      if (hashDb.length === 0) {
+        return;
+      }
+      console.log('password', password);
       bcrypt.compare(password, hashDb[0].password)
       .then((valid) => {
         console.log('valid: ', valid);
