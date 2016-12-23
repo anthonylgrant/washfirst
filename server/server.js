@@ -219,21 +219,23 @@ app.post('/login', (req, res) => {
     }
   })
   .then(() => {
-    knex('users').select('password')
+    knex('users').select('password', 'id')
     .where('username', username)
-    .then((hashDb) => {
-      console.log('hashDb', hashDb);
-      if (hashDb.length === 0) {
+    .then((user) => {
+      console.log('user', user);
+      if (user.length === 0) {
         return;
       }
       console.log('password', password);
-      bcrypt.compare(password, hashDb[0].password)
+      bcrypt.compare(password, user[0].password)
       .then((valid) => {
         console.log('valid: ', valid);
         if(valid) {
-
+          console.log('inside bcrypt user: ', user)
           //### Initializes Session ###//
           req.session.username = username;
+          req.session.userId = user[0].id;
+
 
           res.redirect('http://localhost:3000');
         } else {
@@ -263,13 +265,13 @@ app.post('/register', (req, res) => {
       password: hash,
       email: req.body.email,
       phone_number: req.body.phone,
-      gender: req.body.gender
-      // min_top_size: parseInt(req.body.min_top_size),
-      // max_top_size: parseInt(req.body.max_top_size),
-      // min_bottom_size: parseInt(req.body.min_bottom_size),
-      // max_bottom_size: parseInt(req.body.max_bottom_size),
-      // min_shoe_size: parseInt(req.body.min_shoe_size),
-      // max_shoe_size: parseInt(req.body.max_shoe_size)
+      gender: req.body.gender,
+      min_top_size: parseInt(req.body.min_top_size),
+      max_top_size: parseInt(req.body.max_top_size),
+      min_bottom_size: parseInt(req.body.min_bottom_size),
+      max_bottom_size: parseInt(req.body.max_bottom_size),
+      min_shoe_size: parseInt(req.body.min_shoe_size),
+      max_shoe_size: parseInt(req.body.max_shoe_size)
     }
 
 
