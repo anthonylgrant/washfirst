@@ -286,12 +286,7 @@ app.post('/register', (req, res) => {
 // +---------------------+
 
 app.post('/users/:id/new', (req, res) => {
-  let currentUserId = 0;
-  knex('users').select('id').where('username', req.session.username).asCallback((err, rows) => {
-    if (err) throw err;
-    console.log("rows[0].id: ", rows[0].id)
-    currentUserId = rows[0].id;
-  })
+  let currentUserId = req.session.userId;
 
   let itemTags = req.body.tags.split(' ');
   let dataTemplate = {
