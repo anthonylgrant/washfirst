@@ -131,7 +131,7 @@ const PORT = process.env.PORT || 8080;
 app.get('/users/:id', (req, res) => {
   const userId = req.params.id;
   // Passing back to view: user's items, user's sizes (editable)
-  res.json({})
+  res.render('pages/user')
 })
 
 
@@ -245,10 +245,21 @@ app.post('/register', (req, res) => {
 // |      NEW ITEM       |
 // +---------------------+
 
-app.post('/users/:id/items/new', (req, res) => {
+app.post('/users/:id/new', (req, res) => {
   const userId = req.body.params;
   console.log('users id from url is: ', userId);
-
+  let itemTags = req.body.tags.split(' ');
+  let dataTemplate = {
+    gender: req.body.gender,
+    itemtype: req.body.type,
+    itemsize: Number(req.body.size),
+    itemdescription: req.body.description,
+    itemtags: itemTags,
+    itemimageurl: req.body.imageurl,
+    userId: 'user id from session'
+  }
+  console.log(dataTemplate);
+  res.redirect('/users/:id');
 });
 
 
