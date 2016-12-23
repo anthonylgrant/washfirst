@@ -294,7 +294,7 @@ app.post('/users/:id/items/new', (req, res) => {
 
 app.get('/logout', (req, res) => {
   req.session.destroy();
-  res.redirect('/login');
+  res.redirect('http://localhost:3000');
 });
 
 
