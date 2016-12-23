@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 import Navbar from './components/Navbar.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Item from './components/Item.jsx';
@@ -195,6 +196,7 @@ class App extends Component {
   }
 
   render() {
+    console.log("shoes: ", this.state.topsInventory);
     return (
       <div>
         <Navbar loggedIn={this.state.loggedIn}/>
@@ -220,6 +222,7 @@ class App extends Component {
         {!this.state.loggedIn &&
           <Landing />
         }
+
       </div>
     );
   }
