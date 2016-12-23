@@ -34,6 +34,7 @@ const knex = require('knex')(connection);
 const getTags = require('./helpers/get_tags.js');
 const getResultsFromDb = require('../_behzad/query_simple');
 const processUserQuery = require('../_behzad/process_user_query');
+const createNewItem = require('../_behzad/create_new_item');
 const insertUser = require('./helpers/add_user_to_db.js');
 
   // VALIDATION
@@ -287,14 +288,16 @@ app.post('/users/:id/new', (req, res) => {
   let itemTags = req.body.tags.split(' ');
   let dataTemplate = {
     gender: req.body.gender,
-    itemtype: req.body.type,
-    itemsize: Number(req.body.size),
-    itemdescription: req.body.description,
-    itemtags: itemTags,
-    itemimageurl: req.body.imageurl,
-    username: currentUserId
+    type: req.body.type,
+    size: Number(req.body.size),
+    description: req.body.description,
+    tags: itemTags,
+    img_url: req.body.imageurl,
+    user_id: currentUserId
   }
   console.log(dataTemplate);
+
+  createNewItem(dataTemplate, knex);
   res.redirect('/users/:id');
 });
 
@@ -360,7 +363,8 @@ app.listen(PORT, () => {
 
 
 
-//
-// app.post('/api', (req, res) => {
-//   processUserQuery(req, res, knex);
-// });
+
+app.post('/api', (req, res) => {
+  processUserQuery(req, res, knex);
+});
+
