@@ -120,6 +120,18 @@ const PORT = process.env.PORT || 8080;
 // |     INDEX/ITEMS     |
 // +---------------------+
 
+app.get('/login/check', (req, res) => {
+  console.log('got called');
+  console.log('req.session', req.session.username);
+  if(!req.session.username) {
+    console.log('no username');
+    res.json({ status: false });
+  } else {
+    res.json({ status: true });
+    console.log('username present');
+  }
+});
+
 app.get('/api', (req, res) => {
   getResultsFromDb(res, knex);
 });
@@ -280,10 +292,9 @@ app.post('/users/:id/items/new', (req, res) => {
 // |        LOGOUT       |
 // +---------------------+
 
-app.put('/logout', (req, res) => {
-
-  // delete session key, redirect to '/'
-
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/login');
 });
 
 
