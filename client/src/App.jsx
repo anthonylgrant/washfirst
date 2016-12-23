@@ -206,14 +206,16 @@ class App extends Component {
             )
           })}
         </div>
-        <Sidebar
-          userPreferenceTags={this.state.userPreferenceTags}
-          tagsFromItems={this.state.tagsFromItems}
-          swapTagsFromUserPref = {this.swapTagsFromUserPref}
-          swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
-          autoCompleteSearchBar={this.autoCompleteSearchBar}
-          handlePreferenceSubmit={this.handlePreferenceSubmit}
-        />
+        {this.state.loggedIn &&
+          <Sidebar
+            userPreferenceTags={this.state.userPreferenceTags}
+            tagsFromItems={this.state.tagsFromItems}
+            swapTagsFromUserPref = {this.swapTagsFromUserPref}
+            swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
+            autoCompleteSearchBar={this.autoCompleteSearchBar}
+            handlePreferenceSubmit={this.handlePreferenceSubmit}
+          />
+        }
       </div>
     );
   }
