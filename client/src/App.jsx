@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Navbar from './components/Navbar.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Item from './components/Item.jsx';
+import Landing from './components/Landing.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -215,6 +216,9 @@ class App extends Component {
             autoCompleteSearchBar={this.autoCompleteSearchBar}
             handlePreferenceSubmit={this.handlePreferenceSubmit}
           />
+        }
+        {!this.state.loggedIn &&
+          <Landing />
         }
       </div>
     );
