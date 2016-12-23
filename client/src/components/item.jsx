@@ -158,8 +158,6 @@ class Item extends Component {
     }
   }
 
-// className="animated fadeInDown"
-
   render() {
     return (
       <FlipCard
