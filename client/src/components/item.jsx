@@ -127,6 +127,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import FlipCard from 'react-flipcard';
+import DeleteButton from './item_components/DeleteButton.jsx'
 
 class Item extends Component {
   constructor() {
@@ -157,20 +158,18 @@ class Item extends Component {
     }
   }
 
-// className="animated fadeInDown"
-
   render() {
     return (
-
       <FlipCard
         disabled={true}
         flipped={this.state.isFlipped}
         onFlip={this.handleOnFlip}
         onKeyDown={this.handleKeyDown}
       >
-
+      <div>
         <div className="card card-front">
           <div className="card-image">
+            <DeleteButton />
             <figure className="image is-4by3">
               <img src="../../public/images/default_img.jpg" alt="" />
             </figure>
@@ -195,7 +194,9 @@ class Item extends Component {
             <button className="card-footer-item" type="button" onClick={this.showBack}>Show back</button>
           </div>
         </div>
+      </div>
 
+      <div>
         <div className="card card-back">
           <span className="item-owner-contact-info">email: {this.props.item.owner.email} | phone: {this.props.item.owner.phone_number} </span>
 
@@ -213,7 +214,7 @@ class Item extends Component {
             <button className="card-footer-item" type="button" ref="backButton" onClick={this.showFront}>Show front</button>
           </div>
         </div>
-
+      </div>
       </FlipCard>
     );
   }

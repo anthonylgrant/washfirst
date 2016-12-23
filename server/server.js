@@ -96,14 +96,10 @@ const PORT = process.env.PORT || 8080;
 
 
 //          ToDO
-
-  // Authentication
+    // -validate registration
     // -BlackList
-    // -Middleware
-    // -Sessions
-    // -bCrypt
-    // -instructions for form names
     // -env files
+    // -
 
 
 // ***********************
@@ -150,8 +146,15 @@ app.get('/api', (req, res) => {
 app.get('/users/:id', (req, res) => {
   const userId = req.params.id;
   // Passing back to view: user's items, user's sizes (editable)
-  res.render('pages/user')
+  knex('items').select().where('user_id', 11).asCallback((err, rows) => {
+    console.log("user 11's items rows: ", rows)
+    const templateVars = { currentUserItems: rows, currentUsername: req.session.username };
+
+    res.render('pages/user', templateVars)
+  })
 })
+
+
 
 
 // +---------------------+
@@ -332,7 +335,29 @@ app.get('/logout', (req, res) => {
 // |        ITEM         |
 // +---------------------+
 
-// app.post('/users/:id/items/id', (req, res) => {
+app.get('/users/:username/items/:id', (req, res) => {
+  knex('items').select().where('id', req.params.id).asCallback((err, rows) => {
+    if (err) throw err;
+    knex('tags').select('tags.content').join('item_tag', 'item_tag.tag_id', 'tags.id').where('item_id', rows[0].id).asCallback((err, tags) => {
+      if (err) throw err;
+      let currentItemTags = "";
+      tags.forEach((tag) => {
+        currentItemTags += (tag.content + ' ');
+      })
+      let templateVars = {
+        currentItem: rows,
+        currentItemTags: currentItemTags,
+        currentUsername: req.session.username
+      }
+      console.log("templateVars: ", templateVars);
+      res.render('pages/item_edit', templateVars)
+    });
+  });
+});
+
+app.post('/users/:username/items/:id', (req, res) => {
+  console.log("wasssup you are here")
+});
 
 
 
@@ -346,8 +371,7 @@ app.get('/logout', (req, res) => {
 // |        ITEM         |
 // +---------------------+
 
-//CHECK EXPRESS SYNTAX
-app.delete('/users/:id/items/id', (req, res) => {
+app.delete('/users/:username/items/:id', (req, res) => {
 
 });
 
@@ -372,4 +396,3 @@ app.listen(PORT, () => {
 app.post('/api', (req, res) => {
   processUserQuery(req, res, knex);
 });
-

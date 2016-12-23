@@ -14,7 +14,7 @@ $default_content_padding: 10px;
   position: fixed;
   right: 0;
   top: $header_height;
-  width: 100% - $main_container_width;
+  width: 300px;
   z-index: $fixed_componet_z_index;
   h2 {
     color: white;
@@ -57,5 +57,3 @@ $default_content_padding: 10px;
             user-select: none; /* Non-prefixed version, currently
                                   not supported by any browser */
 }
-
-
