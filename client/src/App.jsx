@@ -23,6 +23,7 @@ class App extends Component {
     this.concatTagArrays = this.concatTagArrays.bind(this);
     this.autoCompleteSearchBar = this.autoCompleteSearchBar.bind(this);
     this.handlePreferenceSubmit = this.handlePreferenceSubmit.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   swapTagsFromUserPref(event) {
@@ -76,7 +77,7 @@ class App extends Component {
   componentWillMount() {
     $.ajax({
       method: 'GET',
-      url: '/login/check',
+      url: '/api/login/check',
       dataType: 'JSON',
       success: (response) => {
         console.log('response: ', response);
@@ -92,7 +93,7 @@ class App extends Component {
   componentDidMount() {
     $.ajax({
       method: 'GET',
-      url: '/api',
+      url: '/api/',
       dataType: 'JSON',
       success: (response) => {
         this.setState({
@@ -177,6 +178,25 @@ class App extends Component {
     return tempArr;
   }
 
+  deleteItem(itemId) {
+
+    $.ajax({
+      method: 'DELETE',
+      url: `/api/items/${itemId}`,
+      success: ((response) => {
+        console.log('response from delete request', response);
+        this.setState({
+          userPreferenceTags: response.currUserInfo.preferences,
+          tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
+          fixedTagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
+          topsInventory: this.sortItemsByRanking(response.inventory.tops),
+          bottomsInventory: this.sortItemsByRanking(response.inventory.bottoms),
+          shoesInventory: this.sortItemsByRanking(response.inventory.shoes)
+        });
+      })
+    })
+  }
+
   changeMessage(e) {
     console.log(e.target);
     console.log('value:', e.target.value);
@@ -200,7 +220,7 @@ class App extends Component {
         <Navbar loggedIn={this.state.loggedIn}/>
         <div className="main-container">
           {this.state.shoesInventory.map((shoe) => {
-            return (
+            return(
               <div className="main-container-item">
                 <Item key={shoe.id} item={shoe} />
               </div>
