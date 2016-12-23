@@ -127,6 +127,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import FlipCard from 'react-flipcard';
+import DeleteButton from './item_components/DeleteButton.jsx'
 
 class Item extends Component {
   constructor() {
@@ -171,6 +172,7 @@ class Item extends Component {
 
         <div className="card card-front">
           <div className="card-image">
+            <DeleteButton />
             <figure className="image is-4by3">
               <img src="../../public/images/default_img.jpg" alt="" />
             </figure>

@@ -95,14 +95,10 @@ const PORT = process.env.PORT || 8080;
 
 
 //          ToDO
-
-  // Authentication
+    // -validate registration
     // -BlackList
-    // -Middleware
-    // -Sessions
-    // -bCrypt
-    // -instructions for form names
     // -env files
+    // -
 
 
 // ***********************
@@ -329,7 +325,7 @@ app.get('/logout', (req, res) => {
 // |        ITEM         |
 // +---------------------+
 
-// app.post('/users/:id/items/id', (req, res) => {
+// app.post('/users/:id/items/id', (req, res) => { });
 
 
 
@@ -343,7 +339,6 @@ app.get('/logout', (req, res) => {
 // |        ITEM         |
 // +---------------------+
 
-//CHECK EXPRESS SYNTAX
 app.delete('/users/:id/items/id', (req, res) => {
 
 });
