@@ -222,7 +222,7 @@ class App extends Component {
           {this.state.shoesInventory.map((shoe) => {
             return(
               <div className="main-container-item">
-                <Item key={shoe.id} item={shoe} />
+                <Item key={shoe.id} item={shoe} deleteItem={this.deleteItem} />
               </div>
             )
           })}
