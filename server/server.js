@@ -371,6 +371,7 @@ app.get('/users/:username/items/:id', (req, res) => {
 
 app.post('/users/:username/items/:id', (req, res) => {
   // console.log("wasssup you are here");
+  // console.log("req.body", req.body)
   editItemWithTags(req, res, knex);
 });
 
