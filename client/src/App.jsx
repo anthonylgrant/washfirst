@@ -198,15 +198,17 @@ class App extends Component {
     return (
       <div>
         <Navbar loggedIn={this.state.loggedIn}/>
-        <div className="main-container">
-          {this.state.shoesInventory.map((shoe) => {
-            return (
-              <div className="main-container-item">
-                <Item key={shoe.id} item={shoe} />
-              </div>
-            )
-          })}
-        </div>
+          <div className="main-container">
+            <div className="items-container">
+              {this.state.shoesInventory.map((shoe) => {
+                return (
+                  <div className="main-container-item">
+                    <Item key={shoe.id} item={shoe} />
+                  </div>
+                )
+              })}
+            </div>
+          </div>
         {this.state.loggedIn &&
           <Sidebar
             userPreferenceTags={this.state.userPreferenceTags}

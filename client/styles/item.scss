@@ -13,3 +13,13 @@ $main_container_width: 75%;
   flex-direction: column;
   justify-content: space-between;
 }
+
+.content {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.card-back-content {
+  display: flex;
+  flex-direction: row;
+}
