@@ -27,7 +27,8 @@
       <span class'label'>Tags:</span>
       <input class='input' type="textarea" name="tags" placeholder="the tags" value="<%= currentItemTags %>">
       <span class'label'>Image:</span>
-      <input class='input' type="textarea" name="imageurl" placeholder="image url" value="<%= currentItem[0].img_url %>">
+      <input class='input' type="textarea" name="img_url" placeholder="image url" value="<%= currentItem[0].img_url %>">
+      <input type="hidden" name="item_id" value="<%= currentItem[0].id %>">
       <button type="submit">Submit</button>
     </form>
   </body>

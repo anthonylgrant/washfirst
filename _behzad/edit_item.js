@@ -1,21 +1,21 @@
-const connection = require('../server/db/knexfile.js').development;
-const knex = require('knex')(connection);
+// const connection = require('../server/db/knexfile.js').development;
+// const knex = require('knex')(connection);
 
-changeItemTags = (req, res) => {
+editItemWithTags = (req, res, knex) => {
 
-  // let data = JSON.parse(req.body.data);
+  let data = req.body;
 
-  let data = {
-    type: 'editted',
-    gender: 'editted',
-    size: 999,
-    description: "editted editted",
-    img_url: "some editted url"
+  let itemInfo = {
+    type: data.type,
+    gender: data.gender,
+    size: data.size,
+    description: data.description,
+    img_url: data.img_url
   };
 
-  let itemInfo = data;
-  let item_id = 2;
-  let tags = ["green", "bar"];
+  // let itemInfo = data;
+  let item_id = data.item_id;
+  let tags = data.tags.split(' ');
 
   addOrUpdateTag = (tag, item_id) => new Promise((resolve, reject) => {
     knex('item_tag').where('item_id', item_id).del().then(() => {
@@ -61,6 +61,6 @@ changeItemTags = (req, res) => {
 
 }
 
-// module.exports = changeUserPreferences;
+module.exports = editItemWithTags;
 
-changeItemTags(null, null, knex);
+// changeItemTags(null, null, knex);
