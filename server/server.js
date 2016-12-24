@@ -37,11 +37,19 @@ const processUserQuery = require('../_behzad/process_user_query');
 const createNewItem = require('../_behzad/create_new_item');
 const insertUser = require('./helpers/add_user_to_db.js');
 const editItemWithTags = require('../_behzad/edit_item.js');
+const deleteItem = require('./helpers/delete_item.js');
 
   // VALIDATION
   // const validUsername;
   // const validPassword;
   // const validEmail;
+
+// +---------------------+
+// |     ROUTER          |
+// +---------------------+
+
+
+
 
 
 
@@ -59,6 +67,7 @@ const blacklist = [
 // +---------------------+
 // |     MIDDLEWARE      |
 // +---------------------+
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
@@ -80,6 +89,9 @@ if(req.session.username) {
     });
   }
 });
+
+
+
 
 
 // +---------------------+
@@ -121,7 +133,7 @@ const PORT = process.env.PORT || 8080;
 // |     INDEX/ITEMS     |
 // +---------------------+
 
-app.get('/login/check', (req, res) => {
+app.get('/api/login/check', (req, res) => {
   console.log('got called');
   console.log('req.session', req.session.username);
   if(!req.session.username) {
@@ -133,7 +145,7 @@ app.get('/login/check', (req, res) => {
   }
 });
 
-app.get('/api', (req, res) => {
+app.get('/api/', (req, res) => {
   getResultsFromDb(res, knex);
 });
 
@@ -374,8 +386,12 @@ app.post('/users/:username/items/:id', (req, res) => {
 // |        ITEM         |
 // +---------------------+
 
-app.delete('/users/:username/items/:id', (req, res) => {
 
+
+
+app.delete('/api/items/:id', (req, res) => {
+  deleteItem(req.params.id);
+  getResultsFromDb(res, knex);
 });
 
 // ***********************
