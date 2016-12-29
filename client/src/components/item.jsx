@@ -207,18 +207,21 @@ class Item extends Component {
 
       <div>
         <div className="card card-back">
-          <span className="item-owner-contact-info">email: {this.props.item.owner.email} | phone: {this.props.item.owner.phone_number} </span>
-
-          { this.props.item.owner.sellersInterestInMyProduct.map((item, index) => {
-            return (
-              <div key={index} className="matched-item-from-users-closet">
-                <figure className="image is-64x64">
-                  <img src="../../public/images/curr_user_item_img.jpg" alt="Image" />
-                </figure>
-                <span>{Math.round(item[Object.keys(item)[0]] * 100)/100} </span>
-              </div>
-            );
-          })}
+          <div className="card-back-content">
+            <div className="item-owner-contact-info">email: {this.props.item.owner.email} | phone: {this.props.item.owner.phone_number} </div>
+            <div className="card-back-owner-images">
+            { this.props.item.owner.sellersInterestInMyProduct.map((item, index) => {
+              return (
+                <div key={index} className="matched-item-from-users-closet">
+                  <figure className="image is-64x64">
+                    <img src="../../public/images/curr_user_item_img.jpg" alt="Image" />
+                  </figure>
+                  <span>{Math.round(item[Object.keys(item)[0]] * 100)/100} </span>
+                </div>
+              );
+            })}
+            </div>
+          </div>
           <div className="card-footer button-container">
             <button className="card-footer-item" type="button" ref="backButton" onClick={this.showFront}>Show front</button>
           </div>

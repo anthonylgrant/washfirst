@@ -36,6 +36,7 @@ const getResultsFromDb = require('../_behzad/query_simple');
 const processUserQuery = require('../_behzad/process_user_query');
 const createNewItem = require('../_behzad/create_new_item');
 const insertUser = require('./helpers/add_user_to_db.js');
+const editItemWithTags = require('../_behzad/edit_item.js');
 const deleteItem = require('./helpers/delete_item.js');
 
   // VALIDATION
@@ -354,6 +355,7 @@ app.get('/users/:username/items/:id', (req, res) => {
         currentItemTags += (tag.content + ' ');
       })
       let templateVars = {
+        id: req.params.id,
         currentItem: rows,
         currentItemTags: currentItemTags,
         currentUsername: req.session.username
@@ -365,7 +367,9 @@ app.get('/users/:username/items/:id', (req, res) => {
 });
 
 app.post('/users/:username/items/:id', (req, res) => {
-  console.log("wasssup you are here")
+  // console.log("wasssup you are here");
+  // console.log("req.body", req.body)
+  editItemWithTags(req, res, knex);
 });
 
 

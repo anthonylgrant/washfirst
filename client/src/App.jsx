@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 import Navbar from './components/Navbar.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Item from './components/Item.jsx';
@@ -215,18 +216,21 @@ class App extends Component {
   }
 
   render() {
+    console.log("shoes: ", this.state.topsInventory);
     return (
       <div>
         <Navbar loggedIn={this.state.loggedIn}/>
-        <div className="main-container">
-          {this.state.shoesInventory.map((shoe) => {
-            return(
-              <div className="main-container-item">
-                <Item key={shoe.id} item={shoe} deleteItem={this.deleteItem} />
-              </div>
-            )
-          })}
-        </div>
+          <div className="main-container">
+            <div className="items-container">
+              {this.state.shoesInventory.map((shoe) => {
+                return (
+                  <div className="main-container-item">
+                    <Item key={shoe.id} item={shoe} deleteItem={this.deleteItem}/>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
         {this.state.loggedIn &&
           <Sidebar
             userPreferenceTags={this.state.userPreferenceTags}
@@ -240,6 +244,7 @@ class App extends Component {
         {!this.state.loggedIn &&
           <Landing />
         }
+
       </div>
     );
   }

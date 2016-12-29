@@ -42,3 +42,13 @@ $main_container_width: 75%;
     opacity: 0.7;
   }
 }
+
+.content {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.card-back-content {
+  display: flex;
+  flex-direction: row;
+}
