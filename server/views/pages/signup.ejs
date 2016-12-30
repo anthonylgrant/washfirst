@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Log In</title>
+    <title>Register</title>
     <link rel="stylesheet" href="/style/register.css">
 <%#
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -26,34 +26,68 @@
     </script>%>
   </head>
   <body>
-    <form class="register-form" action="/register" method="post">
-      <span class='label'>username: </span>
-      <input class='input' type="text" name="username" value="">
-      <span class='label'>password: </span>
-      <input class='input' type="password" name="password" value="">
-      <span class='label'>email: </span>
-      <input class='input' type="email" name="email" value="">
-      <span class='label'>phone number: </span>
-      <input class='input' type="text" name="phone" value="">
-      Male <input class='input' type="radio" name="gender" value="male">
-      Female <input class='input' type="radio" name="gender" value="female">
+    <div class="header">
+      <h1><a href="http://localhost:3000/">Wash First</a></h1>
+    </div>
+    <div class="form-wrap">
+      <form class="register-form" action="/register" method="post">
+        <div class="input-field">
+          <span class='label'>Username</span>
+          <input class='input' type="text" name="username" value="">
+        </div>
+        <div class="input-field">
+          <span class='label'>Password</span>
+          <input class='input' type="password" name="password" value="">
+        </div>
+        <div class="input-field">
+          <span class='label'>Email</span>
+          <input class='input' type="email" name="email" value="">
+        </div>
+        <div class="input-field">
+          <span class='label'>Phone Number</span>
+          <input class='input' type="text" name="phone" value="">
+        </div>
 
-      <%# <p class='waist-size-min'></p><p class='waist-size-max'></p>
+        <div class="radio-input-field">
+          Male <input class='radio' type="radio" name="gender" value="male">
+          Female <input class='radio' type="radio" name="gender" value="female">
+        </div>
+          <%# <p class='waist-size-min'></p><p class='waist-size-max'></p>
 
-      <div id='slider'></div>%>
-      <span class='label'>smallest shoe size: </span>
-      <input class='input' type="text" name="min_shoe_size" value="">
-      <span class='label'>largest shoe size: </span>
-      <input class='input' type="text" name="max_shoe_size" value="">
-      <span class='label'>smallest waist size: </span>
-      <input class='input' type="text" name="min_bottom_size" value="">
-      <span class='label'>largest waist size: </span>
-      <input class='input' type="text" name="max_bottom_size" value="">
-      <span class='label'>smallest top size: </span>
-      <input class='input' type="text" name="min_top_size" value="">
-      <span class='label'>largest top size: </span>
-      <input class='input' type="text" name="max_top_size" value="">
-      <button type="Submit" name="button">Submit</button>
-    </form>
+          <div id='slider'></div>%>
+        <div class="input-field">
+          <span class='label'>Smallest Shoe Size</span>
+          <input class='input' type="text" name="min_shoe_size" value="">
+        </div>
+        <div class="input-field">
+          <span class='label'>Largest Shoe Size</span>
+          <input class='input' type="text" name="max_shoe_size" value="">
+        </div>
+        <div class="input-field">
+          <span class='label'>Smallest Waist Size</span>
+          <input class='input' type="text" name="min_bottom_size" value="">
+        </div>
+        <div class="input-field">
+          <span class='label'>Largest Waist Size</span>
+          <input class='input' type="text" name="max_bottom_size" value="">
+        </div>
+        <div class="input-field">
+          <span class='label'>Smallest Top Size</span>
+          <input class='input' type="text" name="min_top_size" value="">
+        </div>
+        <div class="input-field">
+          <span class='label'>Largest Top Size</span>
+          <input class='input' type="text" name="max_top_size" value="">
+        </div>
+
+          <button type="Submit" name="button">Submit</button>
+      </form>
+    </div>
+
+    <div class="footer">
+      <footer>
+        <a href="/login">Log In</a>
+      </footer>
+    </div>
   </body>
 </html>

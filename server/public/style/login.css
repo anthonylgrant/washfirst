@@ -19,7 +19,6 @@ body {
     color: white; }
 
 .login-form-wrap {
-  height: 450px;
   padding-top: 80px; }
   .login-form-wrap .login-form {
     color: #6c6c6c; }
@@ -33,10 +32,11 @@ body {
       padding-left: 30px; }
     .login-form-wrap .login-form .link {
       text-decoration: none;
-      color: #6c6c6c; }
+      color: #6c6c6c;
+      transition: 0.1s; }
     .login-form-wrap .login-form .link:hover {
       color: #00d1b2;
-      transition: 0.15s; }
+      transition: 0.1s; }
     .login-form-wrap .login-form .input-field-wrap {
       margin: auto;
       width: 400px;
@@ -59,5 +59,29 @@ body {
       border-radius: 5px;
       background-color: rgba(0, 0, 128, 0.5);
       width: 80px; }
+  .login-form-wrap .to-register {
+    display: block;
+    margin: 5px auto;
+    color: white;
+    font-size: 13px;
+    line-height: 18px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 128, 0.3);
+    width: 70px;
+    transition: 0.1s; }
+  .login-form-wrap .to-register:hover {
+    background-color: rgba(0, 0, 128, 0.5);
+    transition: 0.1s; }
+
+.footer {
+  box-shadow: 0 0 10px #6c6c6c;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background-color: white; }
+  .footer span {
+    left: -200px; }
 
 /*# sourceMappingURL=login.css.map */

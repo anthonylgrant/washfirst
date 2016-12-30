@@ -146,6 +146,12 @@ app.get('/api/', (req, res) => {
   getResultsFromDb(res, knex);
 });
 
+app.get('/', (req, res) => {
+  res.render('pages/login', {
+    usernameError: false
+  })
+})
+
 
 
 
