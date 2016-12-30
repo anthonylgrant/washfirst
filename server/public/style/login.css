@@ -21,27 +21,43 @@ body {
 .login-form-wrap {
   height: 450px;
   padding-top: 80px; }
-  .login-form-wrap .login-form .input-field-wrap {
-    margin: auto;
-    width: 400px;
-    padding: 0 5px 20px 5px; }
-    .login-form-wrap .login-form .input-field-wrap .input-field {
-      display: inline-block; }
-      .login-form-wrap .login-form .input-field-wrap .input-field span {
-        color: #6c6c6c;
-        display: block; }
-      .login-form-wrap .login-form .input-field-wrap .input-field input {
-        font-size: 14px;
-        line-height: 20px;
-        width: 190px; }
-  .login-form-wrap .login-form button {
-    display: block;
-    margin: auto;
-    color: white;
-    font-size: 14px;
-    line-height: 19px;
-    border-radius: 5px;
-    background-color: rgba(0, 0, 128, 0.5);
-    width: 80px; }
+  .login-form-wrap .login-form {
+    color: #6c6c6c; }
+    .login-form-wrap .login-form .error {
+      font-size: 19px;
+      position: fixed;
+      top: 320px;
+      left: 0;
+      right: 0;
+      line-height: 30px;
+      padding-left: 30px; }
+    .login-form-wrap .login-form .link {
+      text-decoration: none;
+      color: #6c6c6c; }
+    .login-form-wrap .login-form .link:hover {
+      color: #00d1b2;
+      transition: 0.15s; }
+    .login-form-wrap .login-form .input-field-wrap {
+      margin: auto;
+      width: 400px;
+      padding: 0 5px 20px 5px; }
+      .login-form-wrap .login-form .input-field-wrap .input-field {
+        display: inline-block; }
+        .login-form-wrap .login-form .input-field-wrap .input-field span {
+          color: #6c6c6c;
+          display: block; }
+        .login-form-wrap .login-form .input-field-wrap .input-field input {
+          font-size: 14px;
+          line-height: 20px;
+          width: 190px; }
+    .login-form-wrap .login-form button {
+      display: block;
+      margin: auto;
+      color: white;
+      font-size: 14px;
+      line-height: 19px;
+      border-radius: 5px;
+      background-color: rgba(0, 0, 128, 0.5);
+      width: 80px; }
 
 /*# sourceMappingURL=login.css.map */

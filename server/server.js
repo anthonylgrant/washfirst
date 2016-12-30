@@ -207,10 +207,8 @@ app.post('/login', (req, res) => {
   // username: nodemon, password: asdf = true
   if(!username || !password) {
     const usernameError = true;
-    const passwordError = false;
     res.render('pages/login', {
-      usernameError: usernameError,
-      passwordError: passwordError
+      usernameError: usernameError
     });
     return;
   }
@@ -225,10 +223,9 @@ app.post('/login', (req, res) => {
     if (int === 0) {
       console.log('in here');
       const usernameError = true;
-      const passwordError = false;
+
       res.render('pages/login', {
-        usernameError: usernameError,
-        passwordError: passwordError
+        usernameError: usernameError
       });
     }
   })
@@ -253,12 +250,9 @@ app.post('/login', (req, res) => {
 
           res.redirect('http://localhost:3000');
         } else {
-          const usernameError = false;
-          const passwordError = true;
-          console.log('passwordError', passwordError)
+          const usernameError = true;
           res.render('pages/login', {
-            usernameError: usernameError,
-            passwordError: passwordError
+            usernameError: usernameError
           });
         }
       });

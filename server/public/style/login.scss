@@ -1,5 +1,7 @@
 $HEADER_COLOR: rgba(221, 97, 74, 1);
 $WHITE: rgba(255, 255, 255, 1);
+$NOT_BLACK: #6c6c6c;
+$GREEN_ISH: #00d1b2;
 
 * {
   font-family: sans-serif;
@@ -12,7 +14,7 @@ body {
 }
 
 .header {
-  box-shadow: 0 0 10px #6c6c6c;
+  box-shadow: 0 0 10px $NOT_BLACK;
   top: 0;
   left: 0;
   right: 0;
@@ -20,6 +22,7 @@ body {
   background-color: $HEADER_COLOR;
   padding-top: 175px;
   padding-left: 30px;
+
   h1 {
     color: $WHITE;
   }
@@ -28,17 +31,43 @@ body {
 .login-form-wrap {
   height: 450px;
   padding-top: 80px;
+
   .login-form {
+    color: $NOT_BLACK;
+    .error {
+
+      font-size: 19px;
+      position: fixed;
+      top: 320px;
+      left: 0;
+      right: 0;
+      line-height: 30px;
+      padding-left: 30px;
+    }
+
+    .link {
+      text-decoration: none;
+      color: $NOT_BLACK;
+    }
+
+    .link:hover {
+      color: $GREEN_ISH;
+      transition: 0.15s;
+    }
+
     .input-field-wrap{
       margin: auto;
       width: 400px;
       padding: 0 5px 20px 5px;
+
       .input-field {
         display: inline-block;
+
         span {
-          color: #6c6c6c;
+          color: $NOT_BLACK;
           display: block;
         }
+
         input {
           font-size: 14px;
           line-height: 20px;
@@ -46,6 +75,7 @@ body {
         }
       }
     }
+
     button {
       display: block;
       margin: auto;
