@@ -1,12 +1,21 @@
 $header_height: 50px;
+$side_bar_height: 300px;
 $sidebar_color: rgba(0, 0, 128, 0.5);
 $tag_hover_color: rgba(100, 199, 128, 0.5);
 $fixed_componet_z_index: 3;
 $main_container_width: 75%;
 $default_content_padding: 10px;
 
+$DARKEST: #43383D;
+$DARK: #583F95;
+$NEUTRAL: #7A70A2;
+$LIGHT: #E7D1B2;
+$LIGHTEST: #FFFBF7;
+$BORDER_COLOR: lighten($DARKEST, 50%);
+
+
 .side-bar {
-  background-color: $sidebar_color;
+  background-color: $LIGHTEST;
   bottom: 0;
   display: flex;
   flex-direction: column;
@@ -14,12 +23,15 @@ $default_content_padding: 10px;
   position: fixed;
   right: 0;
   top: $header_height;
-  width: 300px;
-  z-index: $fixed_componet_z_index;
+  width: $side_bar_height;
+  z-index: 2;
+  border-left: 1px solid $BORDER_COLOR;
   h2 {
-    color: white;
-    font-weight: bold;
+    color: $DARKEST;
+    font-weight: 200;
     font-size: 14px;
+    font-family: 'Proza Libre', sans-serif;
+
   }
   .side-bar-tag-list {
     overflow-y: auto;
@@ -44,6 +56,10 @@ $default_content_padding: 10px;
   button {
     margin-top: 20px;
     min-height: 30px;
+    background-color: darken($LIGHTEST, 5%);
+  }
+  button:hover {
+    background-color: darken($LIGHTEST, 10%);
   }
 }
 

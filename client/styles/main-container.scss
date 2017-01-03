@@ -1,14 +1,23 @@
 $header_height: 50px;
-$main_container_width: 75%;
+$side_bar_height: 300px;
 $default_content_padding: 5px;
+$main_container_width: 75%;
+
+
+$DARKEST: #43383D;
+$DARK: #583F95;
+$NEUTRAL: #7A70A2;
+$LIGHT: #E7D1B2;
+$LIGHTEST: #FFFBF7;
 
 .main-container {
-  padding: 50px 300px 50px 0;
+  background-color: $LIGHTEST;
+  padding: $header_height $side_bar_height 0 0;
   .items-container {
+    padding-left: 20px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    padding: 0 20px;
   }
   .main-container-item {
     width: 320px;

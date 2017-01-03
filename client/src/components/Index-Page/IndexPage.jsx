@@ -47,12 +47,13 @@ class App extends Component {
   swapTagsFromTagsFromItems(event) {
     event.preventDefault;
     let targetText = event.target.innerHTML;
-    let newArr2 = this.state.userPreferenceTags
+    let newArr2 = this.state.userPreferenceTags;
     newArr2.push(targetText);
 
-    let newArr1 = this.state.tagsFromItems
+    let newArr1 = this.state.searchBarText ? this.state.fixedTagsFromItems : this.state.tagsFromItems;
     let index = newArr1.indexOf(targetText);
     newArr1.splice(index, 1);
+
     this.setState({
       tagsFromItems: newArr1,
       fixedTagsFromItems: newArr1,
@@ -203,28 +204,25 @@ class App extends Component {
     return (
       <div>
         <Navbar loggedIn={true} />
-
-          <div className="main-container">
-            <div className="items-container">
-              { allInvetory.map((item) => {
-                return (
-                  <div key={item.id} className="main-container-item">
-                    <ItemCard myItems={this.state.myItems} item={item} deleteItem={this.deleteItem} />
-                  </div>
-                );
-              })}
-            </div>
+        <div className="main-container">
+          <div className="items-container">
+            { allInvetory.map((item) => {
+              return (
+                <div key={item.id} className="main-container-item">
+                  <ItemCard myItems={this.state.myItems} item={item} deleteItem={this.deleteItem} />
+                </div>
+              );
+            })}
           </div>
-
-          <Sidebar
-            userPreferenceTags={this.state.userPreferenceTags}
-            tagsFromItems={this.state.tagsFromItems}
-            swapTagsFromUserPref = {this.swapTagsFromUserPref}
-            swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
-            autoCompleteSearchBar={this.autoCompleteSearchBar}
-            handlePreferenceSubmit={this.handlePreferenceSubmit}
-          />
-
+        </div>
+        <Sidebar
+          userPreferenceTags={this.state.userPreferenceTags}
+          tagsFromItems={this.state.tagsFromItems}
+          swapTagsFromUserPref = {this.swapTagsFromUserPref}
+          swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
+          autoCompleteSearchBar={this.autoCompleteSearchBar}
+          handlePreferenceSubmit={this.handlePreferenceSubmit}
+        />
       </div>
     );
   }

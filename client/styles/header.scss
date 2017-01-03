@@ -3,19 +3,27 @@ $fixed_componet_z_index: 3;
 $HEADER_COLOR: rgba(221, 97, 74, 1);
 $header_height: 50px;
 
+$DARKEST: #43383D;
+$DARK: #583F95;
+$NEUTRAL: #7A70A2;
+$LIGHT: #E7D1B2;
+$LIGHTEST: #FFFBF7;
+$BORDER_COLOR: lighten($DARKEST, 50%);
+
 .top-bar {
-   background-color: $HEADER_COLOR;
+   background-color: $LIGHTEST;
    display: flex;
    flex-direction: row;
-   font-family: sans-serif;
+   font-family: 'Cinzel Decorative', cursive;
    font-size: .8em;
    line-height: $header_height;
    padding-left: 20px;
    position: fixed;
    width: 100%;
    z-index: $fixed_componet_z_index;
+   border-bottom: 1px solid $BORDER_COLOR;
    #logo {
-    color: white;
+    color: darken($LIGHT, 30%);
     font-size: 18px;
     font-weight: bold;
    }
@@ -25,9 +33,16 @@ $header_height: 50px;
      line-height: $header_height;
      .nav-bar-item {
         padding: 10px;
-        color: white;
+        color: $LIGHT;
         font-weight: bold;
         font-size: 14px;
+        border-bottom: 1px solid $LIGHTEST;
+        transition: 0.5s;
+     }
+     .nav-bar-item:hover {
+      transition: 0.5s;
+      color: darken($LIGHT, 30%);
+      border-bottom: 1px solid darken($LIGHT, 30%);
      }
    }
  }
