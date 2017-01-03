@@ -1,7 +1,6 @@
-const config = require('./knex_config.json');
-const knex = require('knex')({ client: 'pg', connection: config });
+const getMainData = require('./get_main_data');
 
-function deleteItem(itemId) {
+function deleteItem(itemId, res, knex, user_id) {
   knex('item_tag')
     .where('item_id', itemId)
     .del()
@@ -10,13 +9,9 @@ function deleteItem(itemId) {
         .where('id', itemId)
         .del()
         .then(() => {
-          return;
-        })
-    })
-
+          getMainData(res, knex, user_id);
+        });
+    });
 }
 
-
-
-deleteItem(3);
 module.exports = deleteItem;

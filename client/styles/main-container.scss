@@ -3,8 +3,6 @@ $main_container_width: 75%;
 $default_content_padding: 5px;
 
 .main-container {
-  display: flex;
-  flex-wrap: wrap;
   padding: 50px 300px 50px 0;
   .items-container {
     display: flex;

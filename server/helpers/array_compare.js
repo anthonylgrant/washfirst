@@ -28,9 +28,6 @@ function compareArrays(preferences, itemTags) {
 
   const relation = (overlap/numOfPreferences);
 
-  console.log('this is number of matching tags', overlap);
-  console.log('this is the relationship value', relation);
-
   return relation;
 }
 

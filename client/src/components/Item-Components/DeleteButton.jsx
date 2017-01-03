@@ -3,7 +3,6 @@
 
 import React, {Component} from 'react';
 
-
 class DeleteButton extends Component {
   constructor(props) {
     super(props);
@@ -11,19 +10,11 @@ class DeleteButton extends Component {
     this.handler = this.handler.bind(this);
   }
 
-
   handler() {
     this.props.deleteItem(this.props.item.id);
   }
 
-
-
-
-
-
-
   render() {
-    console.log('item id from props:', this.props.item.id)
     return (
       <div className="delete-button-div">
         <h1 onClick={this.handler}>X</h1>

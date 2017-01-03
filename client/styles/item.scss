@@ -13,42 +13,108 @@ $main_container_width: 75%;
   flex-direction: column;
   justify-content: space-between;
 
-  .delete-button-div {
-    box-sizing: content-box;
-    box-shadow: 0 0 10px #333;
-    background-color: #ccc;
-    border: 2px solid #bbb;
-    display: inline-block;
-    width: 30px;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 100%;
-    position: absolute;
-    z-index: 1000;
-    top: -10px;
-    right: -10px;
-    opacity: 0.4;
+  // .delete-button-div {
+  //   box-sizing: content-box;
+  //   box-shadow: 0 0 10px #333;
+  //   background-color: #ccc;
+  //   border: 2px solid #bbb;
+  //   display: inline-block;
+  //   width: 30px;
+  //   line-height: 30px;
+  //   text-align: center;
+  //   border-radius: 100%;
+  //   position: absolute;
+  //   z-index: 1000;
+  //   top: -10px;
+  //   right: -10px;
+  //   opacity: 0.4;
 
-    h1 {
-      color: #000;
-      display: block;
-      font-family: sans-serif;
-      font-weight: bold;
+  //   h1 {
+  //     color: #000;
+  //     display: block;
+  //     font-family: sans-serif;
+  //     font-weight: bold;
+  //   }
+  // }
+
+  // .delete-button-div:hover {
+  //   cursor: pointer;
+  //   opacity: 0.7;
+  // }
+
+  .card-back-content {
+    padding: $default_content_padding;
+
+    .matched-items-from-users-closet {
+      display: flex;
+      flex-direction: row;
+      overflow: scroll;
+      .matched-item {
+        min-width: 96px;
+        max-width: 96px;
+        margin: $default_content_padding $default_content_padding $default_content_padding 0;
+        text-align: center;
+        .image, .smiley-indicator {
+          text-align: center;
+          width: 100%;
+        }
+      }
     }
+
+
+    hr {
+      margin: 0;
+    }
+
+
+    .item-owner-info {
+      h1 {
+        padding-bottom: $default_content_padding;
+      }
+      .textarea {
+        display: block;
+        line-height: 1.2;
+        max-width: 100%;
+        min-height: 200px;
+        min-width: 100%;
+        padding: 5px;
+        resize: none;
+        margin: $default_content_padding 0;
+      }
+      .button {
+        margin:0 auto;
+        display:block;
+      }
+    }
+    // display: flex;
+    // flex-direction: row;
+
+    // .item-owner-info {
+    //   margin: $default_content_padding;
+    //   padding: $default_content_padding;
+    //   min-height: 440px;
+    //   border-right: 2px solid rgba(0, 0, 128, 0.5);
+    //   width: 60%;
+    // }
+
+    // .matched-items-from-users-closet {
+    //   margin: $default_content_padding $default_content_padding $default_content_padding 0;
+    //   width: 40%;
+
+    //   .matched-item {
+    //     .image, .smiley-indicator {
+    //       display: inline-block;
+    //       vertical-align: middle;
+    //       margin: $default_content_padding 2px;
+    //     }
+    //   }
+    // }
   }
 
-  .delete-button-div:hover {
-    cursor: pointer;
-    opacity: 0.7;
-  }
+
 }
 
-.content {
-  max-height: 150px;
-  overflow-y: auto;
-}
-
-.card-back-content {
-  display: flex;
-  flex-direction: row;
-}
+// .content {
+//   max-height: 150px;
+//   overflow-y: auto;
+// }

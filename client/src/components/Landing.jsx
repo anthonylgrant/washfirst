@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+// import React, {Component} from 'react';
 
-class Landing extends Component {
+// class Landing extends Component {
 
 
-  render() {
+//   render() {
 
-    return (
-      <div className="landing-greeting">
-        <h1>Please log in or sign up to continue!</h1>
-      </div>
-    );
-  }
-}
-export default Landing;
+//     return (
+//       <div className="landing-greeting">
+//         <h1>Please log in or sign up to continue!</h1>
+//       </div>
+//     );
+//   }
+// }
+// export default Landing;

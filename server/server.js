@@ -3,23 +3,10 @@
 // |    DEPENDENCIES     |
 // +---------------------+
 const express = require('express');
+const url = require('url');
 const app = express();
 const bodyParser = require('body-parser');
 
-
-// const dbConfig = require('../server/db/config_local');
-// const knex = require('knex')({
-//   client: 'pg',
-//   connection: dbConfig,
-//   pool: {
-//     min: 2,
-//     max: 16
-//   }
-// });
-
-
-// const bcrypt = require('bcrypt');
-// const session = require('express-session');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 // const engine = require('ejs-locals');
@@ -31,26 +18,24 @@ const knex = require('knex')(connection);
 // +---------------------+
 // |       HELPERS       |
 // +---------------------+
-const getTags = require('./helpers/get_tags.js');
-const getResultsFromDb = require('../_behzad/query_simple');
-const processUserQuery = require('../_behzad/process_user_query');
-const createNewItem = require('../_behzad/create_new_item');
+
+const updateUserPreferences = require('./helpers/update_user_preferences');
+const getMainData = require('./helpers/get_main_data');
 const insertUser = require('./helpers/add_user_to_db.js');
-const editItemWithTags = require('../_behzad/edit_item.js');
+const createNewItem = require('./helpers/create_new_item');
+const editItem = require('./helpers/edit_item.js');
 const deleteItem = require('./helpers/delete_item.js');
+const findSuggestedItems = require('./helpers/find_suggested_items.js');
 
-  // VALIDATION
-  // const validUsername;
-  // const validPassword;
-  // const validEmail;
-
-// +---------------------+
-// |     ROUTER          |
-// +---------------------+
-
-
-
-
+const nodemailer = require('nodemailer');
+let transporter = nodemailer.createTransport({
+  host: "mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "12d82a5ce210c8",
+    pass: "2b5b44e86ab965"
+  }
+});
 
 
 // +---------------------+
@@ -60,7 +45,7 @@ const deleteItem = require('./helpers/delete_item.js');
 const blacklist = [
   '/index',
   '/user/:id',
-  '/api'
+  // '/api'
 ]
 
 
@@ -91,28 +76,11 @@ if(req.session.username) {
 });
 
 
-
-
-
-// +---------------------+
-// |     VIEW ENGINE     |
-// +---------------------+
-
-app.set('view engine', 'ejs');
-
-
 // +---------------------+
 // |        PORT         |
 // +---------------------+
 
 const PORT = process.env.PORT || 8080;
-
-
-//          ToDO
-    // -validate registration
-    // -BlackList
-    // -env files
-    // -
 
 
 // ***********************
@@ -123,32 +91,34 @@ const PORT = process.env.PORT || 8080;
 // ***********************
 // ***********************
 
-// ***********************
-// ***********************
-// +---------------------+
-// |         GET         |
-// +---------------------+
-
 // +---------------------+
 // |     INDEX/ITEMS     |
 // +---------------------+
 
-app.get('/api/login/check', (req, res) => {
-  console.log('got called');
-  console.log('req.session', req.session.username);
-  if(!req.session.username) {
-    console.log('no username');
-    res.json({ status: false });
-  } else {
-    res.json({ status: true });
-    console.log('username present');
-  }
-});
-
+// index route - get
 app.get('/api/', (req, res) => {
-  getResultsFromDb(res, knex);
+  getMainData(res, knex, req.session.userId);
 });
 
+// index route - post
+app.post('/api', (req, res) => {
+  updateUserPreferences(req, res, knex, req.session.userId);
+});
+
+// Delete item route
+app.delete('/api/items/:id', (req, res) => {
+  deleteItem(req.params.id, res, knex, req.session.userId);
+});
+
+// New item route
+app.post('/api/users/:id/new', (req, res) => {
+  createNewItem(req, res, knex, req.session.userId);
+});
+
+// Edit item route - post
+app.post('/api/users/:username/items/:id', (req, res) => {
+  editItem(req, res, knex);
+});
 
 
 
@@ -156,17 +126,14 @@ app.get('/api/', (req, res) => {
 // |     USER'S PAGE     |
 // +---------------------+
 
-app.get('/users/:id', (req, res) => {
-  const userId = req.params.id;
-  // Passing back to view: user's items, user's sizes (editable)
-  knex('items').select().where('user_id', 11).asCallback((err, rows) => {
-    console.log("user 11's items rows: ", rows)
-    const templateVars = { currentUserItems: rows, currentUsername: req.session.username };
-
-    res.render('pages/user', templateVars)
-  })
-})
-
+// app.get('/users/:id', (req, res) => {
+//   const userId = req.params.id;
+//   // Passing back to view: user's items, user's sizes (editable)
+//   knex('items').select().where('user_id', 11).asCallback((err, rows) => {
+//     const templateVars = { currentUserItems: rows, currentUsername: req.session.username };
+//     res.render('pages/user', templateVars)
+//   })
+// });
 
 
 
@@ -174,47 +141,30 @@ app.get('/users/:id', (req, res) => {
 // |        LOGIN        |
 // +---------------------+
 
-app.get('/login', (req, res) => {
-  const usernameError = false;
-  const passwordError = false;
-  res.render('pages/login', {
-    usernameError: usernameError,
-    passwordError: passwordError
-  });
-})
+// Login Route - Get
+app.get('/api/login/check', (req, res) => {
+  if(!req.session.username) {
+    res.json({
+      authorized: false,
+    });
+  } else {
+    res.json({
+      authorized: true,
+      userId: req.session.userId,
+      userName: req.session.username
+    });
+  }
+});
 
 
-// +---------------------+
-// |      REGISTER       |
-// +---------------------+
-
-
-app.get('/register', (req, res) => {
-  res.render('pages/signup')
-})
-
-
-// ***********************
-// ***********************
-// +---------------------+
-// |        POST         |
-// +---------------------+
-
-// +---------------------+
-// |        LOGIN        |
-// +---------------------+
-
-app.post('/login', (req, res) => {
+// Login Route - Post
+app.post('/api/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-  // username: nodemon, password: asdf = true
   if(!username || !password) {
     const usernameError = true;
     const passwordError = false;
-    res.render('pages/login', {
-      usernameError: usernameError,
-      passwordError: passwordError
-    });
+    res.send(false);
     return;
   }
 
@@ -222,111 +172,43 @@ app.post('/login', (req, res) => {
     .count('id')
     .where('username', username)
   .then((string) => {
-    console.log('string: ', string);
     const int = parseInt(string[0].count);
-    console.log('int: ', int);
     if (int === 0) {
-      console.log('in here');
       const usernameError = true;
       const passwordError = false;
-      res.render('pages/login', {
-        usernameError: usernameError,
-        passwordError: passwordError
-      });
+      res.send(false);
     }
   })
   .then(() => {
     knex('users').select('password', 'id')
     .where('username', username)
     .then((user) => {
-      console.log('user', user);
       if (user.length === 0) {
         return;
       }
-      console.log('password', password);
       bcrypt.compare(password, user[0].password)
       .then((valid) => {
-        console.log('valid: ', valid);
         if(valid) {
-          console.log('inside bcrypt user: ', user)
-          //### Initializes Session ###//
           req.session.username = username;
           req.session.userId = user[0].id;
-
-
-          res.redirect('http://localhost:3000');
+          res.send(true);
         } else {
           const usernameError = false;
           const passwordError = true;
-          console.log('passwordError', passwordError)
-          res.render('pages/login', {
-            usernameError: usernameError,
-            passwordError: passwordError
-          });
+          res.send(false);
         }
       });
     })
   });
-
 });
 
 
 // +---------------------+
 // |      REGISTER       |
 // +---------------------+
-
-app.post('/register', (req, res) => {
-  bcrypt.hash(req.body.password, 10).then(function(hash) {
-    const userObject = {
-      username: req.body.username,
-      password: hash,
-      email: req.body.email,
-      phone_number: req.body.phone,
-      gender: req.body.gender,
-      min_top_size: parseInt(req.body.min_top_size),
-      max_top_size: parseInt(req.body.max_top_size),
-      min_bottom_size: parseInt(req.body.min_bottom_size),
-      max_bottom_size: parseInt(req.body.max_bottom_size),
-      min_shoe_size: parseInt(req.body.min_shoe_size),
-      max_shoe_size: parseInt(req.body.max_shoe_size)
-    }
-
-
-    insertUser(userObject);
-    res.redirect('http://localhost:3000');
-  })
+app.post('/api/register', (req, res) => {
+  insertUser(req, res, knex, bcrypt);
 });
-
-
-// +---------------------+
-// |      NEW ITEM       |
-// +---------------------+
-
-app.post('/users/:id/new', (req, res) => {
-  let currentUserId = req.session.userId;
-
-  let itemTags = req.body.tags.split(' ');
-  let dataTemplate = {
-    gender: req.body.gender,
-    type: req.body.type,
-    size: Number(req.body.size),
-    description: req.body.description,
-    tags: itemTags,
-    img_url: req.body.imageurl,
-    user_id: currentUserId
-  }
-  console.log(dataTemplate);
-
-  createNewItem(dataTemplate, knex);
-  res.redirect('/users/:id');
-});
-
-
-// ***********************
-// ***********************
-// +---------------------+
-// |        PUT          |
-// +---------------------+
 
 // +---------------------+
 // |        LOGOUT       |
@@ -341,77 +223,41 @@ app.get('/logout', (req, res) => {
 // ***********************
 // ***********************
 // +---------------------+
-// |       UPDATE        |
-// +---------------------+
-
-// +---------------------+
-// |        ITEM         |
-// +---------------------+
-
-app.get('/users/:username/items/:id', (req, res) => {
-  knex('items').select().where('id', req.params.id).asCallback((err, rows) => {
-    if (err) throw err;
-    knex('tags').select('tags.content').join('item_tag', 'item_tag.tag_id', 'tags.id').where('item_id', rows[0].id).asCallback((err, tags) => {
-      if (err) throw err;
-      let currentItemTags = "";
-      tags.forEach((tag) => {
-        currentItemTags += (tag.content + ' ');
-      })
-      let templateVars = {
-        id: req.params.id,
-        currentItem: rows,
-        currentItemTags: currentItemTags,
-        currentUsername: req.session.username
-      }
-      console.log("templateVars: ", templateVars);
-      res.render('pages/item_edit', templateVars)
-    });
-  });
-});
-
-app.post('/users/:username/items/:id', (req, res) => {
-  // console.log("wasssup you are here");
-  editItemWithTags(req, res, knex);
-});
-
-
-
-// ***********************
-// ***********************
-// +---------------------+
-// |       DELETE        |
-// +---------------------+
-
-// +---------------------+
-// |        ITEM         |
-// +---------------------+
-
-
-
-
-app.delete('/api/items/:id', (req, res) => {
-  deleteItem(req.params.id);
-  getResultsFromDb(res, knex);
-});
-
-// ***********************
-// ***********************
-// +---------------------+
 // |       LISTEN        |
 // +---------------------+
 // ***********************
 // ***********************
 
 app.listen(PORT, () => {
-  console.log('listening to http://localhost:' + PORT);
+  console.log(`listening to http://localhost: ${PORT}`);
 });
 
 
+// +---------------------+
+// |        OTHER        |
+// +---------------------+
 
-
-
-
-
-app.post('/api', (req, res) => {
-  processUserQuery(req, res, knex);
+// link route
+app.get('/api/suggestion', (req, res) => {
+  findSuggestedItems(req, res, knex);
 });
+
+
+app.post('/api/email', (req, res) => {
+  var mailOptions = {
+    from: '"Fred Foo ?" <rajaghavami@gmail.com>', // sender address
+    to: 'some@email.com', // list of receivers
+    subject: 'Someone wants to trade with you!', // Subject line
+    text: req.body.content, // plaintext body
+    html: req.body.content // html body
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+      return console.log(error);
+    }
+    console.log('Message sent: ' + info.response);
+  });
+});
+
+
