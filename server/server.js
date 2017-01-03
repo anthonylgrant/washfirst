@@ -216,7 +216,7 @@ app.post('/api/register', (req, res) => {
 
 app.get('/logout', (req, res) => {
   req.session.destroy();
-  res.redirect('/login');
+  res.redirect('http://localhost:3000');
 });
 
 
@@ -258,5 +258,3 @@ app.post('/api/email', (req, res) => {
     console.log('Message sent: ' + info.response);
   });
 });
-
-
