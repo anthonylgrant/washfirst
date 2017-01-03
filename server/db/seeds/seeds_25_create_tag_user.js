@@ -15,41 +15,42 @@ let tagUserArr = [];
 
 exports.seed = function(knex, Promise) {
 
-  randomUserForTagUser = (array) => {
-    return array[Math.floor(Math.random() * array.length)];
-  }
+  // randomUserForTagUser = (array) => {
+  //   return array[Math.floor(Math.random() * array.length)];
+  // }
 
-  randomTagForTagUser = (array, user_id, tagUserArr) => {
-    let numberOfTagsFromThisArr = Math.floor(Math.random() * array.length);
-    let tags = new Set();
+  // randomTagForTagUser = (array, user_id, tagUserArr) => {
+  //   let numberOfTagsFromThisArr = Math.floor(Math.random() * array.length);
+  //   let tags = new Set();
 
-    for (let i = 0; i < numberOfTagsFromThisArr; i++) {
-      tags.add(array[Math.floor(Math.random() * array.length)]);
-    }
+  //   for (let i = 0; i < numberOfTagsFromThisArr; i++) {
+  //     tags.add(array[Math.floor(Math.random() * array.length)]);
+  //   }
 
-    tags.forEach((tag_id) => {
-      tagUserArr.push(knex('tag_user').insert(
-        {
-          tag_id: tag_id,
-          user_id: user_id
-        })
-      );
-    });
-  }
+  //   tags.forEach((tag_id) => {
+  //     tagUserArr.push(knex('tag_user').insert(
+  //       {
+  //         tag_id: tag_id,
+  //         user_id: user_id
+  //       })
+  //     );
+  //   });
+  // }
 
-  users.forEach((user_id) => {
-    randomTagForTagUser(colorTags, user_id, tagUserArr);
-    randomTagForTagUser(otherTags, user_id, tagUserArr);
-    randomTagForTagUser(styleTags, user_id, tagUserArr);
-    randomTagForTagUser(materialTags, user_id, tagUserArr);
-    randomTagForTagUser(brandTags, user_id, tagUserArr);
-  });
+  // users.forEach((user_id) => {
+  //   randomTagForTagUser(colorTags, user_id, tagUserArr);
+  //   randomTagForTagUser(otherTags, user_id, tagUserArr);
+  //   randomTagForTagUser(styleTags, user_id, tagUserArr);
+  //   randomTagForTagUser(materialTags, user_id, tagUserArr);
+  //   randomTagForTagUser(brandTags, user_id, tagUserArr);
+  // });
 
-  tagUserArr.push(knex('tag_user').orderBy('id'));
+  // tagUserArr.push(knex('tag_user').orderBy('id'));
 
-  return Promise.all(
-    tagUserArr
-  );
+  // return Promise.all(
+  //   tagUserArr
+  // );
+  return;
 };
 
 

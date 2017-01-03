@@ -15,39 +15,41 @@ let itemTagArr = [];
 
 exports.seed = function(knex, Promise) {
 
-  randomItemForItemTag = (array) => {
-    return array[Math.floor(Math.random() * array.length)];
-  }
+  // randomItemForItemTag = (array) => {
+  //   return array[Math.floor(Math.random() * array.length)];
+  // }
 
-  randomTagForItemTag = (array, item_id, itemTagArr) => {
-    let numberOfTagsFromThisArr = Math.floor(Math.random() * array.length);
-    let tags = new Set();
+  // randomTagForItemTag = (array, item_id, itemTagArr) => {
+  //   let numberOfTagsFromThisArr = Math.floor(Math.random() * array.length);
+  //   let tags = new Set();
 
-    for (let i = 0; i < numberOfTagsFromThisArr; i++) {
-      tags.add(array[Math.floor(Math.random() * array.length)]);
-    }
+  //   for (let i = 0; i < numberOfTagsFromThisArr; i++) {
+  //     tags.add(array[Math.floor(Math.random() * array.length)]);
+  //   }
 
-    tags.forEach((tag_id) => {
-      itemTagArr.push(knex('item_tag').insert(
-        {
-          tag_id: tag_id,
-          item_id: item_id
-        })
-      );
-    });
-  }
+  //   tags.forEach((tag_id) => {
+  //     itemTagArr.push(knex('item_tag').insert(
+  //       {
+  //         tag_id: tag_id,
+  //         item_id: item_id
+  //       })
+  //     );
+  //   });
+  // }
 
-  items.forEach((item_id) => {
-    randomTagForItemTag(colorTags, item_id, itemTagArr);
-    randomTagForItemTag(otherTags, item_id, itemTagArr);
-    randomTagForItemTag(styleTags, item_id, itemTagArr);
-    randomTagForItemTag(materialTags, item_id, itemTagArr);
-    randomTagForItemTag(brandTags, item_id, itemTagArr);
-  });
+  // items.forEach((item_id) => {
+  //   randomTagForItemTag(colorTags, item_id, itemTagArr);
+  //   randomTagForItemTag(otherTags, item_id, itemTagArr);
+  //   randomTagForItemTag(styleTags, item_id, itemTagArr);
+  //   randomTagForItemTag(materialTags, item_id, itemTagArr);
+  //   randomTagForItemTag(brandTags, item_id, itemTagArr);
+  // });
 
-  itemTagArr.push(knex('item_tag').orderBy('id'));
+  // itemTagArr.push(knex('item_tag').orderBy('id'));
 
-  return Promise.all(
-    itemTagArr
-  );
+  // return Promise.all(
+  //   itemTagArr
+  // );
+
+  return;
 };

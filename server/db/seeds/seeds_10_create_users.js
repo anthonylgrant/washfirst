@@ -25,45 +25,47 @@ randomUserIndex = (array, type) => {
 
 
 exports.seed = function(knex, Promise) {
-  for (let i = 0; i < 10; i++) {
-    let gender = randomUserIndex(genders, 'gender');
-    let topSizes = [];
-    let shoeSizes = [];
-    let bottomSizes = [];
+  // for (let i = 0; i < 10; i++) {
+  //   let gender = randomUserIndex(genders, 'gender');
+  //   let topSizes = [];
+  //   let shoeSizes = [];
+  //   let bottomSizes = [];
 
-    if (gender[0] === 'male') {
-      topSizes = randomUserIndex(maleTopSizes, 'maleTops');
-      shoeSizes = randomUserIndex(maleShoeSizes, 'maleShoes');
-      bottomSizes = randomUserIndex(maleBottomSizes, 'maleBottoms');
-    } else if (gender[0] === 'female') {
-      topSizes = randomUserIndex(femaleTopSizes, 'femaleTops');
-      shoeSizes = randomUserIndex(femaleShoeSizes, 'femaleShoes');
-      bottomSizes = randomUserIndex(femaleBottomSizes, 'femaleBottoms');
-    }
+  //   if (gender[0] === 'male') {
+  //     topSizes = randomUserIndex(maleTopSizes, 'maleTops');
+  //     shoeSizes = randomUserIndex(maleShoeSizes, 'maleShoes');
+  //     bottomSizes = randomUserIndex(maleBottomSizes, 'maleBottoms');
+  //   } else if (gender[0] === 'female') {
+  //     topSizes = randomUserIndex(femaleTopSizes, 'femaleTops');
+  //     shoeSizes = randomUserIndex(femaleShoeSizes, 'femaleShoes');
+  //     bottomSizes = randomUserIndex(femaleBottomSizes, 'femaleBottoms');
+  //   }
 
 
-    users.push(knex('users').insert(
-      {
-        username: `user_${i}`,
-        password: `password_${i}`,
-        email: `email_${i}`,
-        phone_number: `111-111-1${i}`,
-        gender: gender[0],
-        type: 'tops',
-        min_top_size: topSizes[0],
-        max_top_size: topSizes[1],
-        min_size: topSizes[0],
-        max_size: topSizes[1],
-        min_shoe_size: shoeSizes[0],
-        max_shoe_size: shoeSizes[1],
-        min_bottom_size: bottomSizes[0],
-        max_bottom_size: bottomSizes[1]
-      })
-    );
-  }
+  //   users.push(knex('users').insert(
+  //     {
+  //       username: `user_${i}`,
+  //       password: `password_${i}`,
+  //       email: `email_${i}`,
+  //       phone_number: `111-111-1${i}`,
+  //       gender: gender[0],
+  //       type: 'tops',
+  //       min_top_size: topSizes[0],
+  //       max_top_size: topSizes[1],
+  //       min_size: topSizes[0],
+  //       max_size: topSizes[1],
+  //       min_shoe_size: shoeSizes[0],
+  //       max_shoe_size: shoeSizes[1],
+  //       min_bottom_size: bottomSizes[0],
+  //       max_bottom_size: bottomSizes[1]
+  //     })
+  //   );
+  // }
 
-  users.push(knex('users').orderBy('id'));
+  // users.push(knex('users').orderBy('id'));
 
-  return Promise.all(users);
+  // return Promise.all(users);
+
+  return;
 
 };
