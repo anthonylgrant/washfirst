@@ -162,8 +162,6 @@ app.post('/api/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   if(!username || !password) {
-    const usernameError = true;
-    const passwordError = false;
     res.send(false);
     return;
   }
@@ -174,8 +172,6 @@ app.post('/api/login', (req, res) => {
   .then((string) => {
     const int = parseInt(string[0].count);
     if (int === 0) {
-      const usernameError = true;
-      const passwordError = false;
       res.send(false);
     }
   })
@@ -193,8 +189,6 @@ app.post('/api/login', (req, res) => {
           req.session.userId = user[0].id;
           res.send(true);
         } else {
-          const usernameError = false;
-          const passwordError = true;
           res.send(false);
         }
       });
