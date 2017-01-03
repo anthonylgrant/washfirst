@@ -258,5 +258,3 @@ app.post('/api/email', (req, res) => {
     console.log('Message sent: ' + info.response);
   });
 });
-
-
