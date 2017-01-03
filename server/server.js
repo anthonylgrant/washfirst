@@ -216,7 +216,7 @@ app.post('/api/register', (req, res) => {
 
 app.get('/logout', (req, res) => {
   req.session.destroy();
-  res.redirect('http://localhost:3000');
+  res.redirect('/login');
 });
 
 
@@ -225,8 +225,7 @@ app.get('/logout', (req, res) => {
 // +---------------------+
 // |       LISTEN        |
 // +---------------------+
-// ***********************
-// ***********************
+
 
 app.listen(PORT, () => {
   console.log(`listening to http://localhost: ${PORT}`);

@@ -6,19 +6,39 @@
     <link rel="stylesheet" href="/style/login.css">
   </head>
   <body>
-    <form class="login-form" action="/login" method="post">
-      <%if(usernameError) {%>
-        <span>No account? <a href="/register">Sign up!</a></span>
-      <%}%>
-      <span>username: </span>
-      <input type="text" name="username" value="">
-      <%if(passwordError) {%>
-        <span>Invalid password.</span>
-      <%}%>
-      <span>password: </span>
-      <input type="password" name="password" value="">
-      <button type="Submit" name="button">Submit</button>
-    </form>
+    <div class="header">
+      <h1>Wash First</h1>
+      <p>find new homes for old clothes</p>
+    </div>
+
+
+    <div class="login-form-wrap">
+      <form class="login-form" action="/login" method="post">
+        <%if(usernameError) {%>
+          <span class="error">No account? <a class="link"href="/register">Sign up!</a></span>
+        <%}%>
+        <div class="input-field-wrap">
+          <div class="input-field">
+            <span class="login-label">Username</span>
+            <input type="text" class="login-input" name="username" value="">
+          </div>
+
+
+
+          <div class="input-field">
+            <span class="login-label">Password</span>
+            <input type="password" class="login-input" name="password" value="">
+          </div>
+        </div>
+        <button type="Submit" name="button">Log In</button>
+
+      </form>
+      <form action="/register">
+        <button class="to-register" type="Submit" name="button">Sign Up</button>
+      </form>
+    </div>
+
+
   </body>
 </html>
  -->
