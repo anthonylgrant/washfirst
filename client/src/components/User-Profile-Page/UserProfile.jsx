@@ -10,6 +10,7 @@ class UserProfile extends Component {
     this.state = {
       userPreferenceTags: [],
       myItems: [],
+      username: ''
     };
 
     this.deleteItem = this.deleteItem.bind(this);
@@ -31,7 +32,8 @@ class UserProfile extends Component {
         let shoes = response.currUserInfo.myItems.shoes;
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
-          myItems: tops.concat(bottoms).concat(shoes)
+          myItems: tops.concat(bottoms).concat(shoes),
+          username: response.currUserInfo.username
         });
       })
     });
@@ -48,7 +50,8 @@ class UserProfile extends Component {
         let shoes = response.currUserInfo.myItems.shoes;
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
-          myItems: tops.concat(bottoms).concat(shoes)
+          myItems: tops.concat(bottoms).concat(shoes),
+          username: response.currUserInfo.username
         });
       }
     });
@@ -70,7 +73,7 @@ class UserProfile extends Component {
             {this.state.myItems.map((item) => {
               return (
                 <div key={item.id} className="main-container-item">
-                  <MyItem item={item} deleteItem={this.deleteItem} />
+                  <MyItem item={item} deleteItem={this.deleteItem} username={this.state.username} />
                 </div>
               );
             })}

@@ -13,7 +13,7 @@ class SuggestionCard extends Component {
         <div className="card-content">
           <div className="media">
             <div className="media-content">
-              <p className="title is-5">John Smith</p>
+              <p className="title is-5">@{this.props.item.username}</p>
             </div>
           </div>
           <div className="content">

@@ -105,7 +105,7 @@ class MyItem extends Component {
 
   defaultView() {
     return (
-      <ViewCard item={this.state.item} handleToggleView={this.handleToggleView} />
+      <ViewCard item={this.state.item} handleToggleView={this.handleToggleView} username={this.props.username} />
     );
   }
 
