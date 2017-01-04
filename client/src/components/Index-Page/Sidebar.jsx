@@ -25,7 +25,7 @@ class Sidebar extends Component {
           <hr/>
           <ul className='side-bar-tag-list'>{userPreferenceTags}</ul>
         </div>
-        <button className="button is-small" onClick={this.props.handlePreferenceSubmit}>submit</button>
+        <button className="button is-small" onClick={this.props.handlePreferenceSubmit}>update</button>
         <hr/>
         <div className='tags-list'>
           <h2 className='all-tags-label'>Tags From Items</h2>

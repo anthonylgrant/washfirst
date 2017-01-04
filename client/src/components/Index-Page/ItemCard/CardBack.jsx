@@ -93,7 +93,7 @@ class CardBack extends Component {
     return (
       <div className="card card-back">
         <div className="card-back-content">
-          <h1>Onwer's Interest In My Items:</h1>
+          <h1>Owner's Interest In My Items:</h1>
           <div className="matched-items-from-users-closet">
             { this.props.item.owner.sellersInterestInMyProduct.map((item, index) => {
               return (
