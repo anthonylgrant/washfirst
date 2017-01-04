@@ -96,7 +96,7 @@ const PORT = process.env.PORT || 8080;
 // +---------------------+
 
 // index route - get
-app.get('/api/', (req, res) => {
+app.get('/api', (req, res) => {
   getMainData(res, knex, req.session.userId);
 });
 
