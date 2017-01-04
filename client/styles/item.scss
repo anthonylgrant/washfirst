@@ -6,8 +6,12 @@ $default_content_padding: 10px;
 
 $header_height: 50px;
 
-
-
+$DARKEST: #43383D;
+$DARK: #583F95;
+$NEUTRAL: #7A70A2;
+$LIGHT: #E7D1B2;
+$LIGHTEST: #FFFBF7;
+$BORDER_COLOR: lighten($DARKEST, 50%);
 
 
 .card-front, .card-back {
@@ -16,14 +20,19 @@ $header_height: 50px;
   flex-direction: column;
   justify-content: space-between;
 
-  .card-image .image img {
-    max-width: 100%;
-    max-height: 100%;
+
+
+  .card-image .image {
+    img {
+    padding: 15px;
+    border: 1px solid $BORDER_COLOR;
+    max-width: 90%;
+    max-height: 90%;
     width: auto;
     height: auto;
     margin: auto;
+    }
   }
-
   // .delete-button-div {
   //   box-sizing: content-box;
   //   box-shadow: 0 0 10px #333;

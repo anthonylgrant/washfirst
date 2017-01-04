@@ -10,25 +10,10 @@ $NEUTRAL: #7A70A2;
 $LIGHT: #E7D1B2;
 $LIGHTEST: #FFFBF7;
 
-// .main-container {
-//   background-color: $LIGHTEST;
-//   padding: $header_height+20px $side_bar_height 0 20px;;
-//   .items-container {
-//
-//     display: flex;
-//     flex-direction: row;
-//     flex-wrap: wrap;
-//   }
-//   .main-container-item {
-//     width: 320px;
-//     height: 520px;
-//   }
-// }
-
-.main-container {
+.main-container-profile {
   margin: auto;
   background-color: $LIGHTEST;
-  padding: $header_height+20px $side_bar_height 0 20px;;
+  padding: $header_height+20px 20px 0 20px;;
   display: flex;
   .items-container {
     justify-content: center;

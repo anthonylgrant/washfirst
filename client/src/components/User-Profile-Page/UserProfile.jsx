@@ -62,7 +62,7 @@ class UserProfile extends Component {
     return (
       <div>
         <Navbar loggedIn={true}/>
-        <div className="main-container">
+        <div className="main-container-profile">
 
           <div className="items-container">
 
