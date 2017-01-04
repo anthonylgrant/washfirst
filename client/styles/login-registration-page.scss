@@ -1,6 +1,26 @@
 $header_height: 50px;
 $default_content_padding: 5px;
 
-.login-register-main-container {
-  padding-top: $header_height * 1.2;
+.login-registration {
+  background-image: url(../public/images/login-registration/male-female-models.jpg);
+  height: 100vh;
+  width: 100vw;
+  background-size: cover;
+
+  .login-register-main-container {
+    padding: $header_height * 1.5 $header_height;
+
+    max-width: 40%;
+    min-width: 400px;
+
+    .control .submit {
+      width: 50%;
+      background-color: black;
+    }
+
+    .control .input {
+      border: none;
+    }
+  }
 }
+

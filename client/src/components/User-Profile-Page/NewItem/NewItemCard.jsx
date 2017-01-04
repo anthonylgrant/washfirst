@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import NewCard from './NewCard.jsx';
 
+
 class NewItem extends Component {
   constructor(props) {
     super(props);
@@ -16,17 +17,10 @@ class NewItem extends Component {
       tags: '',
       description: '',
     };
-    // this.editView = this.editView.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.handleToggleView = this.handleToggleView.bind(this);
     this.handleNewRequest = this.handleNewRequest.bind(this);
     this.validateForm = this.validateForm.bind(this);
   }
-
-  // handleToggleView() {
-  //   this.setState({ edit: !this.state.edit });
-  // }
-
 
   handleChange(e) {
     e.preventDefault();
@@ -67,7 +61,7 @@ class NewItem extends Component {
 
   render() {
     return (
-      <NewCard handleChange={this.handleChange} validateForm={this.validateForm} handleNewRequest={this.handleNewRequest} />
+      <NewCard type={this.state.type} handleChange={this.handleChange} validateForm={this.validateForm} handleNewRequest={this.handleNewRequest} />
     );
   }
 };

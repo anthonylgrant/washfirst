@@ -22,7 +22,12 @@ module.exports = {
       {
         test: /\.scss$/,
         loaders: ["style", "css", "sass"]
-      }
+      },
+      {
+        test: /\.(png|jpg)$/,
+        include: path.join(__dirname, 'public/images/login-registration'),
+        loader: 'url-loader?limit=1000000'
+      } // inline base64 URLs for <=10k images, direct URLs for the rest
     ]
   }
 }

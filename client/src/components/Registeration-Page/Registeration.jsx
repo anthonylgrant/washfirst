@@ -69,9 +69,9 @@ class Registeration extends Component {
       <div>
 
       <Navbar loggedIn={false} />
+      <div className="login-registration">
 
         <div className="login-register-main-container">
-          <h1> REGISTER HERE </h1>
 
           <label className="label">Username:</label>
           <p className="control has-icon has-icon-left">
@@ -179,11 +179,12 @@ class Registeration extends Component {
           </p>
 
           <p className="control">
-            <button className="button is-primary" disabled={!this.validateForm()} onClick={this.handleSubmit}>Submit</button>
+            <button className="button submit is-primary" disabled={!this.validateForm()} onClick={this.handleSubmit}>Submit</button>
             <Link className="button is-link" to="/">Cancel</Link>
           </p>
 
         </div>
+      </div>
       </div>
     );
   }

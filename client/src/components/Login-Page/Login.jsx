@@ -63,24 +63,27 @@ class Login extends Component {
     return (
       <div>
         <Navbar loggedIn={false} />
+        <div className="login-registration">
 
-        <div className="login-register-main-container">
-          <p>{this.state.loginErrorMsg}</p>
-          <p className="control has-icon">
-            <input className="input" type="text" name="username" placeholder="Username" onChange={this.handleChange} />
-            <i className="fa fa-user"></i>
-          </p>
-          <p className="control has-icon">
-            <input className="input" type="password" name="password" placeholder="Password" onChange={this.handleChange}  onKeyPress={this.keyPressEnter} />
-            <i className="fa fa-lock"></i>
-          </p>
-          <p className="control">
-            <button className="button is-success" disabled={!this.validateForm()} onClick={this.handleSubmit}>
-              Login
-            </button>
-          </p>
+          <div className="login-register-main-container">
+            <p>{this.state.loginErrorMsg}</p>
+            <p className="control has-icon">
+              <input className="input" type="text" name="username" placeholder="Username" onChange={this.handleChange} />
+              <i className="fa fa-user"></i>
+            </p>
+            <p className="control has-icon">
+              <input className="input" type="password" name="password" placeholder="Password" onChange={this.handleChange}  onKeyPress={this.keyPressEnter} />
+              <i className="fa fa-lock"></i>
+            </p>
+            <p className="control">
+              <button className="button submit is-success" disabled={!this.validateForm()} onClick={this.handleSubmit}>
+                Login
+              </button>
+              <Link className="button is-link" to="/register">Register</Link>
+            </p>
 
-          <Link to="/register">Register</Link>
+          </div>
+
         </div>
       </div>
     );

@@ -3,7 +3,6 @@ $side_bar_height: 300px;
 $default_content_padding: 5px;
 $main_container_width: 75%;
 
-
 $DARKEST: #43383D;
 $DARK: #583F95;
 $NEUTRAL: #7A70A2;
@@ -11,6 +10,7 @@ $LIGHT: #E7D1B2;
 $LIGHTEST: #FFFBF7;
 
 .main-container {
+  height: 100vh;
   background-color: $LIGHTEST;
   padding: $header_height $side_bar_height 0 0;
   .items-container {
