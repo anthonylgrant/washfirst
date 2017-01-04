@@ -39,6 +39,9 @@ $BORDER_COLOR: lighten($DARKEST, 50%);
         border-bottom: 1px solid $LIGHTEST;
         transition: 0.5s;
      }
+     .selected {
+       color: darken($LIGHT, 30%);
+     }
      .nav-bar-item:hover {
       transition: 0.5s;
       color: darken($LIGHT, 30%);

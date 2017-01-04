@@ -61,7 +61,7 @@ class UserProfile extends Component {
   render() {
     return (
       <div>
-        <Navbar loggedIn={true}/>
+        <Navbar loggedIn={true} profilePage={true}/>
         <div className="main-container-profile">
 
           <div className="items-container">

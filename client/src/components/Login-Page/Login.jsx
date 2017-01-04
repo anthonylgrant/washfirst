@@ -62,7 +62,7 @@ class Login extends Component {
 
     return (
       <div>
-        <Navbar loggedIn={false} />
+        <Navbar loggedIn={false} loginPage={true} />
 
         <div className="login-register-main-container">
           <p>{this.state.loginErrorMsg}</p>
