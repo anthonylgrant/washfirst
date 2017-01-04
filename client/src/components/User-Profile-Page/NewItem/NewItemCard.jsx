@@ -21,6 +21,7 @@ class NewItem extends Component {
     // this.handleToggleView = this.handleToggleView.bind(this);
     this.handleNewRequest = this.handleNewRequest.bind(this);
     this.validateForm = this.validateForm.bind(this);
+    this.emptyField = this.emptyField.bind(this);
   }
 
   // handleToggleView() {
@@ -53,10 +54,18 @@ class NewItem extends Component {
       url: `/api/users/some_userid/new`,
       data: newItem,
       success: (response) => {
+        this.setState
         this.props.reload();
       }
     });
 
+  }
+
+  emptyField(e) {
+    e.preventDefault();
+    console.log('e', e);
+    console.log('e value', e.target.value);
+    e.target.value = "";
   }
 
 
@@ -67,7 +76,7 @@ class NewItem extends Component {
 
   render() {
     return (
-      <NewCard handleChange={this.handleChange} validateForm={this.validateForm} handleNewRequest={this.handleNewRequest} />
+      <NewCard handleChange={this.handleChange} validateForm={this.validateForm} handleNewRequest={this.handleNewRequest} emptyField={this.emptyField}/>
     );
   }
 };
