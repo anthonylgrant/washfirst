@@ -40,6 +40,7 @@ class UserProfile extends Component {
   }
 
   loadPageData() {
+    console.log("i'm here 1");
     $.ajax({
       method: 'GET',
       url: '/api/',
@@ -61,8 +62,8 @@ class UserProfile extends Component {
   render() {
     return (
       <div>
-        <Navbar loggedIn={true}/>
-        <div className="main-container">
+        <Navbar loggedIn={true} profilePage={true}/>
+        <div className="main-container-profile">
 
           <div className="items-container">
 

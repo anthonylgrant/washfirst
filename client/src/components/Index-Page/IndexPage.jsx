@@ -203,7 +203,7 @@ class App extends Component {
     let allInvetory = this.state.shoesInventory.concat(this.state.topsInventory).concat(this.state.bottomsInventory);
     return (
       <div>
-        <Navbar loggedIn={true} />
+        <Navbar loggedIn={true} mainPage={true}/>
         <div className="main-container">
           <div className="items-container">
             { allInvetory.map((item) => {

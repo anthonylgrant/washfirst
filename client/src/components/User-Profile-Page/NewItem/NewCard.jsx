@@ -27,10 +27,10 @@ class NewCard extends Component {
 
         <h1>Enter information for a new item here:</h1>
 
-        <div className='control'>
+        <form className='control' onSubmit={this.props.emptyField}>
           <input type='text' className='input is-primary'
                  placeholder='Image URL' name='img_url'
-                 onChange={this.props.handleChange}>
+                 onChange={this.props.handleChange} >
           </input>
 
           <label>Category: </label>
@@ -79,7 +79,7 @@ class NewCard extends Component {
                  placeholder='Enter Description' name='description'
                  onChange={this.props.handleChange}>
           </input>
-        </div>
+        </form>
 
 
         <div className="card-footer button-container">

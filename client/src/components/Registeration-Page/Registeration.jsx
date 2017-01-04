@@ -68,7 +68,7 @@ class Registeration extends Component {
     return (
       <div>
 
-      <Navbar loggedIn={false} />
+      <Navbar loggedIn={false} registerPage={true} />
       <div className="login-registration">
 
         <div className="login-register-main-container">

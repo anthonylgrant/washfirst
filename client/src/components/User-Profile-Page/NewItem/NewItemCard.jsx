@@ -15,11 +15,12 @@ class NewItem extends Component {
       gender: '',
       size: '',
       tags: '',
-      description: '',
+      description: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleNewRequest = this.handleNewRequest.bind(this);
     this.validateForm = this.validateForm.bind(this);
+    this.emptyField = this.emptyField.bind(this);
   }
 
   handleChange(e) {
@@ -53,6 +54,11 @@ class NewItem extends Component {
 
   }
 
+  emptyField(e) {
+    e.preventDefault();
+    e.target.value = "";
+  }
+
 
   validateForm() {
     return (this.state.img_url && this.state.type && this.state.gender && this.state.size && this.state.tags && this.state.description);
@@ -61,7 +67,7 @@ class NewItem extends Component {
 
   render() {
     return (
-      <NewCard type={this.state.type} handleChange={this.handleChange} validateForm={this.validateForm} handleNewRequest={this.handleNewRequest} />
+      <NewCard type={this.state.type} handleChange={this.handleChange} validateForm={this.validateForm} handleNewRequest={this.handleNewRequest} emptyField={this.emptyField} />
     );
   }
 };

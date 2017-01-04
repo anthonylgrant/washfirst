@@ -12,10 +12,10 @@ $NEUTRAL: #7A70A2;
 $LIGHT: #E7D1B2;
 $LIGHTEST: #FFFBF7;
 $BORDER_COLOR: lighten($DARKEST, 50%);
-
+$BACKGROUND_COLOR: $LIGHTEST;
 
 .side-bar {
-  background-color: $LIGHTEST;
+  background-color: $BACKGROUND_COLOR;
   bottom: 0;
   display: flex;
   flex-direction: column;
