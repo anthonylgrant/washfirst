@@ -56,6 +56,7 @@ class NewItem extends Component {
         this.props.reload();
       }
     });
+
   }
 
 

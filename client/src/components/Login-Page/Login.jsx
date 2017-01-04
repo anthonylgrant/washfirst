@@ -13,6 +13,7 @@ class Login extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.validateForm = this.validateForm.bind(this);
+    this.keyPressEnter = this.keyPressEnter.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.printLoginError = this.printLoginError.bind(this);
   }
@@ -31,6 +32,13 @@ class Login extends Component {
       this.state.username &&
       this.state.password
     );
+  }
+
+  keyPressEnter(event) {
+    if (event.charCode==13) {
+      console.log("enter key pressed!!")
+      this.handleSubmit();
+    }
   }
 
   handleSubmit() {
@@ -63,7 +71,7 @@ class Login extends Component {
             <i className="fa fa-user"></i>
           </p>
           <p className="control has-icon">
-            <input className="input" type="password" name="password" placeholder="Password" onChange={this.handleChange} />
+            <input className="input" type="password" name="password" placeholder="Password" onChange={this.handleChange}  onKeyPress={this.keyPressEnter} />
             <i className="fa fa-lock"></i>
           </p>
           <p className="control">
