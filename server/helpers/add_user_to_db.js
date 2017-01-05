@@ -6,7 +6,7 @@
     username,
     password,
     email,
-    phone_number,
+    postal_code,
     gender,
     min_top_size,
     max_top_size,
@@ -21,16 +21,6 @@
 // const knex = require('knex')({ client: 'pg', connection: config });
 
 function addUserToDb(req, res, knex, bcrypt) {
-  // let newUser = Object.assign({}, req.body, {
-  //   min_top_size: parseInt(req.body.min_top_size),
-  //   max_top_size: parseInt(req.body.max_top_size),
-  //   min_bottom_size: parseInt(req.body.min_bottom_size),
-  //   max_bottom_size: parseInt(req.body.max_bottom_size),
-  //   min_shoe_size: parseInt(req.body.min_shoe_size),
-  //   max_shoe_size: parseInt(req.body.max_shoe_size)
-  // });
-
-
 
   bcrypt.hash(req.body.password, 10).then(function(hash) {
     const newUser = Object.assign({}, req.body, {
