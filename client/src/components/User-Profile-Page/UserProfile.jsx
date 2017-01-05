@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { browserHistory } from 'react-router';
 
 import Navbar from '../Partials/Navbar.jsx';
 import MyItem from './MyItem/MyItemCard.jsx';
@@ -54,20 +55,20 @@ class UserProfile extends Component {
   }
 
   updateUserSizes() {
-    console.log("update submitted!");
-    let newUserSizes = this.state;
-    delete newUserSizes.userPreferenceTags;
-    delete newUserSizes.myItems;
-    delete newUserSizes.username;
-    delete newUserSizes.topSizes;
-    delete newUserSizes.bottomSizes;
-    delete newUserSizes.shoeSizes;
+    let newUserSizes = {
+      gender: this.state.gender,
+      min_top_size: this.state.min_top_size,
+      max_top_size: this.state.max_top_size,
+      min_bottom_size: this.state.min_bottom_size,
+      max_bottom_size: this.state.max_bottom_size,
+      min_shoe_size: this.state.min_shoe_size,
+      max_shoe_size: this.state.max_shoe_size
+    };
     $.ajax({
       method: 'POST',
-      url: `/api/users/3/edit`,
+      url: `/api/users/:id/edit`,
       data: newUserSizes,
       success: ((response) => {
-        console.log("success!!");
         browserHistory.push('/users/:id');
       })
     });
@@ -116,9 +117,7 @@ class UserProfile extends Component {
     });
   }
 
-
   render() {
-    console.log("this.state: @@@@@", this.state);
     return (
       <div>
         <Navbar loggedIn={true} profilePage={true}/>
@@ -145,7 +144,6 @@ class UserProfile extends Component {
               bottomSizes={this.state.bottomSizes}
               shoeSizes={this.state.shoeSizes}
             />
-
 
             {this.state.myItems.map((item) => {
               return (
