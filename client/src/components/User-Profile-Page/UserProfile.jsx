@@ -28,7 +28,7 @@ class UserProfile extends Component {
     this.loadPageData = this.loadPageData.bind(this);
     this.validateForm = this.validateForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.updateUserPreferences = this.updateUserPreferences.bind(this);
+    this.updateUserSizes = this.updateUserSizes.bind(this);
   }
 
   componentDidMount() {
@@ -53,8 +53,15 @@ class UserProfile extends Component {
     });
   }
 
-  updateUserPreferences() {
+  updateUserSizes() {
     console.log("update submitted!");
+    $.ajax({
+      method: 'POST',
+      url: `/api/users/3/edit`,
+      success: ((response) => {
+        console.log("success!!");
+      })
+    });
   }
 
   handleChange(e) {
@@ -117,7 +124,7 @@ class UserProfile extends Component {
             <UserSidebar
               validateForm={this.validateForm}
               handleChange={this.handleChange}
-              updateUserPreferences={this.updateUserPreferences}
+              updateUserSizes={this.updateUserSizes}
               gender={this.state.gender}
               min_top_size={this.state.min_top_size}
               max_top_size={this.state.max_top_size}

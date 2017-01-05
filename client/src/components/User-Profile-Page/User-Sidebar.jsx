@@ -11,7 +11,7 @@ class UserSidebar extends Component {
 
     return (
       <div className="side-bar">
-        <p>Update Personal Preference</p>
+        <p>Update Gender & Size Preferences</p>
         <div className="user-preferences-container">
 
           <p className="control">
@@ -103,7 +103,7 @@ class UserSidebar extends Component {
           </p>
 
           <p className="control">
-            <button className="button submit is-primary" disabled={!this.props.validateForm()} onClick={this.props.updateUserPreferences}>Update</button>
+            <button className="button submit is-primary" disabled={!this.props.validateForm()} onClick={this.props.updateUserSizes}>Update</button>
           </p>
         </div>
       </div>
