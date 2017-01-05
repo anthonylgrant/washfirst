@@ -15,7 +15,8 @@ class App extends Component {
       topsInventory: [],
       bottomsInventory: [],
       searchBarText: '',
-      myItems: []
+      myItems: [],
+      type: ''
     };
     this.swapTagsFromUserPref = this.swapTagsFromUserPref.bind(this);
     this.swapTagsFromTagsFromItems = this.swapTagsFromTagsFromItems.bind(this);
@@ -25,7 +26,9 @@ class App extends Component {
     this.handlePreferenceSubmit = this.handlePreferenceSubmit.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.removeDuplicates = this.removeDuplicates.bind(this);
+    this.handleTypeSelection = this.handleTypeSelection.bind(this);
   }
+
 
   swapTagsFromUserPref(event) {
     event.preventDefault;
@@ -75,6 +78,12 @@ class App extends Component {
     });
   }
 
+  handleTypeSelection(e) {
+    let key = e.target.name === 'all' ? '' : e.target.name;
+    let obj = {};
+    obj[key] = e.target.value;
+    this.setState(obj);
+  }
 
   componentDidMount() {
     $.ajax({
@@ -187,8 +196,6 @@ class App extends Component {
       success: ((response) => {
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
-          // tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
-          // fixedTagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
           tagsFromItems: this.removeDuplicates(response.allTags, response.currUserInfo.preferences),
           fixedTagsFromItems: this.removeDuplicates(response.allTags, response.currUserInfo.preferences),
           topsInventory: this.sortItemsByRanking(response.inventory.tops),
@@ -200,7 +207,12 @@ class App extends Component {
   }
 
   render() {
-    let allInvetory = this.state.shoesInventory.concat(this.state.topsInventory).concat(this.state.bottomsInventory);
+
+    let allInvetory = this.state[this.state.type] ||
+                      this.state.shoesInventory.
+                      concat(this.state.topsInventory).
+                      concat(this.state.bottomsInventory);
+
     return (
       <div>
         <Navbar loggedIn={true} mainPage={true}/>
@@ -222,6 +234,7 @@ class App extends Component {
           swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
           autoCompleteSearchBar={this.autoCompleteSearchBar}
           handlePreferenceSubmit={this.handlePreferenceSubmit}
+          handleTypeSelection={this.handleTypeSelection}
         />
       </div>
     );
