@@ -33,6 +33,11 @@ $BACKGROUND_COLOR: $LIGHTEST;
     font-family: 'Proza Libre', sans-serif;
 
   }
+
+  .range-selector .range-slider {
+      margin: 0 20px;
+  }
+
   .side-bar-tag-list {
     overflow-y: auto;
     li {

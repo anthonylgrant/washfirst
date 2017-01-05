@@ -10,13 +10,16 @@ class App extends Component {
     super(props);
     this.state = {
       userPreferenceTags: [],
+      currUserLat: '',
+      currUserLng: '',
       tagsFromItems: [],
       shoesInventory: [],
       topsInventory: [],
       bottomsInventory: [],
       searchBarText: '',
       myItems: [],
-      type: ''
+      type: '',
+      rangeKm: 10
     };
     this.swapTagsFromUserPref = this.swapTagsFromUserPref.bind(this);
     this.swapTagsFromTagsFromItems = this.swapTagsFromTagsFromItems.bind(this);
@@ -27,6 +30,7 @@ class App extends Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.removeDuplicates = this.removeDuplicates.bind(this);
     this.handleTypeSelection = this.handleTypeSelection.bind(this);
+    this.isThisWithinRange = this.isThisWithinRange.bind(this);
   }
 
 
@@ -96,6 +100,8 @@ class App extends Component {
         let shoes = response.currUserInfo.myItems.shoes;
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
+          currUserLat: response.currUserInfo.address_lat,
+          currUserLng: response.currUserInfo.address_lng,
           // tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
           // fixedTagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
           tagsFromItems: this.removeDuplicates(response.allTags, response.currUserInfo.preferences),
@@ -206,6 +212,29 @@ class App extends Component {
     });
   }
 
+
+  isThisWithinRange(item) {
+    const rad = (x) => {
+      return x * Math.PI / 180;
+    };
+
+    const getDistance = (p1, p2) => {
+      let R = 6378137; // Earth’s mean radius in meter
+      let dLat = rad(p2.lat - p1.lat);
+      let dLong = rad(p2.lng - p1.lng);
+      let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(rad(p1.lat)) * Math.cos(rad(p2.lat)) *
+        Math.sin(dLong / 2) * Math.sin(dLong / 2);
+      let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      let d = R * c / 1000;
+      return (d < this.state.rangeKm) ? true : false;
+    };
+
+    let p1 = { lat: this.state.currUserLat, lng: this.state.currUserLng };
+    let p2 = { lat: item.owner.address_lat, lng: item.owner.address_lng };
+    return getDistance(p1, p2);
+  }
+
   render() {
 
     let allInvetory = this.state[this.state.type] ||
@@ -219,7 +248,7 @@ class App extends Component {
         <div className="main-container">
           <div className="items-container">
             { allInvetory.map((item) => {
-              return (
+              if (this.isThisWithinRange(item)) return (
                 <div key={item.id} className="main-container-item">
                   <ItemCard myItems={this.state.myItems} item={item} deleteItem={this.deleteItem} />
                 </div>
@@ -230,6 +259,7 @@ class App extends Component {
         <Sidebar
           userPreferenceTags={this.state.userPreferenceTags}
           tagsFromItems={this.state.tagsFromItems}
+          rangeKm={this.state.rangeKm}
           swapTagsFromUserPref = {this.swapTagsFromUserPref}
           swapTagsFromTagsFromItems = {this.swapTagsFromTagsFromItems}
           autoCompleteSearchBar={this.autoCompleteSearchBar}

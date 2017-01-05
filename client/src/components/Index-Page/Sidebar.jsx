@@ -38,6 +38,13 @@ class Sidebar extends Component {
           </p>
         </div>
         <hr/>
+        <div className='range-selector'>
+          <span>Range:
+            <input className='range-slider' type="range" name="rangeKm" min="0" max="20" onChange={this.props.handleTypeSelection} />
+            {this.props.rangeKm} km
+          </span>
+        </div>
+        <hr/>
         <div className='tags-list'>
           <ul className='side-bar-tag-list'>{userPreferenceTags}</ul>
         </div>
