@@ -27,7 +27,8 @@ class UserSidebar extends Component {
           <label className="label">Top Size - Minimum and Maximum:</label>
           <p className="control">
             <span className="select">
-              <select name="min_top_size" onChange={this.props.handleChange}>
+              <select name="min_top_size"
+                value={this.props.min_top_size} onChange={this.props.handleChange}>
               {
                 this.props.topSizes.map((size, index) => {
                   return <option key={index}>{size}</option>
@@ -37,7 +38,8 @@ class UserSidebar extends Component {
             </span>
             <span> To </span>
             <span className="select">
-              <select name="max_top_size" onChange={this.props.handleChange}>
+              <select name="max_top_size"
+                value={this.props.max_top_size} onChange={this.props.handleChange}>
                 {
                   this.props.topSizes.map((size, index) => {
                     return <option key={index}>{size}</option>
@@ -52,7 +54,8 @@ class UserSidebar extends Component {
           <label className="label">Bottom Size - Minimum and Maximum:</label>
           <p className="control">
             <span className="select">
-              <select name="min_bottom_size" onChange={this.props.handleChange}>
+              <select name="min_bottom_size"
+                value={this.props.min_bottom_size} onChange={this.props.handleChange}>
               {
                 this.props.bottomSizes.map((size, index) => {
                   return <option key={index}>{size}</option>
@@ -62,7 +65,8 @@ class UserSidebar extends Component {
             </span>
             <span> To </span>
             <span className="select">
-              <select name="max_bottom_size" onChange={this.props.handleChange}>
+              <select name="max_bottom_size"
+                value={this.props.max_bottom_size} onChange={this.props.handleChange}>
                 {
                   this.props.bottomSizes.map((size, index) => {
                     return <option key={index}>{size}</option>
@@ -76,7 +80,8 @@ class UserSidebar extends Component {
           <label className="label">Shoe Size - Minimum and Maximum:</label>
           <p className="control">
             <span className="select">
-              <select name="min_shoe_size" onChange={this.props.handleChange}>
+              <select name="min_shoe_size"
+                value={this.props.min_shoe_size} onChange={this.props.handleChange}>
               {
                 this.props.shoeSizes.map((size, index) => {
                   return <option key={index}>{size}</option>
@@ -86,7 +91,8 @@ class UserSidebar extends Component {
             </span>
             <span> To </span>
             <span className="select">
-              <select name="max_shoe_size" onChange={this.props.handleChange}>
+              <select name="max_shoe_size"
+                value={this.props.max_shoe_size} onChange={this.props.handleChange}>
                 {
                   this.props.shoeSizes.map((size, index) => {
                     return <option key={index}>{size}</option>
