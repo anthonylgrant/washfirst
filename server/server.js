@@ -122,7 +122,8 @@ app.post('/api/users/:username/items/:id', (req, res) => {
 
 // Edit user size preference route - post
 app.post('/api/users/:id/edit', (req, res) => {
-  console.log("size preference edit requested!!!");
+  // console.log("size preference edit requested!!!");
+  console.log("req.body:   @@@@@@@@@@", req.body);
 });
 
 

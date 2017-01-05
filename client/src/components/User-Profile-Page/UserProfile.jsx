@@ -55,11 +55,20 @@ class UserProfile extends Component {
 
   updateUserSizes() {
     console.log("update submitted!");
+    let newUserSizes = this.state;
+    delete newUserSizes.userPreferenceTags;
+    delete newUserSizes.myItems;
+    delete newUserSizes.username;
+    delete newUserSizes.topSizes;
+    delete newUserSizes.bottomSizes;
+    delete newUserSizes.shoeSizes;
     $.ajax({
       method: 'POST',
       url: `/api/users/3/edit`,
+      data: newUserSizes,
       success: ((response) => {
         console.log("success!!");
+        browserHistory.push('/users/:id');
       })
     });
   }
@@ -109,6 +118,7 @@ class UserProfile extends Component {
 
 
   render() {
+    console.log("this.state: @@@@@", this.state);
     return (
       <div>
         <Navbar loggedIn={true} profilePage={true}/>
