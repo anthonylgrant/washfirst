@@ -56,6 +56,13 @@ class UserProfile extends Component {
 
   }
 
+    handleChange(e) {
+      let key = e.target.name;
+      let obj = {};
+      obj[key] = e.target.value;
+      this.setState(obj);
+    }
+
   validateForm() {
     return (
       this.state.username &&
@@ -101,6 +108,7 @@ class UserProfile extends Component {
             <div className="main-container-item">
               <NewItem reload={this.loadPageData}/>
             </div>
+
             <div className="side-bar">
               <p>Sidebar</p>
               <div className="user-preferences-container">
@@ -134,7 +142,7 @@ class UserProfile extends Component {
                         })
                       }
                     </select>
-                  </span>
+                  </span><br/>
                   <span> 1: XS 2: S 3: M 4: L 5: XL 6: XXL</span>
                 </p>
 
