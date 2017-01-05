@@ -28,7 +28,7 @@ class NewCard extends Component {
         <h1>Enter information for a new item here:</h1>
 
         <form className='control' onSubmit={this.props.emptyField}>
-          <input type='text' className='input is-primary'
+          <input type='file' className='input is-primary'
                  placeholder='Image URL' name='img_url'
                  onChange={this.props.handleChange} >
           </input>

@@ -1,4 +1,3 @@
-// Needs all item tags and user-pref tags sent in as props
 import React, {Component} from 'react';
 
 class Sidebar extends Component {
@@ -20,9 +19,33 @@ class Sidebar extends Component {
 
     return (
       <div className='side-bar'>
-        <div className='tags-list'>
-          <h2 className='all-tags-label'>User Preference Tags</h2>
+        <div className='type-selector'>
+          <h2 className='all-tags-label'>Select Type and Enter Search Tags:</h2>
           <hr/>
+          <p className="control type-selection">
+            <label className="radio">
+              <input type="radio" name="type" value="topsInventory" onChange={this.props.handleTypeSelection} /> Tops
+            </label>
+            <label className="radio">
+              <input type="radio" name="type" value="bottomsInventory" onChange={this.props.handleTypeSelection} /> Bottoms
+            </label>
+            <label className="radio">
+              <input type="radio" name="type" value="shoesInventory" onChange={this.props.handleTypeSelection} /> Shoes
+            </label>
+            <label className="radio">
+              <input type="radio" name="type" value="all" onChange={this.props.handleTypeSelection} /> All
+            </label>
+          </p>
+        </div>
+        <hr/>
+        <div className='range-selector'>
+          <span>Range:
+            <input className='range-slider' type="range" name="rangeKm" min="0" max="20" onChange={this.props.handleTypeSelection} />
+            {this.props.rangeKm} km
+          </span>
+        </div>
+        <hr/>
+        <div className='tags-list'>
           <ul className='side-bar-tag-list'>{userPreferenceTags}</ul>
         </div>
         <button className="button is-small" onClick={this.props.handlePreferenceSubmit}>update</button>

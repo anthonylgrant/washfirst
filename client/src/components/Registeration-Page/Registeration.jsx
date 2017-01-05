@@ -10,7 +10,6 @@ class Registeration extends Component {
       username: '',
       password: '',
       email: '',
-      phone_number: '',
       gender: '',
       min_top_size: '',
       max_top_size: '',
@@ -18,6 +17,7 @@ class Registeration extends Component {
       max_bottom_size: '',
       min_shoe_size: '',
       max_shoe_size: '',
+      postal_code: '',
       topSizes: ['-', 1, 2, 3, 4, 5, 6],
       bottomSizes: ['-', 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44],
       shoeSizes: ['-', 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
@@ -25,7 +25,31 @@ class Registeration extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.validateForm = this.validateForm.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.getLocation = this.getLocation.bind(this);
   }
+
+  getLocation(callback) {
+    // console.log("i'm here 0", this.state.postal_code);
+    return new Promise((resolve, reject) => {
+      let geocoder = new google.maps.Geocoder();
+      let address = this.state.postal_code;
+      geocoder.geocode (
+        { 'address': address },
+        (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+          let coordinates = {
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng()
+          };
+          // alert("Latitude: " + lat + "\nLongitude: " + lng);
+          resolve(coordinates);
+        } else {
+          alert("Please enter valid postal code.");
+          reject();
+        }
+      });
+  });
+}
 
   handleChange(e) {
     let key = e.target.name;
@@ -44,22 +68,29 @@ class Registeration extends Component {
       this.state.min_bottom_size &&
       this.state.max_bottom_size &&
       this.state.min_shoe_size &&
-      this.state.max_shoe_size
+      this.state.max_shoe_size &&
+      this.state.postal_code
     );
   }
 
   handleSubmit() {
-    let newUserInfo = this.state;
-    delete newUserInfo.topSizes;
-    delete newUserInfo.bottomSizes;
-    delete newUserInfo.shoeSizes;
-    $.ajax({
-      method: 'POST',
-      url: `/api/register`,
-      data: newUserInfo,
-      success: ((response) => {
-        browserHistory.push('/');
-      })
+    this.getLocation().then((coordinates) => {
+      console.log("i'm here 1");
+      let newUserInfo = this.state;
+      newUserInfo.address_lat = coordinates.lat;
+      newUserInfo.address_lng = coordinates.lng;
+      delete newUserInfo.postal_code;
+      delete newUserInfo.topSizes;
+      delete newUserInfo.bottomSizes;
+      delete newUserInfo.shoeSizes;
+      $.ajax({
+        method: 'POST',
+        url: `/api/register`,
+        data: newUserInfo,
+        success: ((response) => {
+          browserHistory.push('/');
+        })
+      });
     });
   }
 
@@ -91,10 +122,10 @@ class Registeration extends Component {
             <i className="fa fa-at fa-fw" aria-hidden="true"></i>
           </p>
 
-          <label className="label">Phone Number:</label>
+          <label className="label">Postal Code:</label>
           <p className="control has-icon has-icon-left">
-            <input className="input is-success" name="phone_number" type="text" placeholder="What's the best phone number to reach you? (optional)" onChange={this.handleChange} />
-            <i className="fa fa-phone fa-fw" aria-hidden="true"></i>
+            <input className="input is-success" name="postal_code" type="text" placeholder="What's your postal code?" onChange={this.handleChange} />
+            <i className="fa fa-map-marker fa-fw" aria-hidden="true"></i>
           </p>
 
           <p className="control">

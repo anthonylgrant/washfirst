@@ -1,7 +1,7 @@
 // Update with your config settings.
 "use strict"
 
-const config = require('./config_heroku');
+const config = require('./config_local');
 
 module.exports = {
 

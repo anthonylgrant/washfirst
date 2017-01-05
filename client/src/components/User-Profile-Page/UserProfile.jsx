@@ -83,7 +83,6 @@ class UserProfile extends Component {
   }
 
   loadPageData() {
-    console.log("i'm here 1");
     $.ajax({
       method: 'GET',
       url: '/api/',
