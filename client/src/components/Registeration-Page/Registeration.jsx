@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { browserHistory, Link } from 'react-router';
+import AlertContainer from 'react-alert';
 
 import Navbar from '../Partials/Navbar.jsx';
 
@@ -22,14 +23,34 @@ class Registeration extends Component {
       bottomSizes: ['-', 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44],
       shoeSizes: ['-', 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     };
+
+    this.alertOptions = {
+      offset: 14,
+      position: 'bottom left',
+      theme: 'dark',
+      transition: 'scale'
+    };
+
+    this.icons = {
+      info: <i className="fa fa-info-circle fa-fw" aria-hidden="true"/>,
+      error: <i className="fa fa-exclamation-circle fa-fw" aria-hidden="true"/>
+    };
+
     this.handleChange = this.handleChange.bind(this);
     this.validateForm = this.validateForm.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getLocation = this.getLocation.bind(this);
   }
 
+  showAlert(content, type) {
+    msg.show(content, {
+      time: 2000,
+      type: type,
+      icon: this.icons[type]
+    });
+  }
+
   getLocation(callback) {
-    // console.log("i'm here 0", this.state.postal_code);
     return new Promise((resolve, reject) => {
       let geocoder = new google.maps.Geocoder();
       let address = this.state.postal_code;
@@ -41,10 +62,9 @@ class Registeration extends Component {
             lat: results[0].geometry.location.lat(),
             lng: results[0].geometry.location.lng()
           };
-          // alert("Latitude: " + lat + "\nLongitude: " + lng);
           resolve(coordinates);
         } else {
-          alert("Please enter valid postal code.");
+          this.showAlert('Invalid postal code', 'error');
           reject();
         }
       });
@@ -75,7 +95,6 @@ class Registeration extends Component {
 
   handleSubmit() {
     this.getLocation().then((coordinates) => {
-      console.log("i'm here 1");
       let newUserInfo = this.state;
       newUserInfo.address_lat = coordinates.lat;
       newUserInfo.address_lng = coordinates.lng;
@@ -216,6 +235,7 @@ class Registeration extends Component {
 
         </div>
       </div>
+      <AlertContainer ref={(a) => global.msg = a} {...this.alertOptions} />
       </div>
     );
   }

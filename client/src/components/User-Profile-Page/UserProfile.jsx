@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { browserHistory } from 'react-router';
+import AlertContainer from 'react-alert';
 
 import Navbar from '../Partials/Navbar.jsx';
 import MyItem from './MyItem/MyItemCard.jsx';
@@ -25,6 +26,18 @@ class UserProfile extends Component {
       shoeSizes: ['-', 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     };
 
+    this.alertOptions = {
+      offset: 14,
+      position: 'bottom left',
+      theme: 'dark',
+      transition: 'scale'
+    };
+
+    this.icons = {
+      info: <i className="fa fa-info-circle fa-fw" aria-hidden="true"/>,
+      error: <i className="fa fa-exclamation-circle fa-fw" aria-hidden="true"/>
+    };
+
     this.deleteItem = this.deleteItem.bind(this);
     this.loadPageData = this.loadPageData.bind(this);
     this.validateForm = this.validateForm.bind(this);
@@ -32,16 +45,24 @@ class UserProfile extends Component {
     this.updateUserSizes = this.updateUserSizes.bind(this);
   }
 
+  showAlert(content, type) {
+    msg.show(content, {
+      time: 2000,
+      type: type,
+      icon: this.icons[type]
+    });
+  }
+
   componentDidMount() {
     this.loadPageData();
   }
-
 
   deleteItem(itemId) {
     $.ajax({
       method: 'DELETE',
       url: `/api/items/${itemId}`,
       success: ((response) => {
+        this.showAlert('Item deleted.', 'info');
         let tops = response.currUserInfo.myItems.tops;
         let bottoms = response.currUserInfo.myItems.bottoms;
         let shoes = response.currUserInfo.myItems.shoes;
@@ -69,6 +90,7 @@ class UserProfile extends Component {
       url: `/api/users/:id/edit`,
       data: newUserSizes,
       success: ((response) => {
+        this.showAlert('User info updated.', 'info');
         browserHistory.push('/users/:id');
       })
     });
@@ -154,6 +176,7 @@ class UserProfile extends Component {
             })}
           </div>
         </div>
+        <AlertContainer ref={(a) => global.msg = a} {...this.alertOptions} />
       </div>
     );
   }

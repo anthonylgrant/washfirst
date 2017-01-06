@@ -27,3 +27,17 @@ $LIGHTEST: #FFFBF7;
     height: 520px;
   }
 }
+
+.react-alerts .alert {
+  .content {
+    background-color: #444;
+    color: white;
+    margin: 0;
+    line-height: 34px;
+  }
+  .icon {
+    height: 50px;
+    padding-top: 8px;
+  }
+
+}
