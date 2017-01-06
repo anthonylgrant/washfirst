@@ -143,31 +143,12 @@ class UserProfile extends Component {
     return (
       <div>
         <Navbar loggedIn={true} profilePage={true}/>
-        <div className="main-container-profile">
-
+        <div className="main-container">
           <div className="items-container">
-
             <div className="main-container-item">
               <NewItem reload={this.loadPageData}/>
             </div>
-
-            <UserSidebar
-              validateForm={this.validateForm}
-              handleChange={this.handleChange}
-              updateUserSizes={this.updateUserSizes}
-              gender={this.state.gender}
-              min_top_size={this.state.min_top_size}
-              max_top_size={this.state.max_top_size}
-              min_bottom_size={this.state.min_bottom_size}
-              max_bottom_size={this.state.max_bottom_size}
-              min_shoe_size={this.state.min_shoe_size}
-              max_shoe_size={this.state.max_shoe_size}
-              topSizes={this.state.topSizes}
-              bottomSizes={this.state.bottomSizes}
-              shoeSizes={this.state.shoeSizes}
-            />
-
-            {this.state.myItems.map((item) => {
+            { this.state.myItems.map((item) => {
               return (
                 <div key={item.id} className="main-container-item">
                   <MyItem item={item} deleteItem={this.deleteItem} username={this.state.username} />
@@ -175,6 +156,21 @@ class UserProfile extends Component {
               );
             })}
           </div>
+          <UserSidebar
+            validateForm={this.validateForm}
+            handleChange={this.handleChange}
+            updateUserSizes={this.updateUserSizes}
+            gender={this.state.gender}
+            min_top_size={this.state.min_top_size}
+            max_top_size={this.state.max_top_size}
+            min_bottom_size={this.state.min_bottom_size}
+            max_bottom_size={this.state.max_bottom_size}
+            min_shoe_size={this.state.min_shoe_size}
+            max_shoe_size={this.state.max_shoe_size}
+            topSizes={this.state.topSizes}
+            bottomSizes={this.state.bottomSizes}
+            shoeSizes={this.state.shoeSizes}
+          />
         </div>
         <AlertContainer ref={(a) => global.msg = a} {...this.alertOptions} />
       </div>

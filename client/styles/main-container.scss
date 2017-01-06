@@ -9,23 +9,9 @@ $NEUTRAL: #7A70A2;
 $LIGHT: #E7D1B2;
 $LIGHTEST: #FFFBF7;
 
-// .main-container {
-//   background-color: $LIGHTEST;
-//   padding: $header_height+20px $side_bar_height 0 20px;;
-//   .items-container {
-//
-//     display: flex;
-//     flex-direction: row;
-//     flex-wrap: wrap;
-//   }
-//   .main-container-item {
-//     width: 320px;
-//     height: 520px;
-//   }
-// }
-
 .main-container {
   height: 100vh;
+  overflow: auto;
   margin: auto;
   background-color: $LIGHTEST;
   padding: $header_height+20px $side_bar_height 0 20px;;
@@ -41,4 +27,17 @@ $LIGHTEST: #FFFBF7;
     width: 320px;
     height: 520px;
   }
+}
+
+.react-alerts .alert {
+  .content {
+    background-color: inherit;
+    color: white;
+    line-height: inherit;
+    margin: auto;
+  }
+  .icon {
+    margin: auto;
+  }
+
 }

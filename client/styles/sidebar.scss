@@ -1,5 +1,5 @@
 $header_height: 50px;
-$side_bar_height: 300px;
+$side_bar_width: 300px;
 $sidebar_color: rgba(0, 0, 128, 0.5);
 $tag_hover_color: rgba(100, 199, 128, 0.5);
 $fixed_componet_z_index: 3;
@@ -23,7 +23,7 @@ $BACKGROUND_COLOR: $LIGHTEST;
   position: fixed;
   right: 0;
   top: $header_height;
-  width: $side_bar_height;
+  width: $side_bar_width;
   z-index: 2;
   border-left: 1px solid $BORDER_COLOR;
   h2 {
