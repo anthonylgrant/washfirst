@@ -238,8 +238,8 @@ app.get('/api/suggestion', (req, res) => {
 
 app.post('/api/email', (req, res) => {
   var mailOptions = {
-    from: '"Fred Foo ?" <rajaghavami@gmail.com>', // sender address
-    to: 'some@email.com', // list of receivers
+    from: '"Wash First" <noreply@washfirst.com>', // sender address
+    to: req.body.to, // list of receivers
     subject: 'Someone wants to trade with you!', // Subject line
     text: req.body.content, // plaintext body
     html: req.body.content // html body
