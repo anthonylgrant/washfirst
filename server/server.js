@@ -26,6 +26,7 @@ const createNewItem = require('./helpers/create_new_item');
 const editItem = require('./helpers/edit_item.js');
 const deleteItem = require('./helpers/delete_item.js');
 const findSuggestedItems = require('./helpers/find_suggested_items.js');
+const updateUserSizes = require('./helpers/update_user_sizes.js');
 
 const nodemailer = require('nodemailer');
 let transporter = nodemailer.createTransport({
@@ -118,6 +119,13 @@ app.post('/api/users/:id/new', (req, res) => {
 // Edit item route - post
 app.post('/api/users/:username/items/:id', (req, res) => {
   editItem(req, res, knex);
+});
+
+// Edit user size preference route - post
+app.post('/api/users/:id/edit', (req, res) => {
+  // console.log("size preference edit requested!!!");
+  updateUserSizes(req, res, knex, req.session.userId);
+
 });
 
 
