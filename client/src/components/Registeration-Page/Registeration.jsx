@@ -19,6 +19,8 @@ class Registeration extends Component {
       min_shoe_size: '',
       max_shoe_size: '',
       postal_code: '',
+      available_username: false,
+      available_email: false,
       topSizes: ['-', 1, 2, 3, 4, 5, 6],
       bottomSizes: ['-', 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44],
       shoeSizes: ['-', 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
@@ -40,6 +42,7 @@ class Registeration extends Component {
     this.validateForm = this.validateForm.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getLocation = this.getLocation.bind(this);
+    this.checkUsernameAndEmail = this.checkUsernameAndEmail.bind(this);
   }
 
   showAlert(content, type) {
@@ -73,9 +76,22 @@ class Registeration extends Component {
 
   handleChange(e) {
     let key = e.target.name;
+    let value = e.target.value;
+    if (key === 'username' || 'email') this.checkUsernameAndEmail(key, value);
     let obj = {};
-    obj[key] = e.target.value;
+    obj[key] = value;
     this.setState(obj);
+  }
+
+  checkUsernameAndEmail(column, value) {
+    $.ajax({
+      method: 'POST',
+      url: `/api/checkUsernameAndEmail`,
+      data: {column, value},
+      success: ((response) => {
+        this.setState(response);
+      })
+    });
   }
 
   validateForm() {
@@ -89,7 +105,9 @@ class Registeration extends Component {
       this.state.max_bottom_size &&
       this.state.min_shoe_size &&
       this.state.max_shoe_size &&
-      this.state.postal_code
+      this.state.postal_code &&
+      this.state.available_username &&
+      this.state.available_email
     );
   }
 
@@ -124,7 +142,7 @@ class Registeration extends Component {
         <div className="login-register-main-container">
 
           <label className="label">Username:</label>
-          <p className="control has-icon has-icon-left">
+          <p className="control has-icon has-icon-left has-icon-left">
             <input className="input is-success" name="username" type="text" placeholder="Enter username here" onChange={this.handleChange} />
             <i className="fa fa-user fa-fw" aria-hidden="true" />
           </p>
@@ -132,19 +150,19 @@ class Registeration extends Component {
           <label className="label">Password:</label>
           <p className="control has-icon has-icon-left">
             <input className="input is-success" name="password" type="password" placeholder="Enter password here" onChange={this.handleChange} />
-            <i className="fa fa-key fa-fw" aria-hidden="true"></i>
+            <i className="fa fa-key fa-fw" aria-hidden="true" />
           </p>
 
           <label className="label">Email:</label>
           <p className="control has-icon has-icon-left">
             <input className="input is-success" name="email" type="email" placeholder="What's the best email to reach you?" onChange={this.handleChange} />
-            <i className="fa fa-at fa-fw" aria-hidden="true"></i>
+            <i className="fa fa-at fa-fw" aria-hidden="true" />
           </p>
 
           <label className="label">Postal Code:</label>
           <p className="control has-icon has-icon-left">
             <input className="input is-success" name="postal_code" type="text" placeholder="What's your postal code?" onChange={this.handleChange} />
-            <i className="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+            <i className="fa fa-map-marker fa-fw" aria-hidden="true" />
           </p>
 
           <p className="control">

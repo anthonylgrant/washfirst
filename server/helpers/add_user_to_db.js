@@ -20,7 +20,7 @@
 // const config = require('./knex_config.json');
 // const knex = require('knex')({ client: 'pg', connection: config });
 
-function addUserToDb(req, res, knex, bcrypt) {
+const addUserToDb = (req, res, knex, bcrypt) => {
 
   bcrypt.hash(req.body.password, 10).then(function(hash) {
     const newUser = Object.assign({}, req.body, {
@@ -35,6 +35,8 @@ function addUserToDb(req, res, knex, bcrypt) {
 
     knex('users').insert(newUser).then(() => {
       res.send("new user added");
+    }).catch((err) => {
+      res.send("Internal error during registration.");
     });
   });
 

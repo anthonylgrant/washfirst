@@ -27,6 +27,7 @@ const editItem = require('./helpers/edit_item.js');
 const deleteItem = require('./helpers/delete_item.js');
 const findSuggestedItems = require('./helpers/find_suggested_items.js');
 const updateUserSizes = require('./helpers/update_user_sizes.js');
+const checkUserNameAndEmail = require('./helpers/check_username_email.js');
 
 const nodemailer = require('nodemailer');
 let transporter = nodemailer.createTransport({
@@ -259,4 +260,9 @@ app.post('/api/email', (req, res) => {
     }
     console.log('Message sent: ' + info.response);
   });
+});
+
+
+app.post('/api/checkUsernameAndEmail', (req, res) => {
+  checkUserNameAndEmail(req, res, knex);
 });

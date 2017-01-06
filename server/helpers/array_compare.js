@@ -32,15 +32,3 @@ function compareArrays(preferences, itemTags) {
 }
 
 module.exports = compareArrays;
-
-// const prefs1 = ['blue', 'solid', 'normcore', 'slim-fit', 'AA', 'henley'];
-// const prefs2 = ['red', 'checkered', 'goth', 'loose', 'gucci', 'baseball'];
-// const prefs3 = ['blue', 'solid', 'normcore', 'slim-fit', 'AA', 'henley', 'this', 'that', 'theOther'];
-// const prefs4 = ['blue', 'solid', 'normcore', 'loose', 'gucci',];
-//
-// const itemTags = ['blue', 'solid', 'normcore', 'slim-fit', 'AA', 'henley'];
-//
-// compareArrays(prefs1, itemTags);
-// compareArrays(prefs2, itemTags);
-// compareArrays(prefs3, itemTags);
-// compareArrays(prefs4, itemTags);
