@@ -34,9 +34,9 @@ const addUserToDb = (req, res, knex, bcrypt) => {
     });
 
     knex('users').insert(newUser).then(() => {
-      res.send("new user added");
+      res.send(true);
     }).catch((err) => {
-      res.send("Internal error during registration.");
+      res.send(false);
     });
   });
 

@@ -67,7 +67,7 @@ class Registeration extends Component {
           };
           resolve(coordinates);
         } else {
-          this.showAlert('Invalid postal code', 'error');
+          this.showAlert('Invalid postal code or address', 'error');
           reject();
         }
       });
@@ -125,7 +125,7 @@ class Registeration extends Component {
         url: `/api/register`,
         data: newUserInfo,
         success: ((response) => {
-          browserHistory.push('/');
+          response ? browserHistory.push('/') : this.showAlert('Registration could not complete. Please try again.', 'error');
         })
       });
     });
