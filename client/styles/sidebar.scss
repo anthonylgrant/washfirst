@@ -70,6 +70,13 @@ $BACKGROUND_COLOR: $LIGHTEST;
   button:hover {
     background-color: darken($LIGHTEST, 10%);
   }
+
+  .user-preferences-container {
+    .select-to {
+      line-height: 30px;
+    }
+  }
+
 }
 
 

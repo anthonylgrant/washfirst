@@ -185,7 +185,7 @@ class Registeration extends Component {
               }
               </select>
             </span>
-            <span> To </span>
+            <span className='select-to'> To </span>
             <span className="select">
               <select name="max_top_size" onChange={this.handleChange}>
                 {
@@ -210,7 +210,7 @@ class Registeration extends Component {
               }
               </select>
             </span>
-            <span> To </span>
+            <span className='select-to'> To </span>
             <span className="select">
               <select name="max_bottom_size" onChange={this.handleChange}>
                 {
@@ -234,7 +234,7 @@ class Registeration extends Component {
               }
               </select>
             </span>
-            <span> To </span>
+            <span className='select-to'> To </span>
             <span className="select">
               <select name="max_shoe_size" onChange={this.handleChange}>
                 {

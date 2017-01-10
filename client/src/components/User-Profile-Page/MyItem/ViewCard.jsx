@@ -27,7 +27,7 @@ class ViewCard extends Component {
           </div>
         </div>
         <div className="card-footer button-container">
-          <button className='button is-active toggle-item-view' onClick={this.props.handleToggleView}>Edit Item</button>
+          <button className='button edit-front is-active toggle-item-view' onClick={this.props.handleToggleView}>Edit Item</button>
         </div>
       </div>
     );

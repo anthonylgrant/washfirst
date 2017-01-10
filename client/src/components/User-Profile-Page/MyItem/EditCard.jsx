@@ -48,15 +48,15 @@ class EditCard extends Component {
 
 
         <div className="card-footer button-container">
-          <button type='submit' className='button is-primary' disabled={!this.props.validateForm()} onClick={this.props.handleUpdate}>
+          <button type='submit' className='button edit-back is-primary' disabled={!this.props.validateForm()} onClick={this.props.handleUpdate}>
             Update
           </button>
 
-          <button className='button is-warning toggle-item-view' onClick={this.props.handleToggleView}>
+          <button className='button edit-back middle is-warning toggle-item-view' onClick={this.props.handleToggleView}>
             Cancel Edit
           </button>
 
-          <button className='button is-danger toggle-item-view' onClick={this.props.deleteItem}>
+          <button className='button edit-back is-danger toggle-item-view' onClick={this.props.deleteItem}>
             Delete
           </button>
         </div>

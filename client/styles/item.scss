@@ -19,6 +19,19 @@ $BORDER_COLOR: lighten($DARKEST, 50%);
   flex-direction: column;
   justify-content: space-between;
 
+  .card-footer {
+    .button.edit-front {
+      width: 100%;
+    }
+    .button.edit-back {
+      min-width: 90px;
+      margin: auto;
+    }
+    .middle {
+      margin: 0 10px;
+    }
+  }
+
   .card-image .image {
     img {
     box-shadow: 0 0 10px $BORDER_COLOR;
