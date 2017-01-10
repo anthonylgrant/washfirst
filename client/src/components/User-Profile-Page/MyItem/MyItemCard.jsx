@@ -54,7 +54,7 @@ class MyItem extends Component {
     e.preventDefault();
     let key = e.target.name;
     let obj = {};
-    obj[key] = e.target.value;
+    obj[key] = key === "img_url" ? e.target.value.replace(/C:\\fakepath\\/, "../../../../public/images/user-seeded-items/") : e.target.value;
     this.setState(obj);
   }
 
