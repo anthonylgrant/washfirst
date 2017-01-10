@@ -43,6 +43,9 @@ class Registeration extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getLocation = this.getLocation.bind(this);
     this.checkUsernameAndEmail = this.checkUsernameAndEmail.bind(this);
+    this.validateUsername = this.validateUsername.bind(this);
+    this.validatePassword = this.validatePassword.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
   }
 
   showAlert(content, type) {
@@ -53,7 +56,7 @@ class Registeration extends Component {
     });
   }
 
-  getLocation(callback) {
+  getLocation() {
     return new Promise((resolve, reject) => {
       let geocoder = new google.maps.Geocoder();
       let address = this.state.postal_code;
@@ -65,6 +68,9 @@ class Registeration extends Component {
             lat: results[0].geometry.location.lat(),
             lng: results[0].geometry.location.lng()
           };
+          this.setState({
+            valid_postal_code: true
+          });
           resolve(coordinates);
         } else {
           this.showAlert('Invalid postal code or address', 'error');
@@ -128,7 +134,23 @@ class Registeration extends Component {
           response ? browserHistory.push('/') : this.showAlert('Registration could not complete. Please try again.', 'error');
         })
       });
+    }).catch((err) => {
+      console.error('error in google location api call: ', err);
     });
+  }
+
+  validateUsername() {
+    return this.state.available_username &&
+           this.state.username.length > 2;
+  }
+
+  validatePassword() {
+    return this.state.password.length > 6;
+  }
+
+  validateEmail() {
+    let regex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    return this.state.email.match(regex) && this.state.available_email;
   }
 
   render() {
@@ -141,19 +163,19 @@ class Registeration extends Component {
 
         <div className="login-register-main-container">
 
-          <label className="label">Username:</label>
+          <label className="label">Username: {this.validateUsername() && <i className="fa fa-check" aria-hidden="true"/>}</label>
           <p className="control has-icon has-icon-left has-icon-left">
             <input className="input is-success" name="username" type="text" placeholder="Enter username here" onChange={this.handleChange} />
             <i className="fa fa-user fa-fw" aria-hidden="true" />
           </p>
 
-          <label className="label">Password:</label>
+          <label className="label">Password: {this.validatePassword() && <i className="fa fa-check" aria-hidden="true"/>}</label>
           <p className="control has-icon has-icon-left">
             <input className="input is-success" name="password" type="password" placeholder="Enter password here" onChange={this.handleChange} />
             <i className="fa fa-key fa-fw" aria-hidden="true" />
           </p>
 
-          <label className="label">Email:</label>
+          <label className="label">Email: {this.validateEmail() && <i className="fa fa-check" aria-hidden="true"/>}</label>
           <p className="control has-icon has-icon-left">
             <input className="input is-success" name="email" type="email" placeholder="What's the best email to reach you?" onChange={this.handleChange} />
             <i className="fa fa-at fa-fw" aria-hidden="true" />
