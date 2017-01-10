@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import AlertContainer from 'react-alert';
 
 import ViewCard from './ViewCard.jsx';
 import EditCard from './EditCard.jsx';
@@ -17,11 +18,30 @@ class MyItem extends Component {
       tags: this.props.item.tags.join(' '),
       description: this.props.item.description,
     };
+    this.alertOptions = {
+      offset: 14,
+      position: 'bottom left',
+      theme: 'dark',
+      transition: 'scale'
+    };
+    this.icons = {
+      info: <i className="fa fa-info-circle fa-fw" aria-hidden="true"/>,
+      error: <i className="fa fa-exclamation-circle fa-fw" aria-hidden="true"/>
+    };
     this.editView = this.editView.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleToggleView = this.handleToggleView.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.validateForm = this.validateForm.bind(this);
+    this.showAlert = this.showAlert.bind(this);
+  }
+
+  showAlert(content, type) {
+    msg.show(content, {
+      time: 2000,
+      type: type,
+      icon: this.icons[type]
+    });
   }
 
 
@@ -50,6 +70,7 @@ class MyItem extends Component {
       tags: this.state.tags,
       description: this.state.description
     };
+    this.showAlert('Item updated.', 'info');
 
     $.ajax({
       method: 'POST',
@@ -58,6 +79,7 @@ class MyItem extends Component {
       dataType: "text",
       contentType: "application/json; charset=utf-8",
       success: (response) => {
+        this.showAlert('Item updated.', 'info');
         this.setState({
           item: {
             ...this.state.item,
