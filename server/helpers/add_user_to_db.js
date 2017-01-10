@@ -1,30 +1,10 @@
-/*
-
-  ADDS USER TO DATABASE
-
-  userObject = {
-    username,
-    password,
-    email,
-    postal_code,
-    gender,
-    min_top_size,
-    max_top_size,
-    min_bottom_size,
-    max_bottom_size,
-    min_shoe_size,
-    max_shoe_size
-  }
-
-*/
-// const config = require('./knex_config.json');
-// const knex = require('knex')({ client: 'pg', connection: config });
-
 const addUserToDb = (req, res, knex, bcrypt) => {
 
-  bcrypt.hash(req.body.password, 10).then(function(hash) {
+  bcrypt.hash(req.body.password, 10).then((hash) => {
     const newUser = Object.assign({}, req.body, {
       password: hash,
+      username: req.body.username.toLowerCase(),
+      email: req.body.email.toLowerCase(),
       min_top_size: parseInt(req.body.min_top_size),
       max_top_size: parseInt(req.body.max_top_size),
       min_bottom_size: parseInt(req.body.min_bottom_size),
@@ -40,6 +20,6 @@ const addUserToDb = (req, res, knex, bcrypt) => {
     });
   });
 
-}
+};
 
 module.exports = addUserToDb;

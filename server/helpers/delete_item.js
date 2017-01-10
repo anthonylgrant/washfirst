@@ -1,6 +1,6 @@
 const getMainData = require('./get_main_data');
 
-function deleteItem(itemId, res, knex, user_id) {
+const deleteItem = (itemId, res, knex, user_id) => {
   knex('item_tag')
     .where('item_id', itemId)
     .del()
@@ -12,6 +12,6 @@ function deleteItem(itemId, res, knex, user_id) {
           getMainData(res, knex, user_id);
         });
     });
-}
+};
 
 module.exports = deleteItem;

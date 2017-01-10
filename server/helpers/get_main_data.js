@@ -2,12 +2,6 @@ const getMainData = (res, knex, user_id) => {
   const Promise = require('bluebird');
   const util = require('util');
 
-  // let currUserInfo = {
-  //   id: user_id,
-  //   gender: 'male',
-  //   myItems: {}
-  // }
-
   let currUserInfo;
 
   let inventory = {};

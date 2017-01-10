@@ -1,20 +1,7 @@
-// const connection = require('../server/db/knexfile.js').development;
-// const knex = require('knex')(connection);
-
 const createNewItem = (req, res, knex, user_id) => {
 
   let newItem = req.body;
   newItem.tags = newItem.tags.split(' ');
-
-  // let data = {
-  //   type: 'bottom',
-  //   gender: 'male',
-  //   size: 30,
-  //   description: "behzad adding item",
-  //   img_url: "some img url",
-  //   user_id: 5,
-  //   tags: ["green", "jacket", "new1", "leather", "new2"]
-  // };
 
   const addTagToItemTag = (tag, item_id) => new Promise((resolve, reject) => {
 
