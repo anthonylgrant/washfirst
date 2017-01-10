@@ -32,6 +32,26 @@ $BORDER_COLOR: lighten($DARKEST, 50%);
     margin: auto;
     }
   }
+
+  .new-form {
+    padding: 0 5px;
+    .upload-input {
+      display: inline-block;
+      max-width: 210px;
+    }
+    .new-input {
+      margin: 3px 0;
+    }
+    .new-label {
+      display: inline-block;
+      padding-top: 10px;
+      min-width: 80px;
+    }
+  }
+
+  .new-button {
+    width: 100%;
+  }
   // .delete-button-div {
   //   box-sizing: content-box;
   //   box-shadow: 0 0 10px #333;

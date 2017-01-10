@@ -25,16 +25,15 @@ class NewCard extends Component {
           </figure>
         </div>
 
-        <h1>Enter information for a new item here:</h1>
-
-        <form className='control' onSubmit={this.props.emptyField}>
-          <input type='file' className='input is-primary'
+        <form className='control new-form' onSubmit={this.props.emptyField}>
+          <label className='new-label'>Photo: </label>
+          <input type='file' className='upload-input is-primary new-input'
                  placeholder='Image URL' name='img_url'
                  onChange={this.props.handleChange} >
           </input>
 
-          <label>Category: </label>
-          <div className="select">
+          <label className='new-label'>Category: </label>
+          <div className="select new-input">
             <select name="type" onChange={this.props.handleChange}>
             {
               categories.map((category, index) => {
@@ -46,8 +45,8 @@ class NewCard extends Component {
 
           <br/>
 
-          <label>Gender: </label>
-          <div className="select">
+          <label className='new-label'>Gender: </label>
+          <div className="select new-input">
             <select name='gender' onChange={this.props.handleChange}>
             {
               genders.map((gender, index) => {
@@ -59,8 +58,8 @@ class NewCard extends Component {
 
           <br />
 
-          <label>Size: </label>
-          <div className="select">
+          <label className='new-label'>Size: </label>
+          <div className="select new-input">
             <select name='size' onChange={this.props.handleChange}>
             {
               this.props.type && sizes[this.props.type].map((size, index) => {
@@ -70,12 +69,12 @@ class NewCard extends Component {
             </select>
           </div>
 
-          <input type='text' className='input is-primary'
+          <input type='text' className='input is-primary new-input'
                  placeholder='Enter Tags' name='tags'
                  onChange={this.props.handleChange}>
           </input>
 
-          <input type='text' className='input is-primary'
+          <input type='text' className='input is-primary new-input'
                  placeholder='Enter Description' name='description'
                  onChange={this.props.handleChange}>
           </input>
@@ -83,7 +82,7 @@ class NewCard extends Component {
 
 
         <div className="card-footer button-container">
-          <button type='submit' className='button is-primary' disabled={!this.props.validateForm()} onClick={this.props.handleNewRequest}>
+          <button type='submit' className='button new-button is-primary' disabled={!this.props.validateForm()} onClick={this.props.handleNewRequest}>
             Upload
           </button>
 
