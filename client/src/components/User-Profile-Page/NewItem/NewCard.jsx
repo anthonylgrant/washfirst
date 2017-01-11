@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
-const genders = ['-', 'Male', 'Memale'];
+const genders = ['-', 'Male', 'Female'];
 
 const categories = ['-', 'Tops', 'Bottoms', 'Shoes'];
 
