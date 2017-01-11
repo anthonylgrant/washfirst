@@ -49,6 +49,16 @@ class NewItem extends Component {
       url: `/api/users/some_userid/new`,
       data: newItem,
       success: (response) => {
+        this.setState({
+          edit: false,
+          item: 'new',
+          img_url: '',
+          type: '',
+          gender: '',
+          size: '',
+          tags: '',
+          description: ''
+        });
         this.props.reload();
       }
     });
