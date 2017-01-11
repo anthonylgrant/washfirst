@@ -28,11 +28,22 @@ class CardBack extends Component {
   }
 
   evaluateSmileyFace(item) {
-    let matchValue = Math.round(item[Object.keys(item)[0]] * 100)/100;
-    if (matchValue > 0.75) { return <i className="fa fa-smile-o fa-2x smiley-indicator" aria-hidden="true" />; }
-    else if (matchValue > 0.4) { return <i className="fa fa-meh-o fa-2x smiley-indicator" aria-hidden="true" />; }
-    else { return <i className="fa fa-frown-o fa-2x smiley-indicator" aria-hidden="true"></i>; }
+    let matchValue = Math.round(item[Object.keys(item)[0]] * 100);
+    return (
+      <div className='outer'>
+        <i className="fa fa-heart-o fa-2x smiley-indicator" aria-hidden="true" />
+        <div className="inner" style={{height: `${matchValue}%`}}><i className="fa fa-heart fa-2x smiley-indicator" aria-hidden="true" /></div>
+      </div>
+    );
   }
+
+  // evaluateSmileyFace(item) {
+  //   let matchValue = Math.round(item[Object.keys(item)[0]] * 100);
+  //   return <i>{matchValue}% </i>
+  //   // if (matchValue > 0.75) { return <i className="fa fa-smile-o fa-2x smiley-indicator" aria-hidden="true" />; }
+  //   // else if (matchValue > 0.4) { return <i className="fa fa-meh-o fa-2x smiley-indicator" aria-hidden="true" />; }
+  //   // else { return <i className="fa fa-frown-o fa-2x smiley-indicator" aria-hidden="true"></i>; }
+  // }
 
   componentDidMount() {
     let msgObj = {};

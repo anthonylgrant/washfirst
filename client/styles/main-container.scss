@@ -12,12 +12,12 @@ $LIGHTEST: #FFFBF7;
 .main-container {
   height: 100vh;
   overflow: auto;
-  margin: auto;
+  // margin: auto;
   background-color: $LIGHTEST;
   padding: $header_height+20px $side_bar_height 0 20px;;
   display: flex;
   .items-container {
-    justify-content: center;
+    // justify-content: center;
     display: inherit;
     flex-direction: row;
     flex-wrap: wrap;

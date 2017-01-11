@@ -129,10 +129,30 @@ $BORDER_COLOR: lighten($DARKEST, 50%);
         max-width: 96px;
         margin: $default_content_padding $default_content_padding $default_content_padding 0;
         text-align: center;
-        .image, .smiley-indicator {
+        .image {
           text-align: center;
           width: 100%;
         }
+
+        .outer {
+          position: relative;
+          .smiley-indicator {
+            text-align: center;
+            width: 100%;
+          }
+          .inner {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            .smiley-indicator {
+              text-align: center;
+              width: 100%;
+            }
+          }
+        }
+
       }
     }
 
