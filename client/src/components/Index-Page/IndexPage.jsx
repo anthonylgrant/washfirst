@@ -4,6 +4,7 @@ import Navbar from '../Partials/Navbar.jsx';
 import Landing from '../Partials/Landing.jsx';
 import Sidebar from './Sidebar.jsx';
 import ItemCard from './ItemCard/Card.jsx';
+import AlertContainer from 'react-alert';
 
 class App extends Component {
   constructor(props) {
@@ -32,6 +33,27 @@ class App extends Component {
     this.removeDuplicates = this.removeDuplicates.bind(this);
     this.handleTypeSelection = this.handleTypeSelection.bind(this);
     this.isThisWithinRange = this.isThisWithinRange.bind(this);
+    this.showAlert = this.showAlert.bind(this);
+
+    this.alertOptions = {
+      offset: 14,
+      position: 'bottom left',
+      theme: 'dark',
+      transition: 'scale'
+    };
+
+    this.icons = {
+      info: <i className="fa fa-info-circle fa-fw" aria-hidden="true"/>,
+      error: <i className="fa fa-exclamation-circle fa-fw" aria-hidden="true"/>
+    };
+  }
+
+  showAlert(content, type) {
+    msg.show(content, {
+      time: 2000,
+      type: type,
+      icon: this.icons[type]
+    });
   }
 
 
@@ -141,6 +163,7 @@ class App extends Component {
       data: data,
       dataType: "JSON",
       success: (response) => {
+        this.showAlert('User preferences updated.', 'info');
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
           tagsFromItems: this.removeDuplicates(response.allTags, response.currUserInfo.preferences),
@@ -265,6 +288,7 @@ class App extends Component {
           handlePreferenceSubmit={this.handlePreferenceSubmit}
           handleTypeSelection={this.handleTypeSelection}
         />
+        <AlertContainer ref={(a) => global.msg = a} {...this.alertOptions} />
       </div>
     );
   }
