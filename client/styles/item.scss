@@ -70,9 +70,8 @@ $BORDER_COLOR: lighten($DARKEST, 50%);
   }
 
   .card-content {
-    // height: 250px;
     max-height: 250px;
-    overflow: scroll;
+    overflow: hidden;
     .item-tag {
       margin: 2px;
     }

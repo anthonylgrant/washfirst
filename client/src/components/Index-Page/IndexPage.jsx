@@ -19,7 +19,8 @@ class App extends Component {
       searchBarText: '',
       myItems: [],
       type: '',
-      rangeKm: 10
+      rangeKm: 10,
+      username: ''
     };
     this.swapTagsFromUserPref = this.swapTagsFromUserPref.bind(this);
     this.swapTagsFromTagsFromItems = this.swapTagsFromTagsFromItems.bind(this);
@@ -98,18 +99,18 @@ class App extends Component {
         let tops = response.currUserInfo.myItems.tops;
         let bottoms = response.currUserInfo.myItems.bottoms;
         let shoes = response.currUserInfo.myItems.shoes;
+        let username = response.currUserInfo.username;
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
           currUserLat: response.currUserInfo.address_lat,
           currUserLng: response.currUserInfo.address_lng,
-          // tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
-          // fixedTagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
           tagsFromItems: this.removeDuplicates(response.allTags, response.currUserInfo.preferences),
           fixedTagsFromItems: this.removeDuplicates(response.allTags, response.currUserInfo.preferences),
           topsInventory: this.sortItemsByRanking(response.inventory.tops),
           bottomsInventory: this.sortItemsByRanking(response.inventory.bottoms),
           shoesInventory: this.sortItemsByRanking(response.inventory.shoes),
-          myItems: tops.concat(bottoms).concat(shoes)
+          myItems: tops.concat(bottoms).concat(shoes),
+          username: username
         });
       }
     });
@@ -142,8 +143,6 @@ class App extends Component {
       success: (response) => {
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
-          // tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
-          // fixedTagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
           tagsFromItems: this.removeDuplicates(response.allTags, response.currUserInfo.preferences),
           fixedTagsFromItems: this.removeDuplicates(response.allTags, response.currUserInfo.preferences),
           topsInventory: this.sortItemsByRanking(response.inventory.tops),
@@ -244,7 +243,7 @@ class App extends Component {
 
     return (
       <div>
-        <Navbar loggedIn={true} mainPage={true}/>
+        <Navbar loggedIn={true} mainPage={true} username={this.state.username}/>
         <div className="main-container">
           <div className="items-container">
             { allInvetory.map((item) => {

@@ -16,18 +16,17 @@ class Navbar extends Component {
     const login = loginPage || loggedIn ? '' : <Link className="nav-bar-item" to="/login">Login</Link>;
     const profile = loggedIn ? <Link className={profileClasses} to="/users/:id">Your-drobe</Link> : '';
     const main = loggedIn ? <Link className={mainClasses} to="/">Wardrobe</Link> : '';
-
-
+    const username = loggedIn ? <small>Hello, {this.props.username}</small> : '';
 
     return (
       <nav className='top-bar'>
         <Link id='logo' to="/">Wash First</Link>
         <div className='status-container'>
+          {username}
           {main}
           {profile}
           {login}
           {logout}
-
         </div>
       </nav>
     );
