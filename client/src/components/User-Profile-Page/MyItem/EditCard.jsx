@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
-const genders = ['-', 'Male', 'Female'];
+const genders = ['-', 'Male', 'Memale'];
 
 const categories = ['-', 'Tops', 'Bottoms', 'Shoes'];
 
 
 const sizes = {
-  Tops: ['-', 1, 2, 3, 4, 5, 6],
-  Bottoms: ['-', 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44],
-  Shoes: ['-', 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  tops: ['-', 1, 2, 3, 4, 5, 6],
+  buttoms: ['-', 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44],
+  shoes: ['-', 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 };
 
 class EditCard extends Component {
@@ -64,7 +64,7 @@ class EditCard extends Component {
           <div className="select new-input">
             <select name='size' onChange={this.props.handleChange} defaultValue={this.props.size} >
             {
-              this.props.type && sizes[this.props.type].map((size, index) => {
+              this.props.type && sizes[this.props.type.toLowerCase()].map((size, index) => {
                 return <option key={index}>{size}</option>
               })
             }

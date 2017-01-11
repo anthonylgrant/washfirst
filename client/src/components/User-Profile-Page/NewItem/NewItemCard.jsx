@@ -43,7 +43,7 @@ class NewItem extends Component {
       tags: this.state.tags,
       description: this.state.description
     };
-
+    console.log("i'm here 2: ", newItem);
     $.ajax({
       method: 'POST',
       url: `/api/users/some_userid/new`,
