@@ -103,7 +103,7 @@ class MyItem extends Component {
 
 
   validateForm() {
-    return (this.state.img_url && this.state.type && this.state.gender && this.state.size && this.state.tags);
+    return (this.state.img_url && this.state.type && this.state.gender && this.state.size && this.state.tags && this.state.description && this.state.description.length <= 140);
   }
 
 

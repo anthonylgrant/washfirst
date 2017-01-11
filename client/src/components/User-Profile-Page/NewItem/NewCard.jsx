@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
-const genders = ['-', 'Male', 'Memale'];
+const genders = ['-', 'Male', 'Female'];
 
 const categories = ['-', 'Tops', 'Bottoms', 'Shoes'];
-
 
 const sizes = {
   tops: ['-', 1, 2, 3, 4, 5, 6],
@@ -73,11 +72,15 @@ class NewCard extends Component {
                  placeholder='Enter Tags' name='tags'
                  onChange={this.props.handleChange}>
           </input>
-
-          <input type='text' className='input is-primary new-input'
-                 placeholder='Enter Description' name='description'
-                 onChange={this.props.handleChange}>
-          </input>
+          <span>
+            <input type='text' className='input is-primary new-input description'
+                   placeholder='Enter Description' name='description'
+                   onChange={this.props.handleChange}>
+            </input>
+            <small className='char-counter' style={{color: 140 - this.props.description.length < 0 ? "red" : ""}}>
+              {140 - this.props.description.length}
+            </small>
+          </span>
         </form>
 
 
