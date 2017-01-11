@@ -27,7 +27,6 @@ const createNewItem = (req, res, knex, user_id) => {
   });
 
   const addItem = (newItem, user_id) => {
-    console.log("i'm here 6: ", newItem);
     knex('items').insert({
       type: newItem.type.toLowerCase(),
       gender: newItem.gender.toLowerCase(),

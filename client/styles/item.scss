@@ -55,6 +55,13 @@ $BORDER_COLOR: lighten($DARKEST, 50%);
     .new-input {
       margin: 3px 0;
     }
+    .description {
+      width: 90%;
+    }
+    .char-counter {
+      line-height: 35px;
+      margin-left: 5px;
+    }
     .new-label {
       display: inline-block;
       padding-top: 10px;
@@ -67,7 +74,7 @@ $BORDER_COLOR: lighten($DARKEST, 50%);
     max-height: 250px;
     overflow: scroll;
     .item-tag {
-      margin: 0 2px;
+      margin: 2px;
     }
     .description {
       font-style: italic;

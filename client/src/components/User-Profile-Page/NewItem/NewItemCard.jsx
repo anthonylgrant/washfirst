@@ -43,7 +43,7 @@ class NewItem extends Component {
       tags: this.state.tags,
       description: this.state.description
     };
-    console.log("i'm here 2: ", newItem);
+
     $.ajax({
       method: 'POST',
       url: `/api/users/some_userid/new`,
@@ -62,13 +62,13 @@ class NewItem extends Component {
 
 
   validateForm() {
-    return (this.state.img_url && this.state.type && this.state.gender && this.state.size && this.state.tags && this.state.description);
+    return (this.state.img_url && this.state.type && this.state.gender && this.state.size && this.state.tags && this.state.description && this.state.description.length <= 140);
   }
 
 
   render() {
     return (
-      <NewCard type={this.state.type} handleChange={this.handleChange} validateForm={this.validateForm} handleNewRequest={this.handleNewRequest} emptyField={this.emptyField} />
+      <NewCard type={this.state.type} handleChange={this.handleChange} validateForm={this.validateForm} handleNewRequest={this.handleNewRequest} emptyField={this.emptyField} description={this.state.description} />
     );
   }
 };
