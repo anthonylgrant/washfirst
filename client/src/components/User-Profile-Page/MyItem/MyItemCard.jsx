@@ -61,44 +61,59 @@ class MyItem extends Component {
 
   handleUpdate(e) {
     e.preventDefault();
+
+    const validateTags = (tagStr) => {
+        let allGood = true;
+        let tempArr = tagStr.split(' ');
+        tempArr.forEach((tag, index) => {
+        if(!/^\w+$/.test(tag)) allGood = false;
+      });
+      return allGood;
+    };
+
+
     let updatedItem = {
       id: this.state.item.id,
       img_url: this.state.img_url,
       type: this.state.type,
       gender: this.state.gender,
       size: this.state.size,
-      tags: this.state.tags,
+      tags: this.state.tags.trim().replace(/\s\s+/g, ' ').toLowerCase(),
       description: this.state.description
     };
-    this.showAlert('Item updated.', 'info');
 
-    $.ajax({
-      method: 'POST',
-      url: `/api/users/some_username/items/${this.state.item.id}`,
-      data: JSON.stringify(updatedItem),
-      dataType: "text",
-      contentType: "application/json; charset=utf-8",
-      success: (response) => {
-        this.showAlert('Item updated.', 'info');
-        this.setState({
-          item: {
-            ...this.state.item,
-            img_url: this.state.img_url,
-            type: this.state.type,
-            gender: this.state.gender,
-            size: this.state.size,
-            tags: this.state.tags,
-            description: this.state.description
-          }
-        });
-      },
-    });
+    if (validateTags(updatedItem.tags)) {
+      $.ajax({
+        method: 'POST',
+        url: `/api/users/some_username/items/${this.state.item.id}`,
+        data: JSON.stringify(updatedItem),
+        dataType: "text",
+        contentType: "application/json; charset=utf-8",
+        success: (response) => {
+          this.setState({
+            item: {
+              ...this.state.item,
+              img_url: this.state.img_url,
+              type: this.state.type,
+              gender: this.state.gender,
+              size: this.state.size,
+              tags: this.state.tags,
+              description: this.state.description
+            }
+          });
+        },
+      });
 
-    this.setState({
-      item: Object.assign({}, this.state.item, updatedItem, {tags: this.state.tags.split(' ')})
-    });
+      this.showAlert('Item updated.', 'info');
 
-    this.handleToggleView();
+      this.setState({
+        item: Object.assign({}, this.state.item, updatedItem, {tags: this.state.tags.trim().replace(/\s\s+/g, ' ').toLowerCase().split(' ')})
+      });
+
+      this.handleToggleView();
+    } else {
+      this.showAlert('Invalid characters in tags.', 'error');
+    }
   }
 
 
