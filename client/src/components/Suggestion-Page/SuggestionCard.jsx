@@ -18,11 +18,12 @@ class SuggestionCard extends Component {
           </div>
           <div className="content">
             <p>Size: {this.props.item.size}</p>
+            <p className='description'>{this.props.item.description}</p>
             { this.props.item.tags.map((tag, i) => {
               return <span key={i} className="tag item-tag">{tag}</span>
             })}
             <br />
-            <small>!!item create date here!!</small>
+            <p className='date'><small>posted on: {this.props.item.item_created_at.slice(0, 10)}</small></p>
           </div>
         </div>
       </div>

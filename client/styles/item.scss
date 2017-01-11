@@ -62,6 +62,21 @@ $BORDER_COLOR: lighten($DARKEST, 50%);
     }
   }
 
+  .card-content {
+    // height: 250px;
+    max-height: 250px;
+    .item-tag {
+      margin: 0 2px;
+    }
+    .description {
+      font-style: italic;
+    }
+    .date {
+      text-align: center;
+      padding-top: 10px;
+    }
+  }
+
   .new-button {
     width: 100%;
   }

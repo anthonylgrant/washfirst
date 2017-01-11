@@ -93,7 +93,6 @@ const getMainData = (res, knex, user_id) => {
   const getItemOwners = (itemInfo) => new Promise((resolve, reject) => {
     knex('users').where('id', itemInfo.user_id).then((rows) => {
       itemInfo.owner = rows[0];
-      // delete itemInfo.user_id;
       getUserPreferences(itemInfo.owner).then(() => {
         resolve();
       });

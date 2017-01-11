@@ -124,7 +124,6 @@ app.post('/api/users/:username/items/:id', (req, res) => {
 
 // Edit user size preference route - post
 app.post('/api/users/:id/edit', (req, res) => {
-  // console.log("size preference edit requested!!!");
   updateUserSizes(req, res, knex, req.session.userId);
 
 });
@@ -168,8 +167,8 @@ app.get('/api/login/check', (req, res) => {
 
 // Login Route - Post
 app.post('/api/login', (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  const username = req.body.username.toLowerCase();
+  const password = req.body.password.toLowerCase();
   if(!username || !password) {
     res.send(false);
     return;

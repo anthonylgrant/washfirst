@@ -36,7 +36,6 @@ class Login extends Component {
 
   keyPressEnter(event) {
     if (event.charCode==13) {
-      console.log("enter key pressed!!")
       this.handleSubmit();
     }
   }
