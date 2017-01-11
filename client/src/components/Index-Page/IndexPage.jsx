@@ -60,7 +60,7 @@ class App extends Component {
   swapTagsFromUserPref(event) {
     event.preventDefault;
     let targetText = event.target.innerHTML;
-    let newArr1 = this.state.tagsFromItems;
+    let newArr1 = this.state.searchBarText ? this.state.fixedTagsFromItems : this.state.tagsFromItems;
     let newArr2 = this.state.userPreferenceTags
 
     let index = newArr2.indexOf(targetText);
@@ -75,7 +75,7 @@ class App extends Component {
   }
 
   swapTagsFromTagsFromItems(event) {
-    event.preventDefault;
+    event.preventDefault();
     let targetText = event.target.innerHTML;
     let newArr2 = this.state.userPreferenceTags;
     newArr2.push(targetText);
@@ -145,7 +145,8 @@ class App extends Component {
 
         this.setState({
           userPreferenceTags: tempArr,
-          searchBarText: ''
+          searchBarText: '',
+          tagsFromItems: this.state.fixedTagsFromItems
         });
         event.target.value = '';
       }
