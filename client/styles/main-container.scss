@@ -8,6 +8,7 @@ $DARK: #583F95;
 $NEUTRAL: #7A70A2;
 $LIGHT: #E7D1B2;
 $LIGHTEST: #FFFBF7;
+$BORDER_COLOR: lighten($DARKEST, 50%);
 
 .main-container {
   height: 100vh;
@@ -22,6 +23,12 @@ $LIGHTEST: #FFFBF7;
     flex-direction: row;
     flex-wrap: wrap;
   }
+  .trade-container {
+    border-left: 1px solid $BORDER_COLOR;
+    padding-left: 40px;
+
+  }
+
   .main-container-item {
     // margin: auto;
     width: 320px;

@@ -38,27 +38,30 @@ class SuggestionIndex extends Component {
     return (
       <div>
         <Navbar loggedIn={true} />
-        <div className="main-container">
-          <h1>Trade this item:</h1>
-          <div className="items-container">
-            { this.state.myItem.map((item) => {
-              return (
-                <div key={item.id} className="main-container-item">
-                  <SuggestionCard item={item} />
-                </div>
-              );
-            })}
+        <div  className="main-container">
+          <div className="container">
+            <p>Trade this item:</p>
+            <div className="items-container">
+              { this.state.myItem.map((item) => {
+                return (
+                  <div key={item.id} className="main-container-item">
+                    <SuggestionCard item={item} />
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <hr />
-          <h1>For these items:</h1>
-          <div className="items-container">
-            { this.state.otherItems.map((item) => {
-              return (
-                <div key={item.id} className="main-container-item">
-                  <SuggestionCard item={item} />
-                </div>
-              );
-            })}
+          <div className="container trade-container">
+            <p>For these items:</p>
+            <div className="items-container">
+              { this.state.otherItems.map((item) => {
+                return (
+                  <div key={item.id} className="main-container-item">
+                    <SuggestionCard item={item} />
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
