@@ -36,7 +36,7 @@ class EditCard extends Component {
 
           <label className='new-label'>Category: </label>
           <div className="select new-input">
-            <select name="type" onChange={this.props.handleChange} defaultText={this.props.type} >
+            <select name="type" onChange={this.props.handleChange} defaultText={this.props.type}>
             {
               categories.map((category, index) => {
                 return <option key={index}>{category}</option>
@@ -49,7 +49,7 @@ class EditCard extends Component {
 
           <label className='new-label'>Gender: </label>
           <div className="select new-input">
-            <select name='gender' onChange={this.props.handleChange} selectedValue={this.props.gender} >
+            <select name='gender' onChange={this.props.handleChange} value={this.props.gender}>
             {
               genders.map((gender, index) => {
                 return <option key={index}>{gender}</option>
@@ -62,7 +62,7 @@ class EditCard extends Component {
 
           <label className='new-label'>Size: </label>
           <div className="select new-input">
-            <select name='size' onChange={this.props.handleChange} defaultValue={this.props.size} >
+            <select name='size' onChange={this.props.handleChange} defaultValue={this.props.size}>
             {
               this.props.type && sizes[this.props.type.toLowerCase()].map((size, index) => {
                 return <option key={index}>{size}</option>
