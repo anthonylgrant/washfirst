@@ -6,6 +6,7 @@ const addUserToDb = (req, res, knex, bcrypt) => {
       username: req.body.username.toLowerCase(),
       email: req.body.email.toLowerCase(),
       gender: req.body.gender.toLowerCase(),
+      postal_code: req.body.postal_code.toUpperCase(),
       address_lat: req.body.address_lat,
       address_lng: req.body.address_lng,
       min_top_size: parseInt(req.body.min_top_size),

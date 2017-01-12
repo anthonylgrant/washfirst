@@ -122,10 +122,11 @@ class Registeration extends Component {
       let newUserInfo = this.state;
       newUserInfo.address_lat = coordinates.lat;
       newUserInfo.address_lng = coordinates.lng;
-      delete newUserInfo.postal_code;
+      // delete newUserInfo.postal_code;
       delete newUserInfo.topSizes;
       delete newUserInfo.bottomSizes;
       delete newUserInfo.shoeSizes;
+      console.log("i'm here 0: ", newUserInfo);
       $.ajax({
         method: 'POST',
         url: `/api/register`,

@@ -14,6 +14,7 @@ class UserProfile extends Component {
       userPreferenceTags: [],
       myItems: [],
       username: '',
+      email: '',
       gender: '',
       min_top_size: '',
       max_top_size: '',
@@ -21,6 +22,7 @@ class UserProfile extends Component {
       max_bottom_size: '',
       min_shoe_size: '',
       max_shoe_size: '',
+      postal_code: '',
       topSizes: ['-', 1, 2, 3, 4, 5, 6],
       bottomSizes: ['-', 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44],
       shoeSizes: ['-', 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
@@ -43,6 +45,7 @@ class UserProfile extends Component {
     this.validateForm = this.validateForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.updateUserSizes = this.updateUserSizes.bind(this);
+    this.getLocation = this.getLocation.bind(this);
   }
 
   showAlert(content, type) {
@@ -50,6 +53,32 @@ class UserProfile extends Component {
       time: 2000,
       type: type,
       icon: this.icons[type]
+    });
+  }
+
+
+
+  getLocation() {
+    return new Promise((resolve, reject) => {
+      let geocoder = new google.maps.Geocoder();
+      let address = this.state.postal_code;
+      geocoder.geocode (
+        { 'address': address },
+        (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+          let coordinates = {
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng()
+          };
+          this.setState({
+            valid_postal_code: true
+          });
+          resolve(coordinates);
+        } else {
+          this.showAlert('Invalid postal code or address', 'error');
+          reject();
+        }
+      });
     });
   }
 
@@ -76,6 +105,7 @@ class UserProfile extends Component {
   }
 
   updateUserSizes() {
+
     let newUserSizes = {
       gender: this.state.gender,
       min_top_size: this.state.min_top_size,
@@ -83,17 +113,47 @@ class UserProfile extends Component {
       min_bottom_size: this.state.min_bottom_size,
       max_bottom_size: this.state.max_bottom_size,
       min_shoe_size: this.state.min_shoe_size,
-      max_shoe_size: this.state.max_shoe_size
+      max_shoe_size: this.state.max_shoe_size,
+      postal_code: this.state.postal_code.toUpperCase(),
+      email: this.state.email
     };
-    $.ajax({
-      method: 'POST',
-      url: `/api/users/:id/edit`,
-      data: newUserSizes,
-      success: ((response) => {
-        this.showAlert('User info updated.', 'info');
-        browserHistory.push('/users/:id');
-      })
-    });
+
+    if (this.state.fixed_postal_code !== this.state.postal_code) {
+      this.getLocation().then((coordinates) => {
+        newUserSizes.address_lat = coordinates.lat;
+        newUserSizes.address_lng = coordinates.lng;
+        $.ajax({
+          method: 'POST',
+          url: `/api/users/:id/edit`,
+          data: newUserSizes,
+          success: ((response) => {
+            response ? this.showAlert('User info updated.', 'info') : this.showAlert('email address already taken.', 'error');
+            // browserHistory.push('/users/:id');
+          })
+        });
+      }).catch((err) => {
+        newUserSizes.postal_code = this.state.fixed_postal_code;
+        $.ajax({
+          method: 'POST',
+          url: `/api/users/:id/edit`,
+          data: newUserSizes,
+          success: ((response) => {
+            response ? this.showAlert('User info updated.', 'info') : this.showAlert('email address already taken.', 'error');
+            // browserHistory.push('/users/:id');
+          })
+        });
+      });
+    } else {
+      $.ajax({
+        method: 'POST',
+        url: `/api/users/:id/edit`,
+        data: newUserSizes,
+        success: ((response) => {
+          response ? this.showAlert('User info updated.', 'info') : this.showAlert('email address already taken.', 'error');
+          // browserHistory.push('/users/:id');
+        })
+      });
+    }
   }
 
   handleChange(e) {
@@ -133,7 +193,10 @@ class UserProfile extends Component {
           min_bottom_size: response.currUserInfo.min_bottom_size,
           max_bottom_size: response.currUserInfo.max_bottom_size,
           min_shoe_size: response.currUserInfo.min_shoe_size,
-          max_shoe_size: response.currUserInfo.max_shoe_size
+          max_shoe_size: response.currUserInfo.max_shoe_size,
+          postal_code: response.currUserInfo.postal_code,
+          fixed_postal_code: response.currUserInfo.postal_code,
+          email: response.currUserInfo.email
         });
       }
     });
@@ -170,6 +233,8 @@ class UserProfile extends Component {
             topSizes={this.state.topSizes}
             bottomSizes={this.state.bottomSizes}
             shoeSizes={this.state.shoeSizes}
+            postal_code={this.state.postal_code}
+            email={this.state.email}
           />
         </div>
         <AlertContainer ref={(a) => global.msg = a} {...this.alertOptions} />

@@ -102,6 +102,19 @@ class UserSidebar extends Component {
             </span>
           </p>
 
+          <label className="label">Postal Code:</label>
+          <p className="control has-icon has-icon-left">
+            <input className="input is-success" name="postal_code" type="text" placeholder={this.props.postal_code} onChange={this.props.handleChange} />
+            <i className="fa fa-map-marker fa-fw" aria-hidden="true" />
+          </p>
+
+          <label className="label">Email:</label>
+          <p className="control has-icon has-icon-left">
+            <input className="input is-success" name="email" type="email" placeholder={this.props.email} onChange={this.props.handleChange} />
+            <i className="fa fa-at fa-fw" aria-hidden="true" />
+          </p>
+
+
           <p className="control">
             <button className="button submit is-primary" disabled={!this.props.validateForm()} onClick={this.props.updateUserSizes}>Update</button>
           </p>
