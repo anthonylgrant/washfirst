@@ -270,9 +270,12 @@ app.post('/api/email', (req, res) => {
 
   transporter.sendMail(mailOptions, function(error, info){
     if(error){
-      return console.log(error);
+      console.error(err);
+      res.send(false);
+    } else {
+      res.send(true);
     }
-    console.log('Message sent: ' + info.response);
+
   });
 });
 

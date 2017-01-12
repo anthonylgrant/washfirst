@@ -8,9 +8,7 @@ class SuggestionIndex extends Component {
     super(props);
     this.state = {
       myItem: [],
-      otherItems: [],
-      myUsername: '',
-      otherUsername: ''
+      otherItems: []
     };
     this.loadPageData = this.loadPageData.bind(this);
   }
@@ -27,7 +25,8 @@ class SuggestionIndex extends Component {
       success: (response) => {
         this.setState({
           myItem: response.myItem,
-          otherItems: response.otherItems
+          otherItems: response.otherItems,
+          username: response.otherItems[0].username
         });
       }
     });
@@ -37,7 +36,7 @@ class SuggestionIndex extends Component {
   render() {
     return (
       <div>
-        <Navbar loggedIn={true} />
+        <Navbar loggedIn={true} username={this.state.username} />
         <div  className="main-container">
           <div className="container">
             <p>Trade this item:</p>
