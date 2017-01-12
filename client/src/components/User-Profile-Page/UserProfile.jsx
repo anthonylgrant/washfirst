@@ -142,7 +142,7 @@ class UserProfile extends Component {
   render() {
     return (
       <div>
-        <Navbar loggedIn={true} profilePage={true}/>
+        <Navbar loggedIn={true} profilePage={true} username={this.state.username}/>
         <div className="main-container">
           <div className="items-container">
             <div className="main-container-item">

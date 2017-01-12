@@ -245,8 +245,23 @@ app.get('/api/suggestion', (req, res) => {
 
 
 app.post('/api/email', (req, res) => {
+
+  const radnomEmailGenerator = () => {
+    let chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+    let length = 15;
+    let random_link = '';
+
+    for(let i = 0; i < length; i++) {
+      random_link += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    return random_link;
+  };
+
+  let from = radnomEmailGenerator();
+
   var mailOptions = {
-    from: '"Wash First" <noreply@washfirst.com>', // sender address
+    from: `"${req.session.username}" <${from}@washfirst.com>`, // sender address
     to: req.body.to, // list of receivers
     subject: 'Someone wants to trade with you!', // Subject line
     text: req.body.content, // plaintext body

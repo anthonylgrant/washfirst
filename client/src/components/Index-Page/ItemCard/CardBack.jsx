@@ -8,8 +8,7 @@ class CardBack extends Component {
       messagesObj: {},
       search: '',
       pathNameStart: `localhost:3000/suggestion?myitemid=${this.props.item.id}`,
-      msgContent: `Hi there,\n\nI am interested in doing a trade with you.\n\nPlease take a look at the link below and let me know what you think.\n\nThanks!`,
-      testMsg: "<p>Yo yo yo</p>"
+      msgContent: `Hi there,\n\nI am interested in doing a trade with you.\n\nPlease take a look at the link below and let me know what you think.\n\nThanks!`
     };
     this.findProductFromMyCloset = this.findProductFromMyCloset.bind(this);
     this.evaluateSmileyFace = this.evaluateSmileyFace.bind(this);
@@ -17,21 +16,38 @@ class CardBack extends Component {
     this.validateTxtBox = this.validateTxtBox.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTxtChange = this.handleTxtChange.bind(this);
+    this.sortSellersInterest = this.sortSellersInterest.bind(this);
+    this.sellersInterestInMyItems = this.sortSellersInterest();
+  }
+
+  sortSellersInterest() {
+    let tempArr = this.props.item.owner.sellersInterestInMyProduct;
+    tempArr.forEach((item) => {
+      let key = Object.keys(item)[0];
+      item.myItemId = key;
+      item.interest = item[key];
+    });
+    tempArr.sort((a, b) => {
+      return b.interest - a.interest;
+    });
+    return tempArr;
   }
 
   findProductFromMyCloset(productId, returnValue) {
     let thisItem = this.props.myItems.find((item) => {
       return item.id == productId;
     });
-
     return thisItem[returnValue];
   }
 
   evaluateSmileyFace(item) {
-    let matchValue = Math.round(item[Object.keys(item)[0]] * 100)/100;
-    if (matchValue > 0.75) { return <i className="fa fa-smile-o fa-2x smiley-indicator" aria-hidden="true" />; }
-    else if (matchValue > 0.4) { return <i className="fa fa-meh-o fa-2x smiley-indicator" aria-hidden="true" />; }
-    else { return <i className="fa fa-frown-o fa-2x smiley-indicator" aria-hidden="true"></i>; }
+    let matchValue = Math.round(item.interest * 100);
+    return (
+      <div className='outer'>
+        <i className="fa fa-heart-o fa-2x smiley-indicator" aria-hidden="true" />
+        <div className="inner" style={{height: `${matchValue}%`}}><i className="fa fa-heart fa-2x smiley-indicator" aria-hidden="true" /></div>
+      </div>
+    );
   }
 
   componentDidMount() {
@@ -39,6 +55,7 @@ class CardBack extends Component {
     this.props.myItems.forEach((myItem) => {
       msgObj[myItem.id] = '';
     });
+    this.sortSellersInterest();
     this.setState({ messagesObj: msgObj });
   }
 
@@ -64,8 +81,6 @@ class CardBack extends Component {
     content = `<p>${content.replace(/(?:\r\n|\r|\n)/g, '<br />')}</p>`;
     let email = {
       to: this.props.item.owner.email,
-      // content: `${this.state.msgContent}\n \nClick here to see the proposed trade:\n${this.state.pathNameStart}${this.state.search}`
-      // content: `${this.state.testMsg}\n \nClick here to see the proposed trade:\n${this.state.pathNameStart}${this.state.search}`
       content: content
     };
     $.ajax({
@@ -88,19 +103,18 @@ class CardBack extends Component {
     return this.state.search && this.state.msgContent;
   }
 
-
   render() {
     return (
       <div className="card card-back">
         <div className="card-back-content">
           <h1>Owner's Interest In My Items:</h1>
           <div className="matched-items-from-users-closet">
-            { this.props.item.owner.sellersInterestInMyProduct.map((item, index) => {
+            { this.sellersInterestInMyItems.map((item, index) => {
               return (
                 <div key={index} className="matched-item">
-                  <img className="image is-96x96" src={this.findProductFromMyCloset(Object.keys(item)[0], 'img_url')} alt="Image" />
+                  <img className="image is-96x96" src={this.findProductFromMyCloset(item.myItemId, 'img_url')} alt="Image" />
                   {this.evaluateSmileyFace(item)}
-                  <input className="my-item-checkbox" type="checkbox" name={this.findProductFromMyCloset(Object.keys(item)[0], 'id')} onChange={this.handleSelection} />
+                  <input className="my-item-checkbox" type="checkbox" name={this.findProductFromMyCloset(item.myItemId, 'id')} onChange={this.handleSelection} />
                 </div>
               );
             })}

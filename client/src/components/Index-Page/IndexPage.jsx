@@ -4,6 +4,7 @@ import Navbar from '../Partials/Navbar.jsx';
 import Landing from '../Partials/Landing.jsx';
 import Sidebar from './Sidebar.jsx';
 import ItemCard from './ItemCard/Card.jsx';
+import AlertContainer from 'react-alert';
 
 class App extends Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class App extends Component {
       searchBarText: '',
       myItems: [],
       type: '',
-      rangeKm: 10
+      rangeKm: 10,
+      username: ''
     };
     this.swapTagsFromUserPref = this.swapTagsFromUserPref.bind(this);
     this.swapTagsFromTagsFromItems = this.swapTagsFromTagsFromItems.bind(this);
@@ -31,13 +33,34 @@ class App extends Component {
     this.removeDuplicates = this.removeDuplicates.bind(this);
     this.handleTypeSelection = this.handleTypeSelection.bind(this);
     this.isThisWithinRange = this.isThisWithinRange.bind(this);
+    this.showAlert = this.showAlert.bind(this);
+
+    this.alertOptions = {
+      offset: 14,
+      position: 'bottom left',
+      theme: 'dark',
+      transition: 'scale'
+    };
+
+    this.icons = {
+      info: <i className="fa fa-info-circle fa-fw" aria-hidden="true"/>,
+      error: <i className="fa fa-exclamation-circle fa-fw" aria-hidden="true"/>
+    };
+  }
+
+  showAlert(content, type) {
+    msg.show(content, {
+      time: 2000,
+      type: type,
+      icon: this.icons[type]
+    });
   }
 
 
   swapTagsFromUserPref(event) {
     event.preventDefault;
     let targetText = event.target.innerHTML;
-    let newArr1 = this.state.tagsFromItems;
+    let newArr1 = this.state.searchBarText ? this.state.fixedTagsFromItems : this.state.tagsFromItems;
     let newArr2 = this.state.userPreferenceTags
 
     let index = newArr2.indexOf(targetText);
@@ -52,7 +75,7 @@ class App extends Component {
   }
 
   swapTagsFromTagsFromItems(event) {
-    event.preventDefault;
+    event.preventDefault();
     let targetText = event.target.innerHTML;
     let newArr2 = this.state.userPreferenceTags;
     newArr2.push(targetText);
@@ -98,18 +121,18 @@ class App extends Component {
         let tops = response.currUserInfo.myItems.tops;
         let bottoms = response.currUserInfo.myItems.bottoms;
         let shoes = response.currUserInfo.myItems.shoes;
+        let username = response.currUserInfo.username;
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
           currUserLat: response.currUserInfo.address_lat,
           currUserLng: response.currUserInfo.address_lng,
-          // tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
-          // fixedTagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
           tagsFromItems: this.removeDuplicates(response.allTags, response.currUserInfo.preferences),
           fixedTagsFromItems: this.removeDuplicates(response.allTags, response.currUserInfo.preferences),
           topsInventory: this.sortItemsByRanking(response.inventory.tops),
           bottomsInventory: this.sortItemsByRanking(response.inventory.bottoms),
           shoesInventory: this.sortItemsByRanking(response.inventory.shoes),
-          myItems: tops.concat(bottoms).concat(shoes)
+          myItems: tops.concat(bottoms).concat(shoes),
+          username: username
         });
       }
     });
@@ -122,7 +145,8 @@ class App extends Component {
 
         this.setState({
           userPreferenceTags: tempArr,
-          searchBarText: ''
+          searchBarText: '',
+          tagsFromItems: this.state.fixedTagsFromItems
         });
         event.target.value = '';
       }
@@ -140,10 +164,9 @@ class App extends Component {
       data: data,
       dataType: "JSON",
       success: (response) => {
+        this.showAlert('User preferences updated.', 'info');
         this.setState({
           userPreferenceTags: response.currUserInfo.preferences,
-          // tagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
-          // fixedTagsFromItems: this.concatTagArrays(response.inventory, response.currUserInfo.preferences),
           tagsFromItems: this.removeDuplicates(response.allTags, response.currUserInfo.preferences),
           fixedTagsFromItems: this.removeDuplicates(response.allTags, response.currUserInfo.preferences),
           topsInventory: this.sortItemsByRanking(response.inventory.tops),
@@ -244,7 +267,7 @@ class App extends Component {
 
     return (
       <div>
-        <Navbar loggedIn={true} mainPage={true}/>
+        <Navbar loggedIn={true} mainPage={true} username={this.state.username}/>
         <div className="main-container">
           <div className="items-container">
             { allInvetory.map((item) => {
@@ -266,6 +289,7 @@ class App extends Component {
           handlePreferenceSubmit={this.handlePreferenceSubmit}
           handleTypeSelection={this.handleTypeSelection}
         />
+        <AlertContainer ref={(a) => global.msg = a} {...this.alertOptions} />
       </div>
     );
   }

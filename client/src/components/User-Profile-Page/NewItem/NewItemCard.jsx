@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import AlertContainer from 'react-alert';
 
 import NewCard from './NewCard.jsx';
 
@@ -21,6 +22,27 @@ class NewItem extends Component {
     this.handleNewRequest = this.handleNewRequest.bind(this);
     this.validateForm = this.validateForm.bind(this);
     this.emptyField = this.emptyField.bind(this);
+    this.showAlert = this.showAlert.bind(this);
+
+    this.alertOptions = {
+      offset: 14,
+      position: 'bottom left',
+      theme: 'dark',
+      transition: 'scale'
+    };
+
+    this.icons = {
+      info: <i className="fa fa-info-circle fa-fw" aria-hidden="true"/>,
+      error: <i className="fa fa-exclamation-circle fa-fw" aria-hidden="true"/>
+    };
+  }
+
+  showAlert(content, type) {
+    msg.show(content, {
+      time: 2000,
+      type: type,
+      icon: this.icons[type]
+    });
   }
 
   handleChange(e) {
@@ -35,34 +57,48 @@ class NewItem extends Component {
 
   handleNewRequest(e) {
     e.preventDefault();
+
+    const validateTags = (tagStr) => {
+      let allGood = true;
+      let tempArr = tagStr.split(' ');
+      tempArr.forEach((tag, index) => {
+        if(!/^\w+$/.test(tag)) allGood = false;
+      });
+      return allGood;
+    };
+
     let newItem = {
       img_url: this.state.img_url,
       type: this.state.type,
       gender: this.state.gender,
       size: this.state.size,
-      tags: this.state.tags,
+      tags: this.state.tags.trim().replace(/\s\s+/g, ' ').toLowerCase(),
       description: this.state.description
     };
 
-    $.ajax({
-      method: 'POST',
-      url: `/api/users/some_userid/new`,
-      data: newItem,
-      success: (response) => {
-        this.setState({
-          edit: false,
-          item: 'new',
-          img_url: '',
-          type: '',
-          gender: '',
-          size: '',
-          tags: '',
-          description: ''
-        });
-        this.props.reload();
-      }
-    });
+    if (validateTags(newItem.tags)) {
+      $.ajax({
+        method: 'POST',
+        url: `/api/users/some_userid/new`,
+        data: newItem,
+        success: (response) => {
+          this.setState({
+            edit: false,
+            item: 'new',
+            img_url: '',
+            type: '',
+            gender: '',
+            size: '',
+            tags: '',
+            description: ''
+          });
+          this.props.reload();
+        }
+      });
 
+    } else {
+      this.showAlert('Invalid characters in tags.', 'error');
+    }
   }
 
   emptyField(e) {
@@ -78,7 +114,9 @@ class NewItem extends Component {
 
   render() {
     return (
-      <NewCard type={this.state.type} handleChange={this.handleChange} validateForm={this.validateForm} handleNewRequest={this.handleNewRequest} emptyField={this.emptyField} description={this.state.description} />
+      <div>
+        <NewCard type={this.state.type} handleChange={this.handleChange} validateForm={this.validateForm} handleNewRequest={this.handleNewRequest} emptyField={this.emptyField} description={this.state.description} />
+      </div>
     );
   }
 };
