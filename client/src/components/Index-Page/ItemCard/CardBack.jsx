@@ -18,6 +18,26 @@ class CardBack extends Component {
     this.handleTxtChange = this.handleTxtChange.bind(this);
     this.sortSellersInterest = this.sortSellersInterest.bind(this);
     this.sellersInterestInMyItems = this.sortSellersInterest();
+
+    this.alertOptions = {
+      offset: 14,
+      position: 'bottom left',
+      theme: 'dark',
+      transition: 'scale'
+    };
+
+    this.icons = {
+      info: <i className="fa fa-info-circle fa-fw" aria-hidden="true"/>,
+      error: <i className="fa fa-exclamation-circle fa-fw" aria-hidden="true"/>
+    };
+  }
+
+  showAlert(content, type) {
+    msg.show(content, {
+      time: 2000,
+      type: type,
+      icon: this.icons[type]
+    });
   }
 
   sortSellersInterest() {
@@ -89,7 +109,7 @@ class CardBack extends Component {
       data: email,
       dataType: 'JSON',
       success: (response) => {
-        console.log(response);
+        response ? this.showAlert('Eamil sent.', 'info') : this.showAlert('Error sending the email', 'error');
       }
     });
   }

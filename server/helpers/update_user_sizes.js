@@ -11,7 +11,10 @@ function updateUserSizes(req, res, knex, userId) {
   });
 
   knex('users').where('id', userId).update(newSizes).then(() => {
-    res.send('user sizes updated');
+    res.send(true);
+  }).catch((err) => {
+    console.error(err);
+    res.send(false);
   });
 }
 

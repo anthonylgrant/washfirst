@@ -143,10 +143,14 @@ class App extends Component {
         let tempArr = this.state.userPreferenceTags;
         tempArr.push(this.state.searchBarText);
 
+        let tempArr2 = this.state.fixedTagsFromItems;
+        let index = tempArr2.indexOf(this.state.searchBarText);
+        if (index > -1) { tempArr2.splice(index, 1); };
+
         this.setState({
           userPreferenceTags: tempArr,
           searchBarText: '',
-          tagsFromItems: this.state.fixedTagsFromItems
+          tagsFromItems: tempArr2
         });
         event.target.value = '';
       }
