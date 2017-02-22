@@ -1,8 +1,8 @@
 ## Washfirst
 
-Do you have any cloth or a pair of shoes that you do not wear anymore but taking spaces in your closet? Do you have an urge to get rid of them, but don't want to see them going into garbage? Welcome to Washfirst!
+Do you have unworn clothes or shoes taking up space in your closet? Are you interested in swapping clothes with another, so long as it is a mutual exchange in value and interest? Welcome to Washfirst!
 
-Washfirst is a multi-route React web app providing users a platform to swap clothing items without using any of monetary units. It is built with Express.js, Postgres, Knex.js, React.js, Webpack, Babel, jQuery, AJAX, SCSS, and Bulma; still ongoing and stacking up.
+Washfirst is a multi-route React web app providing users a platform to swap clothing articles without the use of monetary units. It is built with Express.js, Postgres, Knex.js, React.js, Webpack, Babel, jQuery, AJAX, SCSS, and Bulma; still ongoing and stacking up.
 
 ## Dependencies
 
